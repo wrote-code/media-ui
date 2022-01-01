@@ -14,9 +14,7 @@ import { connect, Dispatch, useIntl, FormattedMessage } from 'umi';
 import { StateType } from '@/models/login';
 import { getFakeCaptcha, LoginParamsType } from '@/services/login';
 import { ConnectState } from '@/models/connect';
-
 import styles from './index.less';
-
 interface LoginProps {
   dispatch: Dispatch;
   userLogin: StateType;
@@ -49,6 +47,7 @@ const Login: React.FC<LoginProps> = (props) => {
       payload: { ...values, type },
     });
   };
+
   return (
     <div className={styles.main}>
       <ProForm
@@ -109,12 +108,7 @@ const Login: React.FC<LoginProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.username.required"
-                      defaultMessage="请输入用户名!"
-                    />
-                  ),
+                  message: '用户名是必填项！',
                 },
               ]}
             />
@@ -131,12 +125,7 @@ const Login: React.FC<LoginProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.password.required"
-                      defaultMessage="请输入密码！"
-                    />
-                  ),
+                  message: '密码是必填项！',
                 },
               ]}
             />
@@ -161,21 +150,11 @@ const Login: React.FC<LoginProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.phoneNumber.required"
-                      defaultMessage="请输入手机号！"
-                    />
-                  ),
+                  message: '手机号是必填项！',
                 },
                 {
                   pattern: /^1\d{10}$/,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.phoneNumber.invalid"
-                      defaultMessage="手机号格式错误！"
-                    />
-                  ),
+                  message: '不合法的手机号！',
                 },
               ]}
             />
@@ -206,19 +185,16 @@ const Login: React.FC<LoginProps> = (props) => {
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.captcha.required"
-                      defaultMessage="请输入验证码！"
-                    />
-                  ),
+                  message: '验证码是必填项！',
                 },
               ]}
               onGetCaptcha={async (mobile) => {
                 const result = await getFakeCaptcha(mobile);
+
                 if (result === false) {
                   return;
                 }
+
                 message.success('获取验证码成功！验证码为：1234');
               }}
             />
@@ -230,19 +206,19 @@ const Login: React.FC<LoginProps> = (props) => {
           }}
         >
           <ProFormCheckbox noStyle name="autoLogin">
-            <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
+            自动登录
           </ProFormCheckbox>
           <a
             style={{
               float: 'right',
             }}
           >
-            <FormattedMessage id="pages.login.forgotPassword" defaultMessage="忘记密码" />
+            忘记密码 ?
           </a>
         </div>
       </ProForm>
       <Space className={styles.other}>
-        <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
+        其他登录方式 :
         <AlipayCircleOutlined className={styles.icon} />
         <TaobaoCircleOutlined className={styles.icon} />
         <WeiboCircleOutlined className={styles.icon} />

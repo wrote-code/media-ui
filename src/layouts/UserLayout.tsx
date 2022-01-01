@@ -5,7 +5,6 @@ import React from 'react';
 import { ConnectState } from '@/models/connect';
 import logo from '../assets/logo.svg';
 import styles from './UserLayout.less';
-
 export interface UserLayoutProps extends Partial<ConnectProps> {
   breadcrumbNameMap: {
     [path: string]: MenuDataItem;
@@ -25,11 +24,10 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
       pathname: '',
     },
   } = props;
-  const { formatMessage } = useIntl();
+  const {} = useIntl();
   const { breadcrumb } = getMenuData(routes);
   const title = getPageTitle({
     pathname: location.pathname,
-    formatMessage,
     breadcrumb,
     ...props,
   });
@@ -52,12 +50,7 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
                 <span className={styles.title}>Ant Design</span>
               </Link>
             </div>
-            <div className={styles.desc}>
-              <FormattedMessage
-                id="pages.layouts.userLayout.title"
-                defaultMessage="Ant Design 是西湖区最具影响力的 Web 设计规范"
-              />
-            </div>
+            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
           </div>
           {children}
         </div>

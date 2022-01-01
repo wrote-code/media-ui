@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
 import { useIntl } from 'umi';
-
 interface CreateFormProps {
   modalVisible: boolean;
   onCancel: () => void;
@@ -10,7 +9,6 @@ interface CreateFormProps {
 const CreateForm: React.FC<CreateFormProps> = (props) => {
   const { modalVisible, onCancel } = props;
   const intl = useIntl();
-
   return (
     <Modal
       destroyOnClose
