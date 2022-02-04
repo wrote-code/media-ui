@@ -8,7 +8,7 @@
 export default {
   dev: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      target: 'localhost:8080/media',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
