@@ -30,6 +30,20 @@
             component: './Welcome',
           },
           {
+            path: '/resource',
+            name: '资源管理',
+            icon: 'smile',
+            component: './Resource',
+            routes: [
+              {
+                path: '/resource/index',
+                name: '资源管理',
+                icon: 'smile',
+                component: './Resource'
+              }
+            ],
+          },
+          {
             path: '/admin',
             name: 'admin',
             icon: 'crown',

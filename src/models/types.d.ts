@@ -108,7 +108,7 @@ export interface ResourceVo {
   /**
    * 作者。
    */
-  author: AuthorVo;
+  authorVo: AuthorVo;
 
   /**
    * 专辑。
