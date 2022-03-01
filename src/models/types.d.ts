@@ -180,7 +180,7 @@ export interface ResourceTypeVo {
   updateTime: Date;
 }
 
-export interface Site {
+export interface SiteVo {
   /**
    * ID
    */

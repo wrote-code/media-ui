@@ -16,6 +16,7 @@ const Resource: React.FC<ResourceProps> = (props) => {
     {
       dataIndex: 'id',
       valueType: 'indexBorder',
+      width: 20
     },
     {
       title: '文件名',

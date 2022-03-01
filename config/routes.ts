@@ -44,6 +44,20 @@
             ],
           },
           {
+            path: '/site',
+            name: '站点管理',
+            icon: 'smile',
+            component: './Site',
+            routes: [
+              {
+                path: '/site/index',
+                name: '站点管理',
+                icon: 'smile',
+                component: './Site'
+              }
+            ],
+          },
+          {
             path: '/admin',
             name: 'admin',
             icon: 'crown',
