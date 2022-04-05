@@ -4,7 +4,8 @@ import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import React from 'react';
-import { connect, Dispatch } from 'umi';
+import type { Dispatch } from 'umi';
+import { connect } from 'umi';
 
 interface ResourceProps {
   dispatch: Dispatch,
