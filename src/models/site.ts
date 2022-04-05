@@ -1,6 +1,6 @@
-import { Effect, Reducer } from 'umi';
+import type { Effect, Reducer } from 'umi';
 import { fetchSiteVoListPro } from '@/services/site';
-import { SiteVo } from './types';
+import type { SiteVo } from './types';
 
 export interface SiteStateType {
   siteList: SiteVo[];
