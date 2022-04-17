@@ -19,7 +19,10 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
         return false;
       } else {
         const { dispatch } = props;
-
+        dispatch({
+          type: 'site/addSite',
+          payload: values,
+        });
         handleCancel(false);
       }
     });

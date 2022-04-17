@@ -2,6 +2,7 @@ import type { Effect, Reducer } from 'umi';
 import { addSite, fetchSiteVoListPro } from '@/services/site';
 import type { SiteVo } from './types';
 import { parseResponse } from '@/utils/utils';
+import { message } from 'antd';
 
 export interface SiteStateType {
   siteList: SiteVo[];
@@ -28,10 +29,11 @@ const SiteModel: SiteModelType = {
     *addSite({ payload }, { call, put }) {
       const data = yield call(addSite(payload));
       if (parseResponse(data)) {
-        yield put({
-          type: 'setSiteList',
-          data: data.data.siteList,
-        });
+        message.success('添加成功');
+        // yield put({
+        //   type: 'setSiteList',
+        //   data: data.data.siteList,
+        // });
       }
     },
     *fetchSiteVoListPro({ payload }, { call, put }) {
