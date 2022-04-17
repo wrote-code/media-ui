@@ -1,11 +1,13 @@
 import { Form, Input, Modal } from 'antd';
 import React from 'react';
+import { connect } from 'umi';
+import type { DefaultStateType } from '@/models/types';
 
 interface PropsType {
   visible: boolean;
   handleCancel: any;
+  dispatch: any;
 }
-
 
 const NewSiteModal: React.FC<any> = (props: PropsType) => {
   const { handleCancel } = props;
@@ -16,6 +18,8 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
       if (errors) {
         return false;
       } else {
+        const { dispatch } = props;
+
         handleCancel(false);
       }
     });
@@ -57,4 +61,6 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
   );
 };
 
-export default NewSiteModal;
+export default connect(({ working }: DefaultStateType) => ({
+  working: working,
+}))(NewSiteModal);

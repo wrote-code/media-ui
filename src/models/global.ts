@@ -10,6 +10,7 @@ export interface NoticeItem extends NoticeIconData {
   status: string;
 }
 
+
 export interface GlobalModelState {
   collapsed: boolean;
   notices: NoticeItem[];

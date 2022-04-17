@@ -1,3 +1,10 @@
+/**
+ * 此类型用于connect使用，避免mapStateToProps报错。
+ */
+ export interface DefaultStateType {
+  working: boolean;
+}
+
 export interface AuthorVo {
   /**
    * ID
