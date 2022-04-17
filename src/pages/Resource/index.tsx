@@ -8,8 +8,8 @@ import type { Dispatch } from 'umi';
 import { connect } from 'umi';
 
 interface ResourceProps {
-  dispatch: Dispatch,
-  resourceList: ResourceVo[],
+  dispatch: Dispatch;
+  resourceList: ResourceVo[];
 }
 
 const Resource: React.FC<ResourceProps> = (props) => {
@@ -17,7 +17,7 @@ const Resource: React.FC<ResourceProps> = (props) => {
     {
       dataIndex: 'id',
       valueType: 'indexBorder',
-      width: 20
+      width: 20,
     },
     {
       title: '文件名',
@@ -26,10 +26,10 @@ const Resource: React.FC<ResourceProps> = (props) => {
         rules: [
           {
             required: true,
-            message: '必须填写件名'
-          }
-        ]
-      }
+            message: '必须填写件名',
+          },
+        ],
+      },
     },
     {
       title: '资源目录',
@@ -38,10 +38,10 @@ const Resource: React.FC<ResourceProps> = (props) => {
         rules: [
           {
             required: true,
-            message: '必须填写资源目录'
-          }
-        ]
-      }
+            message: '必须填写资源目录',
+          },
+        ],
+      },
     },
     {
       title: '作者',
@@ -66,21 +66,22 @@ const Resource: React.FC<ResourceProps> = (props) => {
   const fetchResourceListDemo = () => {
     const { dispatch } = props;
     dispatch({
-      type: 'resource/fetchResourceList'
+      type: 'resource/fetchResourceList',
     });
-  }
-
+  };
 
   return (
     <div>
       <ProTable<ResourceVo>
         columns={columns}
-        request={async (params, sorter, filter) => fetchResourceListRequest({ params, sorter, filter })}
+        request={async (params, sorter, filter) =>
+          fetchResourceListRequest({ params, sorter, filter })
+        }
       />
     </div>
   );
 };
 
 export default connect(({ resourceList }: ResourceStateType) => ({
-  resourceList
+  resourceList,
 }))(Resource);

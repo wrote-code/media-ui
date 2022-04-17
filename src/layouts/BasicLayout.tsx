@@ -6,12 +6,11 @@
 import type {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
-  Settings} from '@ant-design/pro-layout';
-import ProLayout, {
-  DefaultFooter
+  Settings,
 } from '@ant-design/pro-layout';
+import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
 import React, { useEffect, useMemo, useRef } from 'react';
-import type { Dispatch} from 'umi';
+import type { Dispatch } from 'umi';
 import { connect, history, Link, useIntl } from 'umi';
 import { GithubOutlined } from '@ant-design/icons';
 import { Button, Result } from 'antd';

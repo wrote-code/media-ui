@@ -11,5 +11,5 @@ export async function addSite(data: any) {
   return request('/api/site/addSite', {
     data: data,
     method: 'POST',
-  })
+  });
 }

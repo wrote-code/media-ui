@@ -10,7 +10,6 @@ export interface NoticeItem extends NoticeIconData {
   status: string;
 }
 
-
 export interface GlobalModelState {
   collapsed: boolean;
   notices: NoticeItem[];
@@ -57,7 +56,7 @@ export interface PageObject {
   /**
    * 数据列表。
    */
-  dataList: any[],
+  dataList: any[];
 }
 
 export interface GlobalModelType {

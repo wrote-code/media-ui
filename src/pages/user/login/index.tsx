@@ -10,7 +10,7 @@ import {
 import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import type { Dispatch} from 'umi';
+import type { Dispatch } from 'umi';
 import { connect, useIntl, FormattedMessage } from 'umi';
 import type { StateType } from '@/models/login';
 import type { LoginParamsType } from '@/services/login';
