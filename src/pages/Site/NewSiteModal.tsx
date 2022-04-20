@@ -1,5 +1,5 @@
-import { Form, Input, Modal } from 'antd';
-import React from 'react';
+import { Form, Input, Modal, Select } from 'antd';
+import React, { useState } from 'react';
 import { connect } from 'umi';
 import type { DefaultStateType } from '@/models/types';
 
@@ -12,6 +12,24 @@ interface PropsType {
 const NewSiteModal: React.FC<any> = (props: PropsType) => {
   const { handleCancel } = props;
   const [form] = Form.useForm();
+  // 网址前缀
+  const [urlPrefix, setUrlPrefix] = useState('http://');
+
+  const layout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 20 },
+  };
+
+  const selectBefore = (
+    <Select
+      defaultValue="http://"
+      className="select-before"
+      onChange={(value) => setUrlPrefix(value)}
+    >
+      <Select.Option value="http://">http://</Select.Option>
+      <Select.Option value="https://">https://</Select.Option>
+    </Select>
+  );
 
   const handleOk = () => {
     form.validateFields().then((values: any, errors: any) => {
@@ -21,7 +39,11 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
         const { dispatch } = props;
         dispatch({
           type: 'site/addSite',
-          payload: values,
+          payload: {
+            ...values,
+            url: urlPrefix + values.url,
+            createTime: new Date(),
+          },
         });
         handleCancel(false);
       }
@@ -36,7 +58,7 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
       onCancel={handleCancel}
       onOk={handleOk}
     >
-      <Form form={form}>
+      <Form form={form} {...layout}>
         <Form.Item
           label="站点名称"
           name="siteName"
@@ -57,7 +79,7 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
             },
           ]}
         >
-          <Input placeholder="请输入网址" />
+          <Input placeholder="请输入网址" addonBefore={selectBefore} defaultValue="baidu.com" />
         </Form.Item>
       </Form>
     </Modal>

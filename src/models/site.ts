@@ -26,18 +26,14 @@ const SiteModel: SiteModelType = {
     siteList: [],
   },
   effects: {
-    *addSite({ payload }, { call, put }) {
-      const data = yield call(addSite(payload));
+    *addSite({ payload }, { call }) {
+      const data = yield call(addSite, payload);
       if (parseResponse(data)) {
         message.success('添加成功');
-        // yield put({
-        //   type: 'setSiteList',
-        //   data: data.data.siteList,
-        // });
       }
     },
     *fetchSiteVoListPro({ payload }, { call, put }) {
-      const data = yield call(fetchSiteVoListPro(payload));
+      const data = yield call(fetchSiteVoListPro, payload);
       yield put({
         type: 'setSiteList',
         data: data,
