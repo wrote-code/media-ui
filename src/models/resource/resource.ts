@@ -1,5 +1,5 @@
 import { fetchResourceList } from '@/services/resource/resource';
-import type { connect, Effect, Reducer } from 'umi';
+import type { Effect, Reducer } from 'umi';
 import type { ResourceVo } from '../types';
 
 export interface ResourceStateType {
