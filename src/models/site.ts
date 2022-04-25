@@ -1,8 +1,8 @@
-import type { Effect, Reducer } from 'umi';
-import { addSite, fetchSiteVoListPro } from '@/services/site';
-import type { SiteVo } from './types';
+import { addSite, deleteSite, fetchSiteVoListPro } from '@/services/site';
 import { parseResponse } from '@/utils/utils';
 import { message } from 'antd';
+import type { Effect, Reducer } from 'umi';
+import type { SiteVo } from './types';
 
 export interface SiteStateType {
   siteList: SiteVo[];
@@ -14,6 +14,7 @@ interface SiteModelType {
   effects: {
     fetchSiteVoListPro: Effect;
     addSite: Effect;
+    deleteSite: Effect;
   };
   reducers: {
     setSiteList: Reducer;
@@ -29,7 +30,7 @@ const SiteModel: SiteModelType = {
     *addSite({ payload }, { call }) {
       const data = yield call(addSite, payload);
       if (parseResponse(data)) {
-        message.success('添加成功');
+        message.success('添加成功，请刷新页面查看结果');
       }
     },
     *fetchSiteVoListPro({ payload }, { call, put }) {
@@ -38,6 +39,12 @@ const SiteModel: SiteModelType = {
         type: 'setSiteList',
         data: data,
       });
+    },
+    *deleteSite({ payload }, { call, put }) {
+      const response = yield call(deleteSite, payload);
+      if (parseResponse(response)) {
+        message.info('删除成功，请刷新页面');
+      }
     },
   },
   reducers: {

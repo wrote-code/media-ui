@@ -8,39 +8,57 @@ import React, { useState } from 'react';
 import { connect } from 'umi';
 import NewSiteModal from './NewSiteModal';
 
-const columns: ProColumns<SiteVo>[] = [
-  {
-    dataIndex: 'index',
-    valueType: 'indexBorder',
-    width: 30,
-  },
-  {
-    title: '网站名称',
-    dataIndex: 'siteName',
-  },
-  {
-    title: '网站地址',
-    dataIndex: 'url',
-    search: false,
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    search: false,
-  },
-  {
-    title: '更新时间',
-    dataIndex: 'updateTime',
-    search: false,
-  },
-];
-
 const Site: React.FC<SiteStateType> = (props) => {
   const [newSiteModalVisible, setNewSiteModalVisible] = useState<boolean>(false);
 
   const handleCancel = () => {
     setNewSiteModalVisible(false);
   };
+
+  const deleteSite = (record: SiteVo) => {
+    const { dispatch } = props;
+    dispatch({
+      type: 'site/deleteSite',
+      payload: {
+        id: record.id,
+      },
+    });
+  };
+
+  const columns: ProColumns<SiteVo>[] = [
+    {
+      dataIndex: 'index',
+      valueType: 'indexBorder',
+      width: 30,
+    },
+    {
+      title: '网站名称',
+      dataIndex: 'siteName',
+    },
+    {
+      title: '网站地址',
+      dataIndex: 'url',
+      search: false,
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      search: false,
+    },
+    {
+      title: '更新时间',
+      dataIndex: 'updateTime',
+      search: false,
+    },
+    {
+      title: '操作',
+      search: false,
+      width: 50,
+      render: (_, record: SiteVo) => {
+        return <Button onClick={() => deleteSite(record)}>删除</Button>;
+      },
+    },
+  ];
 
   return (
     <div>

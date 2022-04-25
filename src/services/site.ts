@@ -13,3 +13,10 @@ export async function addSite(data: any) {
     method: 'POST',
   });
 }
+
+export async function deleteSite(data: any) {
+  return request('/api/site/delete?id=' + data.id, {
+    data: data,
+    method: 'GET',
+  });
+}
