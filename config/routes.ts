@@ -39,8 +39,8 @@
                 path: '/resource/index',
                 name: '资源管理',
                 icon: 'smile',
-                component: './Resource'
-              }
+                component: './Resource',
+              },
             ],
           },
           {
@@ -53,8 +53,22 @@
                 path: '/site/index',
                 name: '站点管理',
                 icon: 'smile',
-                component: './Site'
-              }
+                component: './Site',
+              },
+            ],
+          },
+          {
+            path: '/author',
+            name: '创作人员',
+            icon: 'smile',
+            component: './Author',
+            routes: [
+              {
+                path: '/author/index',
+                name: '作者管理',
+                component: './Author',
+                icon: 'simle',
+              },
             ],
           },
           {

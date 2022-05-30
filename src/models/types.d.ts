@@ -22,9 +22,9 @@ export interface AuthorVo {
   username: string;
 
   /**
-   * 注册站点ID
+   * 注册站点
    */
-  site: string;
+  site: SiteVo;
 
   /**
    * 主页
