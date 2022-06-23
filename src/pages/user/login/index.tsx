@@ -10,10 +10,12 @@ import {
 import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { connect, Dispatch, useIntl, FormattedMessage } from 'umi';
-import { StateType } from '@/models/login';
-import { getFakeCaptcha, LoginParamsType } from '@/services/login';
-import { ConnectState } from '@/models/connect';
+import type { Dispatch } from 'umi';
+import { connect, useIntl, FormattedMessage } from 'umi';
+import type { StateType } from '@/models/login';
+import type { LoginParamsType } from '@/services/login';
+import { getFakeCaptcha } from '@/services/login';
+import type { ConnectState } from '@/models/connect';
 import styles from './index.less';
 interface LoginProps {
   dispatch: Dispatch;
