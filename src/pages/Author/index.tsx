@@ -54,9 +54,13 @@ const Author: React.FC<AuthorStateType> = (props: AuthorStateType) => {
       <ProTable<AuthorVo>
         columns={columns}
         rowKey="id"
-        toolBarRender={() => [<Button key="button" onClick={() => setAuthorModalVisible(true)}>新建</Button>]}
+        toolBarRender={() => [
+          <Button key="button" onClick={() => setAuthorModalVisible(true)}>
+            新建
+          </Button>,
+        ]}
       />
-      {authorModalVisible && <AuthorModal visible={authorModalVisible}/>}
+      {authorModalVisible && <AuthorModal visible={authorModalVisible} />}
     </div>
   );
 };

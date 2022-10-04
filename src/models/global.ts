@@ -22,7 +22,7 @@ export interface DataObject {
   /**
    * 状态码。
    */
-  statusCode: number;
+  statusCode: string;
   /**
    * 数据。
    */
