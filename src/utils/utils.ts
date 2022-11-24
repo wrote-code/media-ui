@@ -31,8 +31,12 @@ export const getPageQuery = () => parse(window.location.href.split('?')[1]);
  * @returns 操作成功返回true,失败返回false。
  */
 export const parseResponse = (response: DataObject): boolean => {
-  if (response.statusCode !== '200' && response !== null) {
-    message.error(response.message);
+  if (response.statusCode !== '00000000' && response !== null) {
+    if (response.statusCode != null) {
+      message.error(response.statusCode + '：' + response.message);
+    } else {
+      message.error(response.message);
+    }
     return false;
   }
   return true;
