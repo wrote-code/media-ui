@@ -4,6 +4,7 @@ import { fetchSiteVoListPro } from '@/services/site';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import Button from 'antd/es/button';
+import Popconfirm from 'antd/es/popconfirm';
 import React, { useState } from 'react';
 import { connect } from 'umi';
 import NewSiteModal from './NewSiteModal';
@@ -43,11 +44,13 @@ const Site: React.FC<SiteStateType> = (props) => {
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      width: 55,
       search: false,
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
+      width: 55,
       search: false,
     },
     {
@@ -55,7 +58,11 @@ const Site: React.FC<SiteStateType> = (props) => {
       search: false,
       width: 50,
       render: (_, record: SiteVo) => {
-        return <Button onClick={() => deleteSite(record)}>删除</Button>;
+        return (
+          <Popconfirm title="确认删除" onConfirm={() => deleteSite(record)}>
+            <Button>删除</Button>
+          </Popconfirm>
+        );
       },
     },
   ];
