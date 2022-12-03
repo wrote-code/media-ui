@@ -8,8 +8,8 @@ export interface SiteStateType {
   siteList: SiteVo[];
 }
 
-interface SiteModelType {
-  name: 'site';
+export interface SiteModelType {
+  namespace: 'site';
   state: SiteStateType;
   effects: {
     fetchSiteVoListPro: Effect;
@@ -22,7 +22,7 @@ interface SiteModelType {
 }
 
 const SiteModel: SiteModelType = {
-  name: 'site',
+  namespace: 'site',
   state: {
     siteList: [],
   },
@@ -37,7 +37,7 @@ const SiteModel: SiteModelType = {
       const data = yield call(fetchSiteVoListPro, payload);
       yield put({
         type: 'setSiteList',
-        data: data,
+        payload: data.data,
       });
     },
     *deleteSite({ payload }, { call, put }) {
@@ -48,7 +48,7 @@ const SiteModel: SiteModelType = {
     },
   },
   reducers: {
-    setSiteList(state, payload) {
+    setSiteList(state, { payload }) {
       return {
         ...state,
         siteList: payload,
