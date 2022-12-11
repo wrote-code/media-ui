@@ -21,13 +21,15 @@ interface PropsType {
    */
   setCurrentPage: (page: number) => void;
   /**
-   * 点击确认按钮的回调。此方法需要设置使用
+   * 关闭弹框的回调，由父组件控制。
    */
-  onOk: () => void;
   onCancel: () => void;
+  /**
+   * 弹框可见性，由父组件控制。
+   */
   visible: boolean;
   /**
-   * 选择一行内容时的回调。回调中必须关闭弹框。
+   * 选择一行内容时的回调。回调中必须关闭弹框。由父组件控制。
    */
   onSelect: (record: SiteVo) => void;
   /**
