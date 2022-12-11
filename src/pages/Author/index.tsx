@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { connect } from 'umi';
 import AuthorModal from './AuthorModal';
 
-const Author: React.FC<AuthorStateType> = (props: AuthorStateType) => {
+const Author: React.FC<AuthorStateType> = () => {
   const [authorModalVisible, setAuthorModalVisible] = useState(false);
 
   const columns: ProColumns<AuthorVo>[] = [

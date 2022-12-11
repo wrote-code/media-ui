@@ -6,6 +6,7 @@ import type { SiteVo } from './types';
 
 export interface SiteStateType {
   siteList: SiteVo[];
+  total: number;
 }
 
 export interface SiteModelType {
@@ -25,6 +26,7 @@ const SiteModel: SiteModelType = {
   namespace: 'site',
   state: {
     siteList: [],
+    total: 0,
   },
   effects: {
     *addSite({ payload }, { call }) {
@@ -37,10 +39,10 @@ const SiteModel: SiteModelType = {
       const data = yield call(fetchSiteVoListPro, payload);
       yield put({
         type: 'setSiteList',
-        payload: data.data,
+        payload: data,
       });
     },
-    *deleteSite({ payload }, { call, put }) {
+    *deleteSite({ payload }, { call }) {
       const response = yield call(deleteSite, payload);
       if (parseResponse(response)) {
         message.info('删除成功，请刷新页面');
@@ -51,7 +53,8 @@ const SiteModel: SiteModelType = {
     setSiteList(state, { payload }) {
       return {
         ...state,
-        siteList: payload,
+        siteList: payload.data,
+        total: payload.total,
       };
     },
   },

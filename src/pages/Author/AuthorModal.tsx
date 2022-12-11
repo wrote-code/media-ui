@@ -13,8 +13,8 @@ interface PropsType {
 const AuthorModal: React.FC<PropsType> = (props) => {
   const { visible } = props;
   const [form] = Form.useForm();
-  const [selectedSite, setSelectedSite] = useState(null);
-
+  const [selectedSite, setSelectedSite] = useState({});
+  const [page, setPage] = useState(1);
   const [siteVisible, setSiteVisible] = useState(false);
 
   const onSelect = (record: SiteVo) => {
@@ -26,8 +26,8 @@ const AuthorModal: React.FC<PropsType> = (props) => {
     setSiteVisible(false);
   };
 
-  const onOk = () => {
-    setSiteVisible(false);
+  const setCurrentPage = (current: number) => {
+    setPage(current);
   };
 
   const onCancel = () => {
@@ -62,10 +62,11 @@ const AuthorModal: React.FC<PropsType> = (props) => {
         </Item>
         {siteVisible && (
           <SiteSelectorModal
+            currentPage={page}
+            setCurrentPage={setCurrentPage}
             selectedSite={selectedSite}
             onSelect={onSelect}
             visible={siteVisible}
-            onOk={onOk}
             onCancel={onCancel}
           />
         )}

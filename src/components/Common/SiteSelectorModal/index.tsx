@@ -9,6 +9,18 @@ interface PropsType {
    */
   siteList?: SiteVo[];
   /**
+   * 从redux中获取的网站总量。
+   */
+  total?: number;
+  /**
+   * 当前页，由父组件传入。
+   */
+  currentPage: number;
+  /**
+   * 当分页改变后的回调，用于将当前页返回父组件。
+   */
+  setCurrentPage: (page: number) => void;
+  /**
    * 点击确认按钮的回调。此方法需要设置使用
    */
   onOk: () => void;
@@ -23,14 +35,20 @@ interface PropsType {
    */
   selectedSite: SiteVo;
 }
+
 /**
  * 从列表中选择网站，将勾选的站点的id返回父组件（通过回调函数）。
+ *
+ * 此组件会从调用model:site/fetchSiteVoListPro来获取网站清单，默认情况下一次获取5个。目前
+ * 无法更改此默认值。
+ *
  * @param props 属性
  * @returns 选择框
  */
 const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
-  const { siteList } = props;
+  const { siteList, total, currentPage, setCurrentPage } = props;
+
   useEffect(() => {
     dispatch({
       type: 'site/fetchSiteVoListPro',
@@ -38,8 +56,8 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         filter: {},
         sort: {},
         params: {
-          current: 1,
-          pageSize: 10,
+          current: currentPage,
+          pageSize: 5,
         },
       },
     });
@@ -49,6 +67,21 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     type: 'radio',
     onSelect: props.onSelect,
     selectedRowKeys: props.selectedSite == null ? [] : [props.selectedSite.id],
+  };
+
+  const onPageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page);
+    dispatch({
+      type: 'site/fetchSiteVoListPro',
+      payload: {
+        filter: {},
+        sort: {},
+        params: {
+          current: page,
+          pageSize: pageSize,
+        },
+      },
+    });
   };
 
   const columns: any = [
@@ -62,18 +95,24 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     },
   ];
   return (
-    <Modal
-      title="请选择网站"
-      onOk={props.onOk}
-      visible={props.visible}
-      onCancel={props.onCancel}
-      footer={null}
-    >
-      <Table rowSelection={rowSelection} rowKey="id" columns={columns} dataSource={siteList} />
+    <Modal title="请选择网站" visible={props.visible} onCancel={props.onCancel} footer={null}>
+      <Table
+        pagination={{
+          current: currentPage,
+          pageSize: 5,
+          total,
+          onChange: onPageChange,
+        }}
+        rowSelection={rowSelection}
+        rowKey="id"
+        columns={columns}
+        dataSource={siteList}
+      />
     </Modal>
   );
 };
 
 export default connect(({ site }: any) => ({
   siteList: site.siteList,
+  total: site.total,
 }))(SiteSelectorModal);
