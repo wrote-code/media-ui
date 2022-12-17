@@ -3,16 +3,24 @@ import type { AuthorVo } from '@/models/types';
 import { queryList } from '@/services/author';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import Button from 'antd/es/button';
+import { Button, Popconfirm } from 'antd';
 import React, { useState } from 'react';
-import { connect } from 'umi';
+import { connect, useDispatch } from 'umi';
 import AuthorModal from './AuthorModal';
 
 const Author: React.FC<AuthorStateType> = () => {
   const [authorModalVisible, setAuthorModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     setAuthorModalVisible(false);
+  };
+
+  const deleteAuthor = (_dom: any, record: AuthorVo, index: number) => {
+    dispatch({
+      type: 'author/deleteAuthor',
+      payload: record.id,
+    });
   };
 
   const columns: ProColumns<AuthorVo>[] = [
@@ -43,8 +51,12 @@ const Author: React.FC<AuthorStateType> = () => {
       dataIndex: 'option',
       title: '操作',
       width: '30',
-      render: () => {
-        return <Button>删除</Button>;
+      render: (_dom, record, index) => {
+        return (
+          <Popconfirm title="确认删除" onConfirm={() => deleteAuthor(_dom, record, index)}>
+            <Button>删除</Button>
+          </Popconfirm>
+        );
       },
     },
   ];

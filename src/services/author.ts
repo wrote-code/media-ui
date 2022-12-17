@@ -15,7 +15,7 @@ export async function addAuthor(data: any) {
 }
 
 export async function deleteAuthor(data: any) {
-  return request('/api/author/deleteAuthor' + data.id, {
+  return request('/api/author/delete?id=' + data, {
     data: data,
     method: 'GET',
   });
