@@ -33,7 +33,7 @@ interface PropsType {
    */
   onSelect: (record: SiteVo) => void;
   /**
-   * 当前选择的网站。第一次打开时为空。
+   * 当前选择的网站。第一次打开时为空。由父组件控制。
    */
   selectedSite: SiteVo;
 }
