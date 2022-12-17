@@ -1,6 +1,6 @@
 import type { AuthorVo } from './types';
 import type { Effect, Reducer } from 'umi';
-import { deleteAuthor, fetchAuthorList } from '@/services/author';
+import { addAuthor, deleteAuthor, queryList } from '@/services/author';
 import { parseResponse } from '@/utils/utils';
 import { message } from 'antd';
 
@@ -12,8 +12,9 @@ export interface AuthorModelType {
   namespace: 'author';
   state: AuthorStateType;
   effects: {
-    fetchAuthorList: Effect;
+    queryList: Effect;
     deleteAuthor: Effect;
+    addAuthor: Effect;
   };
   reducers: {
     setAuthorList: Reducer<AuthorStateType>;
@@ -26,8 +27,8 @@ const AuthorModel: AuthorModelType = {
     authorList: [],
   },
   effects: {
-    *fetchAuthorList({ payload }, { call, put }) {
-      const response = yield call(fetchAuthorList, payload);
+    *queryList({ payload }, { call, put }) {
+      const response = yield call(queryList, payload);
       if (parseResponse(response)) {
         yield put({
           type: 'setAuthorList',
@@ -39,6 +40,12 @@ const AuthorModel: AuthorModelType = {
       const response = yield call(deleteAuthor, payload);
       if (parseResponse(response)) {
         message.info('删除成功，请刷新页面');
+      }
+    },
+    *addAuthor({ payload }, { call }) {
+      const response = yield call(addAuthor, payload);
+      if (parseResponse(response)) {
+        message.info('添加成功，请刷新页面');
       }
     },
   },

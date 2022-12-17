@@ -2,20 +2,25 @@ import SiteSelectorModal from '@/components/Common/SiteSelectorModal';
 import type { SiteVo } from '@/models/types';
 import { Form, Input, Modal } from 'antd';
 import React, { useState } from 'react';
-import { connect } from 'umi';
+import { connect, useDispatch } from 'umi';
 
 const { Item } = Form;
 
 interface PropsType {
   visible: boolean;
+  /**
+   * 关闭弹框的回调，即onOk和onCancel。
+   */
+  closeModal: () => void;
 }
 
 const AuthorModal: React.FC<PropsType> = (props) => {
-  const { visible } = props;
+  const { visible, closeModal } = props;
   const [form] = Form.useForm();
   const [selectedSite, setSelectedSite] = useState({});
   const [page, setPage] = useState(1);
   const [siteVisible, setSiteVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const onSelect = (record: SiteVo) => {
     setSelectedSite(record);
@@ -34,8 +39,29 @@ const AuthorModal: React.FC<PropsType> = (props) => {
     setSiteVisible(false);
   };
 
+  const submitAuthorData = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        dispatch({
+          type: 'author/addAuthor',
+          payload: {
+            ...values,
+          },
+        });
+        closeModal();
+      })
+      .catch((errors) => {
+        console.log(errors);
+      });
+  };
+
+  const closeAuthorModal = () => {
+    closeModal();
+  };
+
   return (
-    <Modal visible={visible} title="新增作者">
+    <Modal visible={visible} title="新增作者" onOk={submitAuthorData} onCancel={closeAuthorModal}>
       <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} form={form}>
         <Item
           name="username"
@@ -54,10 +80,10 @@ const AuthorModal: React.FC<PropsType> = (props) => {
         <Item name="homepage" label="用户主页">
           <Input />
         </Item>
-        <Item name="siteName" label="网站">
+        <Item name="siteName" label="网站" rules={[{ required: true }]}>
           <Input onClick={() => setSiteVisible(true)} />
         </Item>
-        <Item name="siteId" label="网站" hidden={true}>
+        <Item name="siteId" label="网站" hidden={true} rules={[{ required: true }]}>
           <Input />
         </Item>
         {siteVisible && (
