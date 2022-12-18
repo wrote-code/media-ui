@@ -45,7 +45,7 @@ const SiteModel: SiteModelType = {
     *deleteSite({ payload }, { call }) {
       const response = yield call(deleteSite, payload);
       if (parseResponse(response)) {
-        message.info('删除成功，请刷新页面');
+        message.success('删除成功，请刷新页面');
       }
     },
   },

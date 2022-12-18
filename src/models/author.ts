@@ -39,7 +39,7 @@ const AuthorModel: AuthorModelType = {
     *deleteAuthor({ payload }, { call }) {
       const response = yield call(deleteAuthor, payload);
       if (parseResponse(response)) {
-        message.info('删除成功，请刷新页面');
+        message.success('删除成功，请刷新页面');
       }
     },
     *addAuthor({ payload }, { call }) {

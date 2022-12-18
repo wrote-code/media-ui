@@ -44,7 +44,7 @@ const Author: React.FC<AuthorStateType> = () => {
   const columns: ProColumns<AuthorVo>[] = [
     {
       dataIndex: 'userId',
-      title: '用户id',
+      title: '用户标识',
       hideInSearch: true,
     },
     {

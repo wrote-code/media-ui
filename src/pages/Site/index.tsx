@@ -6,18 +6,18 @@ import ProTable from '@ant-design/pro-table';
 import Button from 'antd/es/button';
 import Popconfirm from 'antd/es/popconfirm';
 import React, { useState } from 'react';
-import { connect } from 'umi';
+import { connect, useDispatch } from 'umi';
 import NewSiteModal from './NewSiteModal';
 
 const Site: React.FC<SiteStateType> = (props) => {
   const [newSiteModalVisible, setNewSiteModalVisible] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleCancel = () => {
     setNewSiteModalVisible(false);
   };
 
   const deleteSite = (record: SiteVo) => {
-    const { dispatch } = props;
     dispatch({
       type: 'site/deleteSite',
       payload: {
@@ -27,11 +27,6 @@ const Site: React.FC<SiteStateType> = (props) => {
   };
 
   const columns: ProColumns<SiteVo>[] = [
-    {
-      dataIndex: 'index',
-      valueType: 'indexBorder',
-      width: 30,
-    },
     {
       title: '网站名称',
       dataIndex: 'siteName',
