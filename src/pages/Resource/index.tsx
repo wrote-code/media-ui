@@ -4,21 +4,15 @@ import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import React from 'react';
-import type { Dispatch } from 'umi';
 import { connect } from 'umi';
+import ResourceFormModal from './ResourceFormModal';
 
 interface ResourceProps {
-  dispatch: Dispatch;
   resourceList: ResourceVo[];
 }
 
-const Resource: React.FC<ResourceProps> = (props) => {
+const Resource: React.FC<ResourceProps> = () => {
   const columns: ProColumns<ResourceVo>[] = [
-    {
-      dataIndex: 'id',
-      valueType: 'indexBorder',
-      width: 20,
-    },
     {
       title: '文件名',
       dataIndex: 'filename',
@@ -63,20 +57,15 @@ const Resource: React.FC<ResourceProps> = (props) => {
     },
   ];
 
-  const fetchResourceListDemo = () => {
-    const { dispatch } = props;
-    dispatch({
-      type: 'resource/fetchResourceList',
-    });
-  };
-
   return (
     <div>
       <ProTable<ResourceVo>
+        rowKey="id"
         columns={columns}
         request={async (params, sorter, filter) =>
           fetchResourceListRequest({ params, sorter, filter })
         }
+        toolBarRender={() => <ResourceFormModal />}
       />
     </div>
   );
