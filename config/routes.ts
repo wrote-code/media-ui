@@ -21,13 +21,14 @@
         routes: [
           {
             path: '/',
-            redirect: '/welcome',
+            redirect: '/resource',
           },
           {
             path: '/welcome',
             name: 'welcome',
             icon: 'smile',
             component: './Welcome',
+            hideInMenu: true,
           },
           {
             path: '/resource',
@@ -62,12 +63,6 @@
                 authority: ['admin'],
               },
             ],
-          },
-          {
-            name: 'list.table-list',
-            icon: 'table',
-            path: '/list',
-            component: './ListTableList',
           },
           {
             component: './404',
