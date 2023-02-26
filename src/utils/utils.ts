@@ -1,7 +1,10 @@
+import type { DataObject } from '@/models/global';
+import { message } from 'antd';
 import { parse } from 'querystring';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
-const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
+const reg =
+  /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/;
 
 export const isUrl = (path: string): boolean => reg.test(path);
 
@@ -22,3 +25,19 @@ export const isAntDesignProOrDev = (): boolean => {
 };
 
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
+/**
+ * 解析相应数据，当响应代码不是200且message不为空时，显示message。
+ * @param response 响应数据
+ * @returns 操作成功返回true,失败返回false。
+ */
+export const parseResponse = (response: DataObject): boolean => {
+  if (response.statusCode !== '00000000' && response !== null) {
+    if (response.statusCode != null) {
+      message.error(response.statusCode + '：' + response.message);
+    } else {
+      message.error(response.message);
+    }
+    return false;
+  }
+  return true;
+};

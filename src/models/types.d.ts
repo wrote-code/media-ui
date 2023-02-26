@@ -1,3 +1,10 @@
+/**
+ * 此类型用于connect使用，避免mapStateToProps报错。
+ */
+export interface DefaultStateType {
+  working: boolean;
+}
+
 export interface AuthorVo {
   /**
    * ID
@@ -15,9 +22,9 @@ export interface AuthorVo {
   username: string;
 
   /**
-   * 注册站点ID
+   * 注册站点
    */
-  site: string;
+  site: SiteVo;
 
   /**
    * 主页
@@ -108,7 +115,7 @@ export interface ResourceVo {
   /**
    * 作者。
    */
-  author: AuthorVo;
+  authorVo: AuthorVo;
 
   /**
    * 专辑。
@@ -180,7 +187,7 @@ export interface ResourceTypeVo {
   updateTime: Date;
 }
 
-export interface Site {
+export interface SiteVo {
   /**
    * ID
    */

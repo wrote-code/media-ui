@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "build",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build",
+      "detail": "umi build"
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": [],
+      "label": "npm: start",
+      "detail": "umi dev"
+    },
+    {
+      "type": "npm",
+      "script": "analyze",
+      "problemMatcher": [],
+      "label": "npm: analyze",
+      "detail": "cross-env ANALYZE=1 umi build"
+    }
+  ]
+}

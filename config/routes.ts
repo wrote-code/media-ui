@@ -21,13 +21,32 @@
         routes: [
           {
             path: '/',
-            redirect: '/welcome',
+            redirect: '/resource',
           },
           {
             path: '/welcome',
             name: 'welcome',
             icon: 'smile',
             component: './Welcome',
+            hideInMenu: true,
+          },
+          {
+            path: '/resource',
+            name: '资源管理',
+            icon: 'smile',
+            component: './Resource',
+          },
+          {
+            path: '/site',
+            name: '站点管理',
+            icon: 'smile',
+            component: './Site',
+          },
+          {
+            path: '/author',
+            name: '创作人员',
+            icon: 'smile',
+            component: './Author',
           },
           {
             path: '/admin',
@@ -44,12 +63,6 @@
                 authority: ['admin'],
               },
             ],
-          },
-          {
-            name: 'list.table-list',
-            icon: 'table',
-            path: '/list',
-            component: './ListTableList',
           },
           {
             component: './404',
