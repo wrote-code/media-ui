@@ -7,6 +7,8 @@ import routes from './routes';
 const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
+  base: '/api',
+  publicPath: process.env.NODE_ENV === 'production' ? '/api/' : '/',
   mfsu: {},
   hash: true,
   antd: {},
