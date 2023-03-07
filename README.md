@@ -1,125 +1,61 @@
-English | [简体中文](./README.zh-CN.md) | [Русский](./README.ru-RU.md) | [Türkçe](./README.tr-TR.md) | [日本語](./README.ja-JP.md) | [Français](./README.fr-FR.md) | [Português](./README.pt-BR.md) | [العربية](./README.ar-DZ.md)
+# media
 
-<h1 align="center">Ant Design Pro</h1>
+media是一个管理本地素材的工具，可以对原始素材进行多维度分类，包括作者、网站、专辑（同义场景：收藏、合集、列表等）、标签。为了避免修改原始素材，目前所有资源都由用户手动录入。
 
-<div align="center">
+**注意事项：目前增加资源时并没有强制关联作者，因此尽量不要使用增加资源的功能。**
 
-An out-of-box UI solution for enterprise applications as a React boilerplate.
+## 简介
 
-[![Build Status](https://dev.azure.com/ant-design/ant-design-pro/_apis/build/status/ant-design.ant-design-pro?branchName=master)](https://dev.azure.com/ant-design/ant-design-pro/_build/latest?definitionId=1?branchName=master) ![Github Action](https://github.com/ant-design/ant-design-pro/workflows/Node%20CI/badge.svg) ![Deploy](https://github.com/ant-design/ant-design-pro/workflows/Deploy%20CI/badge.svg) [![Dependencies](https://img.shields.io/david/ant-design/ant-design-pro.svg)](https://david-dm.org/ant-design/ant-design-pro) [![DevDependencies](https://img.shields.io/david/dev/ant-design/ant-design-pro.svg)](https://david-dm.org/ant-design/ant-design-pro?type=dev)
+### 资源、作者和网站的关系
 
-[![Gitter](https://img.shields.io/gitter/room/ant-design/pro-english.svg?style=flat-square&logoWidth=20&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjEyMzUiIGhlaWdodD0iNjUwIiB2aWV3Qm94PSIwIDAgNzQxMCAzOTAwIj4NCjxyZWN0IHdpZHRoPSI3NDEwIiBoZWlnaHQ9IjM5MDAiIGZpbGw9IiNiMjIyMzQiLz4NCjxwYXRoIGQ9Ik0wLDQ1MEg3NDEwbTAsNjAwSDBtMCw2MDBINzQxMG0wLDYwMEgwbTAsNjAwSDc0MTBtMCw2MDBIMCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMwMCIvPg0KPHJlY3Qgd2lkdGg9IjI5NjQiIGhlaWdodD0iMjEwMCIgZmlsbD0iIzNjM2I2ZSIvPg0KPGcgZmlsbD0iI2ZmZiI%2BDQo8ZyBpZD0iczE4Ij4NCjxnIGlkPSJzOSI%2BDQo8ZyBpZD0iczUiPg0KPGcgaWQ9InM0Ij4NCjxwYXRoIGlkPSJzIiBkPSJNMjQ3LDkwIDMxNy41MzQyMzAsMzA3LjA4MjAzOSAxMzIuODczMjE4LDE3Mi45MTc5NjFIMzYxLjEyNjc4MkwxNzYuNDY1NzcwLDMwNy4wODIwMzl6Ii8%2BDQo8dXNlIHhsaW5rOmhyZWY9IiNzIiB5PSI0MjAiLz4NCjx1c2UgeGxpbms6aHJlZj0iI3MiIHk9Ijg0MCIvPg0KPHVzZSB4bGluazpocmVmPSIjcyIgeT0iMTI2MCIvPg0KPC9nPg0KPHVzZSB4bGluazpocmVmPSIjcyIgeT0iMTY4MCIvPg0KPC9nPg0KPHVzZSB4bGluazpocmVmPSIjczQiIHg9IjI0NyIgeT0iMjEwIi8%2BDQo8L2c%2BDQo8dXNlIHhsaW5rOmhyZWY9IiNzOSIgeD0iNDk0Ii8%2BDQo8L2c%2BDQo8dXNlIHhsaW5rOmhyZWY9IiNzMTgiIHg9Ijk4OCIvPg0KPHVzZSB4bGluazpocmVmPSIjczkiIHg9IjE5NzYiLz4NCjx1c2UgeGxpbms6aHJlZj0iI3M1IiB4PSIyNDcwIi8%2BDQo8L2c%2BDQo8L3N2Zz4%3D)](https://gitter.im/ant-design/pro-english?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Join the chat at https://gitter.im/ant-design/ant-design-pro](https://img.shields.io/gitter/room/ant-design/ant-design-pro.svg?style=flat-square&logoWidth=20&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjkwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAzMCAyMCI%2BDQo8ZGVmcz4NCjxwYXRoIGlkPSJzIiBkPSJNMCwtMSAwLjU4Nzc4NSwwLjgwOTAxNyAtMC45NTEwNTcsLTAuMzA5MDE3SDAuOTUxMDU3TC0wLjU4Nzc4NSwwLjgwOTAxN3oiIGZpbGw9IiNmZmRlMDAiLz4NCjwvZGVmcz4NCjxyZWN0IHdpZHRoPSIzMCIgaGVpZ2h0PSIyMCIgZmlsbD0iI2RlMjkxMCIvPg0KPHVzZSB4bGluazpocmVmPSIjcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNSw1KSBzY2FsZSgzKSIvPg0KPHVzZSB4bGluazpocmVmPSIjcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAsMikgcm90YXRlKDIzLjAzNjI0MykiLz4NCjx1c2UgeGxpbms6aHJlZj0iI3MiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyLDQpIHJvdGF0ZSg0NS44Njk4OTgpIi8%2BDQo8dXNlIHhsaW5rOmhyZWY9IiNzIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMiw3KSByb3RhdGUoNjkuOTQ1Mzk2KSIvPg0KPHVzZSB4bGluazpocmVmPSIjcyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAsOSkgcm90YXRlKDIwLjY1OTgwOCkiLz4NCjwvc3ZnPg%3D%3D)](https://gitter.im/ant-design/ant-design-pro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![Build With Umi](https://img.shields.io/badge/build%20with-umi-028fe4.svg?style=flat-square)](http://umijs.org/) ![](https://badgen.net/badge/icon/Ant%20Design?icon=https://gw.alipayobjects.com/zos/antfincdn/Pp4WPgVDB3/KDpgvguMpGfqaHPjicRK.svg&label)
+作为一个分类工具，我们定义了两个基本维度作者和网站。一个资源必须关联一个作者，一个作者必须关联一个网站。资源可以是图片，也可以是视频，也可以是游戏，而作者可以看作网站的用户。目前一个资源只能关联一个作者，一个作者只能关联一个网站，暂不支持一个作者关联多个网站和一个资源关联多个作者。这两种关联方式对应的场景是多平台投稿，但是一个网站可以关联多个作者。未来的版本中会加入大小号功能，加入大小号功能后，可以实现多平台投稿场景。
 
-![](https://user-images.githubusercontent.com/8186664/44953195-581e3d80-aec4-11e8-8dcb-54b9db38ec11.png)
+### 专辑和标签
 
-</div>
+在网站中，我们通常可以将喜欢的作品或资源收藏下来，不同类型的网站对此操作有不同的描述，在视频网站中是收藏和合集，在音乐软件中是专辑和播放列表，本系统将这些内容都看作专辑。一个专辑是按某个维度分类后的资源合集，一个资源可以根据分类维度不同而关联多个专辑。
 
-- Preview: http://preview.pro.ant.design
-- Home Page: http://pro.ant.design
-- Documentation: http://pro.ant.design/docs/getting-started
-- ChangeLog: http://pro.ant.design/docs/changelog
-- FAQ: http://pro.ant.design/docs/faq
-- Mirror Site in China: http://ant-design-pro.gitee.io
+标签是另一种常见分类方式。标签是一种无法拆分出子标签的原子细分方式，用来描述资源的某一个特点。为了准确描述一个资源，你需要对一个资源打上多个标签。
 
-## 5.0 is ready for trial! 🎉🎉🎉
+## 为什么会开发这么一个工具
 
-[Try Ant Design Pro 5.0.0](https://beta-pro.ant.design/docs/upgrade-v5-cn)
+作为一个收集达人，我收集的资源包括但不限于网络视频、截图、图片，有些资源可能会因为某些原因被删，比如被举报或者侵权，这时候只有存在本地的资源才是安全的，但本地有没有原始网站的分类方式。我去年就找到了一个优秀的分类工具[billfish](https://www.billfish.cn/)，除此之外，还用过[Adobe bridge](https://www.adobe.com/cn/products/bridge.html)。这两个软件的目标用户是从事设计专业的用户，包括但不限于剪辑、摄影等。
 
-## Translation Recruitment :loudspeaker:
+### billfish
 
-We need your help: https://github.com/ant-design/ant-design-pro/issues/120
+在使用 billfish（我目前用过的最新的版本是v2.25.03）的时候，我发现 billfish 不能按作者和专辑进行分类，他只有目录分类和标签分类。我自己的应用场景中，除了必需的标签分类，还需要进行作者分类，因此 billfish 只能满足我一部分的需求，但是不能满足全部需求。此外，由于我的素材以视频为主，且有很多半小时以上的视频，在使用 billfish 导入时，由于 billfish 会解析视频文件，因此导入速度特别慢，且全部素材导入后，billfish 的数据库会变得非常庞大，达到 1GB 以上。
 
-## Features
+对我来说 billfish 的另一个不好的地方是没有完全的绿色版。经过我测试，如果在本机装安装版，移动盘上装一个绿色版，那么启动时是能识别到移动盘上有一个素材库的，这应该是写了一些内容，按理说本机装的 billfish 是完全感知不到移动硬盘上的素材库的。
 
-- :bulb: **TypeScript**: A language for application-scale JavaScript
-- :scroll: **Blocks**: Build page with block template
-- :gem: **Neat Design**: Follow [Ant Design specification](http://ant.design/)
-- :triangular_ruler: **Common Templates**: Typical templates for enterprise applications
-- :rocket: **State of The Art Development**: Newest development stack of React/umi/dva/antd
-- :iphone: **Responsive**: Designed for variable screen sizes
-- :art: **Theming**: Customizable theme with simple config
-- :globe_with_meridians: **International**: Built-in i18n solution
-- :gear: **Best Practices**: Solid workflow to make your code healthy
-- :1234: **Mock development**: Easy to use mock development solution
-- :white_check_mark: **UI Test**: Fly safely with unit and e2e tests
+### adobe bridge
 
-## Templates
+不用说，很牛逼，但是相对我的需求来说，这个软件太重了。
+
+media 为了解决以上问题，所有数据都放在指定目录下，可以随意迁移，同时各素材库完全无法感知对方的存在。
+
+## 版本管理
+
+- `master`：主分支，当代码稳定后会合并到 `master`。当有新功能发布且稳定后，会在 `master` 打标签作为发布版本。
+- `dev-*`：开发分支。主开发分支是 `dev`，如果有更多功能，就加后缀。已定义的固定开发分只有：
+- `pre-release`：预发布分支。所有功能代码都会先合并到此分支，稳定后才会合并到 `master` 分支。
+
+总结：`master` 上是稳定代码，`pre-release` 上是稳定代码，但可能还需要一些改动。
+
+## 使用及启动
+
+本仓库是本系统的后台，使用以下技术栈（依赖）：
+
+- antd-pro
+
+### 打包及启动
+
+代码拉到本地后，运行以下命令：
 
 ```
-- Dashboard
-  - Analytic
-  - Monitor
-  - Workspace
-- Form
-  - Basic Form
-  - Step Form
-  - Advanced From
-- List
-  - Standard Table
-  - Standard List
-  - Card List
-  - Search List (Project/Applications/Article)
-- Profile
-  - Simple Profile
-  - Advanced Profile
-- Account
-  - Account Center
-  - Account Settings
-- Result
-  - Success
-  - Failed
-- Exception
-  - 403
-  - 404
-  - 500
-- User
-  - Login
-  - Register
-  - Register Result
+yarn install
+npm run build
 ```
 
-## Usage
+之后将编译产物复制到[后台代码](https://github.com/wrote-code/media)的 `src/main/resources/static` 下，然后参考 [打包流程](https://github.com/wrote-code/media/blob/master/readme.md#%E6%89%93%E5%8C%85%E5%8F%8A%E5%90%AF%E5%8A%A8) 进行打包即可。
 
-### Use bash
 
-```bash
-$ mkdir <your-project-name>
-$ cd <your-project-name>
-$ yarn create umi  # or npm create umi
 
-# Choose ant-design-pro:
- Select the boilerplate type (Use arrow keys)
-❯ ant-design-pro  - Create project with an layout-only ant-design-pro boilerplate, use together with umi block.
-  app             - Create project with a simple boilerplate, support typescript.
-  block           - Create a umi block.
-  library         - Create a library with umi.
-  plugin          - Create a umi plugin.
-
-$ git init
-$ npm install
-$ npm start         # visit http://localhost:8000
-```
-
-### Use Gitpod
-
-Open the project in Gitpod (free online dev environment for GitHub) and start coding immediately.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ant-design/ant-design-pro)
-
-More instructions at [documentation](http://pro.ant.design/docs/getting-started).
-
-## Browsers support
-
-Modern browsers and IE11.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
-| --- | --- | --- | --- | --- |
-| IE11, Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
-
-## Contributing
-
-Any type of contribution is welcome, here are some examples of how you may contribute to this project:
-
-- Use Ant Design Pro in your daily work.
-- Submit [issues](http://github.com/ant-design/ant-design-pro/issues) to report bugs or ask questions.
-- Propose [pull requests](http://github.com/ant-design/ant-design-pro/pulls) to improve our code.
