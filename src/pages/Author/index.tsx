@@ -96,6 +96,7 @@ const Author: React.FC<AuthorStateType> = () => {
     <div>
       <ProTable<AuthorVo>
         formRef={formRef}
+        defaultSize="small"
         columns={columns}
         rowKey="id"
         request={async (params, sorter, filter) => queryList({ params, sorter, filter })}

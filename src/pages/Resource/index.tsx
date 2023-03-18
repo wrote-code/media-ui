@@ -61,6 +61,7 @@ const Resource: React.FC<ResourceProps> = () => {
     <div>
       <ProTable<ResourceVo>
         rowKey="id"
+        defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) =>
           fetchResourceListRequest({ params, sorter, filter })
