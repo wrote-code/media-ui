@@ -66,6 +66,7 @@ const Site: React.FC<SiteStateType> = (props) => {
     <div>
       <ProTable<SiteVo>
         rowKey="id"
+        defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) => fetchSiteVoListPro({ params, sorter, filter })}
         toolBarRender={() => (
