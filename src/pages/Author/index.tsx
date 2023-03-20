@@ -1,4 +1,4 @@
-import SiteSelectorModal from '@/components/Common/SiteSelectorModal';
+import SiteSelectorModal from '@/components/Common/SelectorModal/SiteSelectorModal';
 import type { AuthorStateType } from '@/models/author';
 import type { AuthorVo, SiteVo } from '@/models/types';
 import { queryList } from '@/services/author';

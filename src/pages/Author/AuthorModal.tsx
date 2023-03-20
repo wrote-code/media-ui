@@ -1,4 +1,4 @@
-import SiteSelectorModal from '@/components/Common/SiteSelectorModal';
+import SiteSelectorModal from '@/components/Common/SelectorModal/SiteSelectorModal';
 import type { SiteVo } from '@/models/types';
 import { Form, Input, Modal } from 'antd';
 import React, { useState } from 'react';
