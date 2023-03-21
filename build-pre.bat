@@ -1,4 +1,4 @@
-call git checkout master
+call git checkout pre-release
 call git checkout .
 call git pull
 call git branch -vv
