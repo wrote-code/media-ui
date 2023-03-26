@@ -1,6 +1,8 @@
-import type { ResourceVo } from '@/models/types';
+import AuthorSelectorModal from '@/components/Common/SelectorModal/AuthorSelectorModal';
+import type { AuthorVo, ResourceVo } from '@/models/types';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import { Button, Col, Form, Row } from 'antd';
+import { useState } from 'react';
 import React from 'react';
 
 interface FormType extends ResourceVo {
@@ -23,7 +25,15 @@ interface FormType extends ResourceVo {
 }
 
 const ResourceFormModal: React.FC<FormType> = () => {
+  const [authorVisible, setAuthorVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedAuthor, setSelectedAuthor] = useState({});
   const [form] = Form.useForm<FormType>();
+
+  const onSelect = (author: AuthorVo) => {
+    setSelectedAuthor(author);
+    setAuthorVisible(false);
+  };
 
   return (
     <ModalForm title="添加资源" trigger={<Button>新建</Button>} form={form} width={500}>
@@ -37,8 +47,16 @@ const ResourceFormModal: React.FC<FormType> = () => {
           <ProFormText label="专辑名称" name="albumName" rules={[{ max: 90 }]} />
         </Col>
       </Row>
-      {/* <ProFormText name="authorId" rules={[{ required: true, max: 19 }]} hidden={true} />
-      <ProFormText name="albumId" rules={[{ max: 19 }]} hidden={true} /> */}
+      {authorVisible && (
+        <AuthorSelectorModal
+          currentPage={currentPage}
+          selectedAuthor={selectedAuthor}
+          visible={authorVisible}
+          onCancel={() => setAuthorVisible(false)}
+          onSelect={onSelect}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </ModalForm>
   );
 };
