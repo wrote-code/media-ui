@@ -1,14 +1,19 @@
+import type { SelectModalType } from '@/models/common/modal';
 import type { AuthorVo } from '@/models/types';
-import type { SelectAuthorStateType } from '@/models/common/selectorModal/selectAuthor';
-import React from 'react';
-import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, Table } from 'antd';
+import type { ColumnsType } from 'antd/lib/table';
+import React, { useEffect } from 'react';
+import { connect, useDispatch } from 'umi';
 
 interface PropsType {
   /**
    * 作者清单。
    */
   authorList: AuthorVo[];
+  /**
+   * 作者总量。
+   */
+  total: number;
   /**
    * 已选择的作者。
    */
@@ -36,10 +41,44 @@ interface PropsType {
 }
 
 const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
-  return <Modal onCancel={props.onCancel} onOk={props.onSelect} visible={props.visible} />;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: 'modal/selectAuthor/queryAuthorList',
+      payload: {
+        filter: {},
+        params: {
+          current: 1,
+          pageSize: 5,
+        },
+        sort: {},
+      },
+    });
+  });
+
+  const columns: ColumnsType<AuthorVo> = [
+    {
+      title: '用户id',
+      dataIndex: 'userId',
+    },
+    {
+      title: '用户名',
+      dataIndex: 'username',
+    },
+    {
+      title: '网站',
+      dataIndex: 'site.siteName',
+    },
+  ];
+
+  return (
+    <Modal onCancel={props.onCancel} onOk={() => props.onSelect} visible={props.visible}>
+      <Table columns={columns} dataSource={props.authorList} size="small" key="id" />
+    </Modal>
+  );
 };
 
-export default connect(({ authorList, total }: SelectAuthorStateType) => ({
+export default connect(({ 'modal/selectAuthor': { authorList, total } }: SelectModalType) => ({
   authorList: authorList,
   total: total,
 }))(AuthorSelectorModal);

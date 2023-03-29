@@ -1,7 +1,6 @@
 import type { AuthorVo } from '@/models/types';
-import type { Effect, Reducer } from 'umi';
 import { queryAuthorList } from '@/services/selectorModal';
-import { parseResponse } from '@/utils/utils';
+import type { Effect, Reducer } from 'umi';
 
 export interface SelectAuthorStateType {
   /**
@@ -44,29 +43,27 @@ const SelectAuthorModel: SelectAuthorModelType = {
   effects: {
     *queryAuthorList({ payload }, { call, put }) {
       const data = yield call(queryAuthorList, payload);
-      if (parseResponse(data)) {
-        yield put({
-          type: 'setAuthorList',
-          payload: data.data,
-        });
-        yield put({
-          type: 'setTotal',
-          payload: data.total,
-        });
-      }
+      yield put({
+        type: 'setAuthorList',
+        payload: data.data,
+      });
+      yield put({
+        type: 'setTotal',
+        payload: data.total,
+      });
     },
   },
   reducers: {
     setAuthorList(state: SelectAuthorStateType, { payload }) {
       return {
         ...state,
-        authorList: payload.data,
+        authorList: payload,
       };
     },
     setTotal(state: SelectAuthorModelType, { payload }) {
       return {
         ...state,
-        total: payload.total,
+        total: payload,
       };
     },
   },

@@ -40,7 +40,7 @@ const ResourceFormModal: React.FC<FormType> = () => {
       <ProFormText label="资源名称" name="filename" rules={[{ required: true, max: 90 }]} />
       <ProFormText label="资源目录" name="dir" rules={[{ required: true, max: 900 }]} />
       <Row gutter={16}>
-        <Col span={12}>
+        <Col span={12} onClick={() => setAuthorVisible(true)}>
           <ProFormText label="作者姓名" name="authorName" rules={[{ required: true, max: 90 }]} />
         </Col>
         <Col span={12}>
