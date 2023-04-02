@@ -1,6 +1,6 @@
 {
   "name": "media",
-  "version": "0.0.5-alpha",
+  "version": "0.0.5-alpha-pre",
   "private": true,
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
