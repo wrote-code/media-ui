@@ -30,6 +30,7 @@ const Site: React.FC<SiteStateType> = (props) => {
     {
       title: '网站名称',
       dataIndex: 'siteName',
+      width: 300,
     },
     {
       title: '网站地址',
@@ -39,13 +40,13 @@ const Site: React.FC<SiteStateType> = (props) => {
     {
       title: '创建时间',
       dataIndex: 'createTime',
-      width: 55,
+      width: 150,
       search: false,
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
-      width: 55,
+      width: 150,
       search: false,
     },
     {
@@ -55,7 +56,7 @@ const Site: React.FC<SiteStateType> = (props) => {
       render: (_, record: SiteVo) => {
         return (
           <Popconfirm title="确认删除" onConfirm={() => deleteSite(record)}>
-            <Button size='small'>删除</Button>
+            <Button size="small">删除</Button>
           </Popconfirm>
         );
       },
