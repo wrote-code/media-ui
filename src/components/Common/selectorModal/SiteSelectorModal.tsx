@@ -63,7 +63,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         },
       },
     });
-  }, []);
+  }, [currentPage, dispatch]);
 
   const rowSelection = {
     type: 'radio',
@@ -99,6 +99,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   return (
     <Modal title="请选择网站" visible={props.visible} onCancel={props.onCancel} footer={null}>
       <Table
+        size="small"
         pagination={{
           current: currentPage,
           pageSize: 5,

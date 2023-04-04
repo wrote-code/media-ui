@@ -45,7 +45,7 @@ const AuthorModel: AuthorModelType = {
     *addAuthor({ payload }, { call }) {
       const response = yield call(addAuthor, payload);
       if (parseResponse(response)) {
-        message.info('添加成功，请刷新页面');
+        message.success('添加成功，请刷新页面');
       }
     },
   },

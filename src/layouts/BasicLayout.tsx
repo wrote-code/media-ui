@@ -69,9 +69,15 @@ const defaultFooterDom = (
         blankTarget: true,
       },
       {
-        key: 'github',
-        title: <GithubOutlined />,
-        href: 'https://github.com/ant-design/ant-design-pro',
+        key: '前台地址',
+        title: '前台地址',
+        href: 'https://github.com/wrote-code/media-ui',
+        blankTarget: true,
+      },
+      {
+        key: '后台地址',
+        title: '后台地址',
+        href: 'https://github.com/wrote-code/media',
         blankTarget: true,
       },
       {
@@ -94,13 +100,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     },
   } = props;
   const menuDataRef = useRef<MenuDataItem[]>([]);
-  useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
-    }
-  }, []);
   /**
    * init variables
    */

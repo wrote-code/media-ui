@@ -36,3 +36,7 @@ screenshot
 .eslintcache
 
 build
+
+# 其他
+todo.txt
+dev-build.bat
