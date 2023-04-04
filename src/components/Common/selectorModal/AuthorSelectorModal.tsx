@@ -1,7 +1,7 @@
 import type { SelectModalType } from '@/models/common/modal';
 import type { AuthorVo } from '@/models/types';
 import { Modal, Table } from 'antd';
-import type { ColumnsType } from 'antd/lib/table';
+import type { ColumnsType, TablePaginationConfig } from 'antd/lib/table';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
 
@@ -42,6 +42,7 @@ interface PropsType {
 
 const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
+  const { selectedAuthor, total, currentPage, setCurrentPage } = props;
   useEffect(() => {
     dispatch({
       type: 'modal/selectAuthor/queryAuthorList',
@@ -54,7 +55,13 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         sort: {},
       },
     });
-  });
+  }, [dispatch]);
+
+  const rowSelection = {
+    type: 'radio',
+    onSelect: props.onSelect,
+    selectedRowKeys: selectedAuthor == null ? [] : [selectedAuthor.id],
+  };
 
   const columns: ColumnsType<AuthorVo> = [
     {
@@ -71,9 +78,38 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     },
   ];
 
+  const onPageChange = (page) => {
+    dispatch({
+      type: 'modal/selectAuthor/queryAuthorList',
+      payload: {
+        filter: {},
+        params: {
+          current: page,
+          pageSize: 5,
+        },
+        sort: {},
+      },
+    });
+    setCurrentPage(page);
+  };
+
+  const pagination: TablePaginationConfig = {
+    current: currentPage,
+    pageSize: 5,
+    onChange: onPageChange,
+    total: total,
+  };
+
   return (
     <Modal onCancel={props.onCancel} onOk={() => props.onSelect} visible={props.visible}>
-      <Table columns={columns} dataSource={props.authorList} size="small" key="id" />
+      <Table
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={props.authorList}
+        size="small"
+        rowKey="id"
+        pagination={pagination}
+      />
     </Modal>
   );
 };

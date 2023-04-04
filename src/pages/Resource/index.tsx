@@ -41,12 +41,12 @@ const Resource: React.FC<ResourceProps> = () => {
     },
     {
       title: '作者',
-      dataIndex: 'authorVo.username',
+      dataIndex: ['authorVo', 'username'],
       width: 150,
     },
     {
       title: '专辑',
-      dataIndex: 'albumVo.albumName',
+      dataIndex: ['albumVo', 'albumName'],
       width: 150,
     },
     {

@@ -1,4 +1,6 @@
-import { fetchResourceList } from '@/services/resource/resource';
+import { addResource, fetchResourceList } from '@/services/resource/resource';
+import { parseResponse } from '@/utils/utils';
+import { message } from 'antd';
 import type { Effect, Reducer } from 'umi';
 import type { ResourceVo } from '../types';
 
@@ -13,9 +15,10 @@ export interface ResourceModelType {
   };
   effects: {
     fetchResourceList: Effect;
+    addResource: Effect;
   };
   reducer: {
-    setResourceList: Reducer<resource.ResourceState>;
+    setResourceList: Reducer<ResourceStateType>;
   };
 }
 
@@ -31,6 +34,12 @@ const ResourceMode: ResourceModelType = {
         type: 'resource/setResourceList',
         payload: data,
       });
+    },
+    *addResource({ payload }, { call }) {
+      const data = yield call(addResource, payload);
+      if (parseResponse(data)) {
+        message.success('添加成功, 请刷新页面后查看');
+      }
     },
   },
   reducer: {

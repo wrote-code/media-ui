@@ -26,7 +26,6 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
           type: 'site/addSite',
           payload: {
             ...values,
-            url: urlPrefix + values.url,
           },
         });
         handleCancel(false);

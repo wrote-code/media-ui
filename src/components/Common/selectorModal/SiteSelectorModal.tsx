@@ -63,7 +63,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         },
       },
     });
-  }, []);
+  }, [currentPage, dispatch]);
 
   const rowSelection = {
     type: 'radio',

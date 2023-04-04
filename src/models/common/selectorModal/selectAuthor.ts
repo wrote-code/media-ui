@@ -51,6 +51,7 @@ const SelectAuthorModel: SelectAuthorModelType = {
         type: 'setTotal',
         payload: data.total,
       });
+      return false;
     },
   },
   reducers: {
