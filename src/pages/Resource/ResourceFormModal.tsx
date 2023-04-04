@@ -57,6 +57,7 @@ const ResourceFormModal: React.FC<FormType> = () => {
         filename: values.filename,
       },
     });
+    return true;
   };
 
   return (

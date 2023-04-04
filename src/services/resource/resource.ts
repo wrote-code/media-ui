@@ -22,3 +22,10 @@ export async function fetchResourceListRequest(data: any) {
     method: 'POST',
   });
 }
+
+export async function deleteResource(payload: string) {
+  return request('/api/resource/delete', {
+    data: payload,
+    method: 'POST',
+  });
+}

@@ -3,15 +3,17 @@ import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
+import { Popconfirm, Button } from 'antd';
 import React from 'react';
-import { connect } from 'umi';
+import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
-
 interface ResourceProps {
   resourceList: ResourceVo[];
 }
 
 const Resource: React.FC<ResourceProps> = () => {
+  const dispatch = useDispatch();
+
   const columns: ProColumns<ResourceVo>[] = [
     {
       title: '文件名',
@@ -63,7 +65,25 @@ const Resource: React.FC<ResourceProps> = () => {
       valueType: 'date',
       width: 150,
     },
+    {
+      title: '操作',
+      width: 50,
+      render: (_, entity: ResourceVo, index: number) => {
+        return (
+          <Popconfirm title="确认删除" onConfirm={() => onOk(entity.id)}>
+            <Button size="small">删除</Button>
+          </Popconfirm>
+        );
+      },
+    },
   ];
+
+  const onOk = (id: string) => {
+    dispatch({
+      type: 'resource/deleteResource',
+      payload: id,
+    });
+  };
 
   return (
     <div>
