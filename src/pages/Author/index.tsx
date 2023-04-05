@@ -1,4 +1,4 @@
-import SiteSelectorModal from '@/components/Common/SiteSelectorModal';
+import SiteSelectorModal from '@/components/Common/SelectorModal/SiteSelectorModal';
 import type { AuthorStateType } from '@/models/author';
 import type { AuthorVo, SiteVo } from '@/models/types';
 import { queryList } from '@/services/author';
@@ -45,11 +45,12 @@ const Author: React.FC<AuthorStateType> = () => {
     {
       dataIndex: 'userId',
       title: '用户标识',
-      hideInSearch: true,
+      width: 200,
     },
     {
       dataIndex: 'username',
       title: '用户名',
+      width: 200,
     },
     {
       dataIndex: ['site', 'siteName'],
@@ -58,34 +59,38 @@ const Author: React.FC<AuthorStateType> = () => {
         name: 'siteName',
       },
       renderFormItem: () => {
-        return <Input onClick={() => setSiteSelectorVisible(true)} />;
+        return <Input allowClear={true} onClick={() => setSiteSelectorVisible(true)} />;
       },
     },
     {
       dataIndex: 'siteIdFormKey',
       hideInTable: true,
+      hideInSearch: true,
       formItemProps: {
         name: 'siteId',
       },
     },
     {
       dataIndex: 'createTime',
-      width: '30',
       title: '注册时间',
+      hideInSearch: true,
+      width: 150,
     },
     {
       dataIndex: 'updateTime',
-      width: '30',
       title: '更新时间',
+      hideInSearch: true,
+      width: 150,
     },
     {
       dataIndex: 'option',
       title: '操作',
-      width: '30',
+      hideInSearch: true,
+      width: 50,
       render: (_dom, record, index) => {
         return (
           <Popconfirm title="确认删除" onConfirm={() => deleteAuthor(_dom, record, index)}>
-            <Button>删除</Button>
+            <Button size="small">删除</Button>
           </Popconfirm>
         );
       },
