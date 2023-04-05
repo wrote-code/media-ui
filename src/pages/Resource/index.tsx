@@ -19,6 +19,7 @@ const Resource: React.FC<ResourceProps> = () => {
       title: '文件名',
       dataIndex: 'filename',
       width: 200,
+      ellipsis: true,
       formItemProps: {
         rules: [
           {
@@ -32,6 +33,7 @@ const Resource: React.FC<ResourceProps> = () => {
       title: '资源目录',
       hideInSearch: true,
       dataIndex: 'dir',
+      ellipsis: true,
       formItemProps: {
         rules: [
           {
