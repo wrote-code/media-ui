@@ -81,7 +81,7 @@ const AuthorModal: React.FC<PropsType> = (props) => {
           <Input />
         </Item>
         <Item name="siteName" label="网站" rules={[{ required: true }]}>
-          <Input onClick={() => setSiteVisible(true)} />
+          <Input onClick={() => setSiteVisible(true)} onFocus={() => setSiteVisible(true)} />
         </Item>
         <Item name="siteId" label="网站" hidden={true} rules={[{ required: true }]}>
           <Input />

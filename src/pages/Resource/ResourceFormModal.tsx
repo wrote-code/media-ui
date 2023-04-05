@@ -67,19 +67,22 @@ const ResourceFormModal: React.FC<FormType> = () => {
       trigger={<Button>新建</Button>}
       form={form}
       width={500}
+      modalProps={{
+        destroyOnClose: true,
+      }}
     >
       <ProFormText label="资源名称" name="filename" rules={[{ required: true, max: 90 }]} />
       <ProFormText label="资源目录" name="dir" rules={[{ required: true, max: 900 }]} />
-      <Row gutter={16}>
-        {/* BUG 点击清除时会弹框  */}
-        <Col span={12} onClick={() => setAuthorVisible(true)}>
-          <ProFormText hidden={true} name="authorId" rules={[{ required: true, max: 90 }]} />
-          <ProFormText label="作者姓名" name="authorName" rules={[{ required: true, max: 90 }]} />
-        </Col>
-        <Col span={12}>
-          <ProFormText label="专辑名称" name="albumName" rules={[{ max: 90 }]} />
-        </Col>
-      </Row>
+      <ProFormText hidden={true} name="authorId" rules={[{ required: true, max: 90 }]} />
+      <ProFormText
+        fieldProps={{
+          onClick: () => setAuthorVisible(true),
+          onFocus: () => setAuthorVisible(true),
+        }}
+        label="作者姓名"
+        name="authorName"
+        rules={[{ required: true, max: 90 }]}
+      />
       {authorVisible && (
         <AuthorSelectorModal
           currentPage={currentPage}
