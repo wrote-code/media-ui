@@ -69,14 +69,14 @@ const defaultFooterDom = (
         blankTarget: true,
       },
       {
-        key: '前台地址',
-        title: '前台地址',
+        key: '前台仓库',
+        title: '前台仓库',
         href: 'https://github.com/wrote-code/media-ui',
         blankTarget: true,
       },
       {
-        key: '后台地址',
-        title: '后台地址',
+        key: '后台仓库',
+        title: '后台仓库',
         href: 'https://github.com/wrote-code/media',
         blankTarget: true,
       },
