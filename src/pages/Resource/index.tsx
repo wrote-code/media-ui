@@ -75,7 +75,11 @@ const Resource: React.FC<ResourceProps> = () => {
       width: 50,
       render: (_, entity: ResourceVo, index: number) => {
         return (
-          <Popconfirm title="确认删除" onConfirm={() => onOk(entity.id)}>
+          <Popconfirm
+            title="确认删除"
+            okButtonProps={{ danger: true, type: 'primary' }}
+            onConfirm={() => onOk(entity.id)}
+          >
             <Button size="small" type="primary" danger>
               删除
             </Button>

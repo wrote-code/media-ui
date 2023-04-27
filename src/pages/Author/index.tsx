@@ -91,7 +91,11 @@ const Author: React.FC<AuthorStateType> = () => {
       width: 50,
       render: (_dom, record, index) => {
         return (
-          <Popconfirm title="确认删除" onConfirm={() => deleteAuthor(_dom, record, index)}>
+          <Popconfirm
+            title="确认删除"
+            okButtonProps={{ danger: true, type: 'primary' }}
+            onConfirm={() => deleteAuthor(_dom, record, index)}
+          >
             <Button size="small" type="primary" danger>
               删除
             </Button>

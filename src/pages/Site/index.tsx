@@ -57,7 +57,11 @@ const Site: React.FC<SiteStateType> = (props) => {
       width: 50,
       render: (_, record: SiteVo) => {
         return (
-          <Popconfirm title="确认删除" onConfirm={() => deleteSite(record)}>
+          <Popconfirm
+            title="确认删除"
+            okButtonProps={{ danger: true, type: 'primary' }}
+            onConfirm={() => deleteSite(record)}
+          >
             <Button size="small" type="primary" danger>
               删除
             </Button>
