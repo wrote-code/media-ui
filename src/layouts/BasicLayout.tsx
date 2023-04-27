@@ -3,35 +3,19 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
+import RightContent from '@/components/GlobalHeader/RightContent';
+import type { ConnectState } from '@/models/connect';
+import Authorized from '@/utils/Authorized';
 import type {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
-  Settings,
+  Settings
 } from '@ant-design/pro-layout';
 import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import type { Dispatch } from 'umi';
-import { connect, history, Link, useIntl } from 'umi';
-import { GithubOutlined } from '@ant-design/icons';
-import { Button, Result } from 'antd';
-import Authorized from '@/utils/Authorized';
-import RightContent from '@/components/GlobalHeader/RightContent';
-import type { ConnectState } from '@/models/connect';
-import { getMatchMenu } from '@umijs/route-utils';
+import { connect, history, Link } from 'umi';
 import logo from '../assets/logo.svg';
-
-const noMatch = (
-  <Result
-    status={403}
-    title="403"
-    subTitle="Sorry, you are not authorized to access this page."
-    extra={
-      <Button type="primary">
-        <Link to="/user/login">Go Login</Link>
-      </Button>
-    }
-  />
-);
 
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: Record<string, MenuDataItem>;
@@ -95,9 +79,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     dispatch,
     children,
     settings,
-    location = {
-      pathname: '/',
-    },
   } = props;
   const menuDataRef = useRef<MenuDataItem[]>([]);
   /**
@@ -113,14 +94,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     }
   }; // get children authority
 
-  const authorized = useMemo(
-    () =>
-      getMatchMenu(location.pathname || '/', menuDataRef.current).pop() || {
-        authority: undefined,
-      },
-    [location.pathname],
-  );
-  const {} = useIntl();
   return (
     <ProLayout
       logo={logo}

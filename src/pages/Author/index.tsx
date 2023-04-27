@@ -1,4 +1,4 @@
-import SiteSelectorModal from '@/components/Common/SelectorModal/SiteSelectorModal';
+import SiteSelectorModal from '@/components/Common/selectorModal/SiteSelectorModal';
 import type { AuthorStateType } from '@/models/author';
 import type { AuthorVo, SiteVo } from '@/models/types';
 import { queryList } from '@/services/author';
@@ -90,7 +90,9 @@ const Author: React.FC<AuthorStateType> = () => {
       render: (_dom, record, index) => {
         return (
           <Popconfirm title="确认删除" onConfirm={() => deleteAuthor(_dom, record, index)}>
-            <Button size="small">删除</Button>
+            <Button size="small" type="primary" danger>
+              删除
+            </Button>
           </Popconfirm>
         );
       },

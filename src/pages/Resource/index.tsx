@@ -50,6 +50,7 @@ const Resource: React.FC<ResourceProps> = () => {
     },
     {
       title: '专辑',
+      hideInSearch: true,
       dataIndex: ['albumVo', 'albumName'],
       width: 150,
     },
@@ -69,11 +70,14 @@ const Resource: React.FC<ResourceProps> = () => {
     },
     {
       title: '操作',
+      hideInSearch: true,
       width: 50,
       render: (_, entity: ResourceVo, index: number) => {
         return (
           <Popconfirm title="确认删除" onConfirm={() => onOk(entity.id)}>
-            <Button size="small">删除</Button>
+            <Button size="small" type="primary" danger>
+              删除
+            </Button>
           </Popconfirm>
         );
       },
