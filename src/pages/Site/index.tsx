@@ -40,12 +40,14 @@ const Site: React.FC<SiteStateType> = (props) => {
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      valueType: 'dateTime',
       width: 150,
       search: false,
     },
     {
       title: '更新时间',
       dataIndex: 'updateTime',
+      valueType: 'dateTime',
       width: 150,
       search: false,
     },

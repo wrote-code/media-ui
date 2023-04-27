@@ -46,6 +46,7 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '作者',
       dataIndex: ['authorVo', 'username'],
+      hideInSearch: true,
       width: 150,
     },
     {
@@ -57,7 +58,7 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '创建时间',
       dataIndex: 'createTime',
-      valueType: 'date',
+      valueType: 'dateTime',
       hideInSearch: true,
       width: 150,
     },
@@ -65,7 +66,7 @@ const Resource: React.FC<ResourceProps> = () => {
       title: '更新时间',
       dataIndex: 'updateTime',
       hideInSearch: true,
-      valueType: 'date',
+      valueType: 'dateTime',
       width: 150,
     },
     {

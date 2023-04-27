@@ -72,12 +72,14 @@ const Author: React.FC<AuthorStateType> = () => {
     },
     {
       dataIndex: 'createTime',
+      valueType: 'dateTime',
       title: '注册时间',
       hideInSearch: true,
       width: 150,
     },
     {
       dataIndex: 'updateTime',
+      valueType: 'dateTime',
       title: '更新时间',
       hideInSearch: true,
       width: 150,
