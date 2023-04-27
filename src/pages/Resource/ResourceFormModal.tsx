@@ -57,6 +57,7 @@ const ResourceFormModal: React.FC<FormType> = () => {
         filename: values.filename,
       },
     });
+    form.resetFields();
     return true;
   };
 
@@ -67,9 +68,6 @@ const ResourceFormModal: React.FC<FormType> = () => {
       trigger={<Button>新建</Button>}
       form={form}
       width={500}
-      modalProps={{
-        destroyOnClose: true,
-      }}
     >
       <ProFormText label="资源名称" name="filename" rules={[{ required: true, max: 90 }]} />
       <ProFormText label="资源目录" name="dir" rules={[{ required: true, max: 900 }]} />

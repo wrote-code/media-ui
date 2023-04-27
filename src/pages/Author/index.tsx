@@ -1,4 +1,4 @@
-import SiteSelectorModal from '@/components/Common/SelectorModal/SiteSelectorModal';
+import SiteSelectorModal from '@/components/Common/selectorModal/SiteSelectorModal';
 import type { AuthorStateType } from '@/models/author';
 import type { AuthorVo, SiteVo } from '@/models/types';
 import { queryList } from '@/services/author';
@@ -72,12 +72,14 @@ const Author: React.FC<AuthorStateType> = () => {
     },
     {
       dataIndex: 'createTime',
+      valueType: 'dateTime',
       title: '注册时间',
       hideInSearch: true,
       width: 150,
     },
     {
       dataIndex: 'updateTime',
+      valueType: 'dateTime',
       title: '更新时间',
       hideInSearch: true,
       width: 150,
@@ -89,8 +91,14 @@ const Author: React.FC<AuthorStateType> = () => {
       width: 50,
       render: (_dom, record, index) => {
         return (
-          <Popconfirm title="确认删除" onConfirm={() => deleteAuthor(_dom, record, index)}>
-            <Button size="small">删除</Button>
+          <Popconfirm
+            title="确认删除"
+            okButtonProps={{ danger: true, type: 'primary' }}
+            onConfirm={() => deleteAuthor(_dom, record, index)}
+          >
+            <Button size="small" type="primary" danger>
+              删除
+            </Button>
           </Popconfirm>
         );
       },

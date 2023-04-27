@@ -46,17 +46,19 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '作者',
       dataIndex: ['authorVo', 'username'],
+      hideInSearch: true,
       width: 150,
     },
     {
       title: '专辑',
+      hideInSearch: true,
       dataIndex: ['albumVo', 'albumName'],
       width: 150,
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
-      valueType: 'date',
+      valueType: 'dateTime',
       hideInSearch: true,
       width: 150,
     },
@@ -64,16 +66,23 @@ const Resource: React.FC<ResourceProps> = () => {
       title: '更新时间',
       dataIndex: 'updateTime',
       hideInSearch: true,
-      valueType: 'date',
+      valueType: 'dateTime',
       width: 150,
     },
     {
       title: '操作',
+      hideInSearch: true,
       width: 50,
       render: (_, entity: ResourceVo, index: number) => {
         return (
-          <Popconfirm title="确认删除" onConfirm={() => onOk(entity.id)}>
-            <Button size="small">删除</Button>
+          <Popconfirm
+            title="确认删除"
+            okButtonProps={{ danger: true, type: 'primary' }}
+            onConfirm={() => onOk(entity.id)}
+          >
+            <Button size="small" type="primary" danger>
+              删除
+            </Button>
           </Popconfirm>
         );
       },
