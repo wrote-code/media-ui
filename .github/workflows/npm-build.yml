@@ -1,0 +1,33 @@
+name: NodeJS with Webpack
+
+on:
+  push:
+    branches: [ "master", "v*" ]
+  pull_request:
+    branches: [ "master", "v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: 设置node环境 ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: 打包
+      run: |
+        yarn install
+        yarn build
+    - name: 上传制品
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist目录
+        path: dist
