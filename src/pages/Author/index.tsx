@@ -24,7 +24,7 @@ const Author: React.FC<AuthorStateType> = () => {
     setAuthorModalVisible(false);
   };
 
-  const deleteAuthor = (_dom: any, record: AuthorVo, index: number) => {
+  const deleteAuthor = (_dom: any, record: AuthorVo) => {
     dispatch({
       type: 'author/deleteAuthor',
       payload: record.id,
@@ -89,12 +89,12 @@ const Author: React.FC<AuthorStateType> = () => {
       title: '操作',
       hideInSearch: true,
       width: 50,
-      render: (_dom, record, index) => {
+      render: (_dom, record) => {
         return (
           <Popconfirm
             title="确认删除"
             okButtonProps={{ danger: true, type: 'primary' }}
-            onConfirm={() => deleteAuthor(_dom, record, index)}
+            onConfirm={() => deleteAuthor(_dom, record)}
           >
             <Button size="small" type="primary" danger>
               删除
