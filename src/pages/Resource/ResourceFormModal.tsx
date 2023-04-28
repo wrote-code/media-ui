@@ -1,9 +1,9 @@
-import { useDispatch } from 'umi';
-import AuthorSelectorModal from '@/components/Common/SelectorModal/AuthorSelectorModal';
+import AuthorSelectorModal from '@/components/Common/selectorModal/AuthorSelectorModal';
 import type { AuthorVo, ResourceVo } from '@/models/types';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
-import { Button, Col, Form, Row } from 'antd';
+import { Button, Form } from 'antd';
 import React, { useState } from 'react';
+import { useDispatch } from 'umi';
 
 interface FormType extends ResourceVo {
   /**
