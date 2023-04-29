@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: 编译打包
 
 on:
   push:
