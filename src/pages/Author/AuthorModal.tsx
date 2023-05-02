@@ -77,7 +77,7 @@ const AuthorModal: React.FC<PropsType> = (props) => {
         <Item name="userId" label="用户id">
           <Input />
         </Item>
-        <Item name="homepage" label="用户主页">
+        <Item name="homepage" label="用户主页" rules={[{ type: 'url' }]}>
           <Input />
         </Item>
         <Item name="siteName" label="网站" rules={[{ required: true }]}>
