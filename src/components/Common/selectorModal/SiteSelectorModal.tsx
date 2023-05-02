@@ -1,7 +1,7 @@
 import type { SiteVo } from '@/models/types';
-import { Input, Modal, Table, Form, Row } from 'antd';
+import { Form, Input, Modal, Table } from 'antd';
 import Button from 'antd/es/button';
-import { Rule } from 'antd/lib/form';
+import type { Rule } from 'antd/lib/form';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
 
