@@ -3,7 +3,7 @@ import type { AuthorStateType } from '@/models/author';
 import type { AuthorVo, SiteVo } from '@/models/types';
 import { queryList } from '@/services/author';
 import type { ProFormInstance } from '@ant-design/pro-form';
-import type { ProColumns } from '@ant-design/pro-table';
+import { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Button, Input, Popconfirm } from 'antd';
 import React, { useRef, useState } from 'react';
@@ -15,10 +15,15 @@ const Author: React.FC<AuthorStateType> = () => {
   const [siteSelectorVisible, setSiteSelectorVisible] = useState(false);
   const [page, setPage] = useState(1);
   const [selectedSites, setSelectedSites] = useState(null);
-
+  const actionRef = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
 
   const dispatch = useDispatch();
+
+
+  const reload = () => {
+    actionRef.current?.reload();
+  };
 
   const closeModal = () => {
     setAuthorModalVisible(false);
@@ -29,6 +34,7 @@ const Author: React.FC<AuthorStateType> = () => {
       type: 'author/deleteAuthor',
       payload: record.id,
     });
+    reload();
   };
 
   const onSiteSelect = (site: SiteVo) => {
@@ -109,6 +115,7 @@ const Author: React.FC<AuthorStateType> = () => {
     <div>
       <ProTable<AuthorVo>
         formRef={formRef}
+        actionRef={actionRef}
         defaultSize="small"
         columns={columns}
         rowKey="id"
@@ -119,7 +126,7 @@ const Author: React.FC<AuthorStateType> = () => {
           </Button>,
         ]}
       />
-      {authorModalVisible && <AuthorModal visible={authorModalVisible} closeModal={closeModal} />}
+      {authorModalVisible && <AuthorModal reload={reload} visible={authorModalVisible} closeModal={closeModal} />}
       {siteSelectorVisible && (
         <SiteSelectorModal
           onSelect={onSiteSelect}

@@ -1,21 +1,29 @@
 import type { SiteStateType } from '@/models/site';
 import type { SiteVo } from '@/models/types';
 import { fetchSiteVoListPro } from '@/services/site';
-import type { ProColumns } from '@ant-design/pro-table';
+import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import Button from 'antd/es/button';
 import Popconfirm from 'antd/es/popconfirm';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import NewSiteModal from './NewSiteModal';
 
 const Site: React.FC<SiteStateType> = (props) => {
+  const actionRef = useRef<ActionType>();
+
   const [newSiteModalVisible, setNewSiteModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const handleCancel = () => {
     setNewSiteModalVisible(false);
   };
+
+
+  const reload = () => {
+    actionRef.current?.reload();
+  };
+
 
   const deleteSite = (record: SiteVo) => {
     dispatch({
@@ -24,6 +32,7 @@ const Site: React.FC<SiteStateType> = (props) => {
         id: record.id,
       },
     });
+    reload();
   };
 
   const columns: ProColumns<SiteVo>[] = [
@@ -74,6 +83,7 @@ const Site: React.FC<SiteStateType> = (props) => {
   return (
     <div>
       <ProTable<SiteVo>
+        actionRef={actionRef}
         rowKey="id"
         defaultSize="small"
         columns={columns}
@@ -89,7 +99,7 @@ const Site: React.FC<SiteStateType> = (props) => {
         )}
       />
       {newSiteModalVisible && (
-        <NewSiteModal handleCancel={handleCancel} visible={newSiteModalVisible} />
+        <NewSiteModal reload={reload} handleCancel={handleCancel} visible={newSiteModalVisible} />
       )}
     </div>
   );

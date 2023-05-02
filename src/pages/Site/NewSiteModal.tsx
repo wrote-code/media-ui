@@ -7,10 +7,14 @@ interface PropsType {
   visible: boolean;
   handleCancel: any;
   dispatch: any;
+  /**
+   * 表单弹框关闭后，刷新父组件。通常用于刷新查询表格。
+   */
+  reload: () => void;
 }
 
 const NewSiteModal: React.FC<any> = (props: PropsType) => {
-  const { handleCancel } = props;
+  const { handleCancel, reload } = props;
   const [form] = Form.useForm();
   const layout = {
     labelCol: { span: 4 },
@@ -29,6 +33,7 @@ const NewSiteModal: React.FC<any> = (props: PropsType) => {
           },
         });
         handleCancel(false);
+        reload();
       })
       .catch((errors: any) => {
         if (errors) {

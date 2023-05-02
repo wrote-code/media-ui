@@ -30,9 +30,15 @@ interface FormType extends ResourceVo {
    * 专辑名称。
    */
   albumName?: string;
+  /**
+   * 刷新父组件。
+   */
+  reload: () => void;
 }
 
-const ResourceFormModal: React.FC<FormType> = () => {
+const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
+  const { reload } = props;
+
   const [authorVisible, setAuthorVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedAuthor, setSelectedAuthor] = useState({});
@@ -58,6 +64,7 @@ const ResourceFormModal: React.FC<FormType> = () => {
       },
     });
     form.resetFields();
+    reload();
     return true;
   };
 
