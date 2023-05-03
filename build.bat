@@ -1,7 +1,4 @@
-call git checkout master
-call git checkout .
 call git pull
-call git branch -vv
-call git log --oneline -5
+call git log -1 --all
 call npm run build
 cmd /k
