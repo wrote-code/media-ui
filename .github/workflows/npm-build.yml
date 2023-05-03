@@ -2,9 +2,9 @@ name: 编译打包
 
 on:
   push:
-    branches: [ "master", "release-*" ]
+    branches: [ "master", "build-*" ]
   pull_request:
-    branches: [ "master", "release-*"]
+    branches: [ "master", "build-*"]
 
 jobs:
   build:
