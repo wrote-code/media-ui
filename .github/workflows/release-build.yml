@@ -3,8 +3,8 @@ on:
   push:
     branches: [ master, build-* ]
 jobs:
-  clone-code:
-    name: 拉取代码
+  build-executable-jar:
+    name: 编译可执行jar包
     runs-on: ubuntu-latest
     steps:
       - name: 拉取前台代码
