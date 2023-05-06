@@ -1,12 +1,10 @@
-import { Tooltip, Tag } from 'antd';
-import type { Settings as ProSettings } from '@ant-design/pro-layout';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import React from 'react';
-import { ConnectProps, Link } from 'umi';
-import { connect, SelectLang } from 'umi';
 import type { ConnectState } from '@/models/connect';
-import Avatar from './AvatarDropdown';
-import HeaderSearch from '../HeaderSearch';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import type { Settings as ProSettings } from '@ant-design/pro-layout';
+import { Tooltip } from 'antd';
+import React from 'react';
+import type { ConnectProps } from 'umi';
+import { connect, Link } from 'umi';
 import styles from './index.less';
 
 export interface GlobalHeaderRightProps extends Partial<ConnectProps>, Partial<ProSettings> {
@@ -29,7 +27,7 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = (props) => {
 
   return (
     <div className={className}>
-      <Tooltip title="版本信息">
+      <Tooltip title="v0.2.0-alpha">
         <Link to="/release-note">发行说明</Link>
       </Tooltip>
       <Tooltip title="使用文档">
