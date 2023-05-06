@@ -2,7 +2,7 @@ import { Tooltip, Tag } from 'antd';
 import type { Settings as ProSettings } from '@ant-design/pro-layout';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
-import type { ConnectProps } from 'umi';
+import { ConnectProps, Link } from 'umi';
 import { connect, SelectLang } from 'umi';
 import type { ConnectState } from '@/models/connect';
 import Avatar from './AvatarDropdown';
@@ -29,6 +29,9 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = (props) => {
 
   return (
     <div className={className}>
+      <Tooltip title="版本信息">
+        <Link to="/release-note">发行说明</Link>
+      </Tooltip>
       <Tooltip title="使用文档">
         <a
           style={{
