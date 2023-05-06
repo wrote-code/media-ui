@@ -49,7 +49,9 @@ jobs:
         run: |
           cd media
           mkdir src/main/resources/static
-          cp -r ../media-ui/dist src/main/resources/static
+          cp -r ../media-ui/dist/* src/main/resources/static
+          cp releasenote.html src/main/resources/static
+          cp ../media-ui/releasenote-ui.html src/main/resources/static
 
       - name: 编译后台代码
         run: |
