@@ -31,11 +31,11 @@ export const getPageQuery = () => parse(window.location.href.split('?')[1]);
  * @returns 操作成功返回true,失败返回false。
  */
 export const parseResponse = (response: DataObject): boolean => {
-  if (response.statusCode !== '00000000' && response !== null) {
-    if (response.statusCode != null) {
-      message.error(response.statusCode + '：' + response.message);
-    } else {
-      message.error(response.message);
+  if (response.statusCode !== '00000000') {
+    message.error(response.message);
+    // 报错情况下，若data是string，则显示报错信息，比如没有通过hibernate-validate校验
+    if (typeof response.data == 'string') {
+      message.warn(response.data);
     }
     return false;
   }
