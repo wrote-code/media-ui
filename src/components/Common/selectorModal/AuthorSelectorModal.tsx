@@ -124,7 +124,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
       width: '40%',
       marginLeft: 5,
     };
-    const rules1: Rule[] = [
+    const rules: Rule[] = [
       {
         type: 'string',
         min: 1,
@@ -135,24 +135,12 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
       },
     ];
 
-    const rules2: Rule[] = [
-      {
-        type: 'url',
-        min: 1,
-        message: '无效网址',
-      },
-      {
-        whitespace: true,
-        message: '输入不能为空白字符',
-      },
-    ];
-
     return (
       <Form form={form}>
-        <Form.Item style={style} rules={rules1} label="用户标识" name="userId">
+        <Form.Item style={style} rules={rules} label="用户标识" name="userId">
           <Input />
         </Form.Item>
-        <Form.Item style={style} rules={rules2} label="用户名" name="username">
+        <Form.Item style={style} rules={rules} label="用户名" name="username">
           <Input />
         </Form.Item>
         <Button style={{ marginLeft: 5 }} type="primary" onClick={() => search()}>
