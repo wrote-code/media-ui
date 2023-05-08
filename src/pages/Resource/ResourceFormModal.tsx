@@ -58,6 +58,7 @@ const ResourceFormModal: React.FC<FormType> = () => {
       },
     });
     form.resetFields();
+    setSelectedAuthor({});
     return true;
   };
 
