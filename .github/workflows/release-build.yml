@@ -20,7 +20,6 @@ jobs:
           node-version: 14.17.6
           cache: yarn
           cache-dependency-path: media-ui/yarn.lock
-          name: 编译前台代码
 
       - name: 编译前台代码
         run: |
@@ -28,6 +27,7 @@ jobs:
           node -v
           npm -v
           yarn -v
+          git log -1
           yarn install
           yarn build
 
@@ -56,6 +56,7 @@ jobs:
       - name: 编译后台代码
         run: |
           cd media
+          git log -1
           mvn -v
           java -version
           mvn -B clean
