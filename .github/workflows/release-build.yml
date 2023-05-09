@@ -58,11 +58,11 @@ jobs:
           cd media-ui
           echo 前台代码版本
           git log -1
-          git log -1 > dist/ui.version
+          git log -1 > dist/ui-version.txt
           echo 后台代码版本
           cd ../media
           git log -1
-          git log -1 > src/main/resources/static/server.version
+          git log -1 > src/main/resources/static/server-version.txt
 
       - name: 编译后台代码
         run: |
