@@ -24,10 +24,10 @@ jobs:
       - name: 编译前台代码
         run: |
           cd media-ui
+          echo node版本
           node -v
-          npm -v
+          echo yarn版本
           yarn -v
-          git log -1
           yarn install
           yarn build
 
@@ -45,7 +45,7 @@ jobs:
           java-version: 8
           cache: maven
 
-      - name: 复制前台产物到后static目录
+      - name: 复制前台产物和发行说明到静态文件目录
         run: |
           cd media
           mkdir src/main/resources/static
@@ -53,11 +53,23 @@ jobs:
           cp releasenote.html src/main/resources/static
           cp ../media-ui/releasenote-ui.html src/main/resources/static
 
+      - name: 设置git提交哈希值
+        run: |
+          cd media-ui
+          echo 前台代码版本
+          git log -1
+          git log -1 > dist/ui.version
+          echo 后台代码版本
+          cd ../media
+          git log -1
+          git log -1 > src/main/resources/static/server.version
+
       - name: 编译后台代码
         run: |
           cd media
-          git log -1
+          echo maven版本
           mvn -v
+          echo java版本
           java -version
           mvn -B clean
           mvn -DskipTests=true -B package
