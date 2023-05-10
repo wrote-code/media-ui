@@ -1,6 +1,7 @@
 import type { SelectModalType } from '@/models/common/modal';
 import type { AuthorVo } from '@/models/types';
-import { Modal, Table } from 'antd';
+import { Button, Form, Input, Modal, Table } from 'antd';
+import type { Rule } from 'antd/lib/form';
 import type { ColumnsType, TablePaginationConfig } from 'antd/lib/table';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
@@ -42,6 +43,7 @@ interface PropsType {
 
 const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const { selectedAuthor, total, currentPage, setCurrentPage } = props;
   useEffect(() => {
     dispatch({
@@ -100,8 +102,62 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     total: total,
   };
 
+  const search = () => {
+    const values = form.getFieldsValue();
+    dispatch({
+      type: 'modal/selectAuthor/queryAuthorList',
+      payload: {
+        filter: {},
+        sort: {},
+        params: {
+          current: currentPage,
+          pageSize: 5,
+          ...values,
+        },
+      },
+    });
+  };
+
+  const searchForm = () => {
+    const style = {
+      display: 'inline-flex',
+      width: '40%',
+      marginLeft: 5,
+    };
+    const rules: Rule[] = [
+      {
+        type: 'string',
+        min: 1,
+      },
+      {
+        whitespace: true,
+        message: '输入不能为空白字符',
+      },
+    ];
+
+    return (
+      <Form form={form}>
+        <Form.Item style={style} rules={rules} label="用户标识" name="userId">
+          <Input />
+        </Form.Item>
+        <Form.Item style={style} rules={rules} label="用户名" name="username">
+          <Input />
+        </Form.Item>
+        <Button style={{ marginLeft: 5 }} type="primary" onClick={() => search()}>
+          搜索
+        </Button>
+      </Form>
+    );
+  };
+
   return (
-    <Modal onCancel={props.onCancel} onOk={() => props.onSelect} visible={props.visible}>
+    <Modal
+      title="新增资源"
+      onCancel={props.onCancel}
+      onOk={() => props.onSelect}
+      visible={props.visible}
+    >
+      {searchForm()}
       <Table
         rowSelection={rowSelection}
         columns={columns}

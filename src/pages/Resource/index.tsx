@@ -1,10 +1,10 @@
 import type { ResourceStateType } from '@/models/resource/resource';
 import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
-import type { ProColumns } from '@ant-design/pro-table';
+import { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Popconfirm, Button } from 'antd';
-import React from 'react';
+import React, { useRef } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
 interface ResourceProps {
@@ -13,6 +13,19 @@ interface ResourceProps {
 
 const Resource: React.FC<ResourceProps> = () => {
   const dispatch = useDispatch();
+  const actionRef = useRef<ActionType>();
+
+  const reload = () => {
+    actionRef.current?.reload();
+  };
+
+  const deleteResource = (id: string) => {
+    dispatch({
+      type: 'resource/deleteResource',
+      payload: id,
+    });
+    reload();
+  };
 
   const columns: ProColumns<ResourceVo>[] = [
     {
@@ -73,12 +86,12 @@ const Resource: React.FC<ResourceProps> = () => {
       title: '操作',
       hideInSearch: true,
       width: 50,
-      render: (_, entity: ResourceVo, index: number) => {
+      render: (_, entity: ResourceVo) => {
         return (
           <Popconfirm
             title="确认删除"
             okButtonProps={{ danger: true, type: 'primary' }}
-            onConfirm={() => onOk(entity.id)}
+            onConfirm={() => deleteResource(entity.id)}
           >
             <Button size="small" type="primary" danger>
               删除
@@ -89,23 +102,17 @@ const Resource: React.FC<ResourceProps> = () => {
     },
   ];
 
-  const onOk = (id: string) => {
-    dispatch({
-      type: 'resource/deleteResource',
-      payload: id,
-    });
-  };
-
   return (
     <div>
       <ProTable<ResourceVo>
         rowKey="id"
+        actionRef={actionRef}
         defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) =>
           fetchResourceListRequest({ params, sorter, filter })
         }
-        toolBarRender={() => <ResourceFormModal />}
+        toolBarRender={() => <ResourceFormModal reload={reload} />}
       />
     </div>
   );

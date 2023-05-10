@@ -1,5 +1,7 @@
 import type { SiteVo } from '@/models/types';
-import { Modal, Table } from 'antd';
+import { Form, Input, Modal, Table } from 'antd';
+import Button from 'antd/es/button';
+import type { Rule } from 'antd/lib/form';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
 
@@ -50,6 +52,8 @@ interface PropsType {
 const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
   const { siteList, total, currentPage, setCurrentPage } = props;
+  // 表格上方的搜索框
+  const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch({
@@ -86,6 +90,66 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     });
   };
 
+  const search = () => {
+    const values = form.getFieldsValue();
+    dispatch({
+      type: 'site/fetchSiteVoListPro',
+      payload: {
+        filter: {},
+        sort: {},
+        params: {
+          current: currentPage,
+          pageSize: 5,
+          ...values,
+        },
+      },
+    });
+  };
+
+  const searchForm = () => {
+    const style = {
+      display: 'inline-flex',
+      width: '40%',
+      marginLeft: 5,
+    };
+    const rules1: Rule[] = [
+      {
+        type: 'string',
+        min: 1,
+      },
+      {
+        whitespace: true,
+        message: '输入不能为空白字符'
+      },
+    ];
+
+    const rules2: Rule[] = [
+      {
+        type: 'url',
+        min: 1,
+        message: '无效网址',
+      },
+      {
+        whitespace: true,
+        message: '输入不能为空白字符',
+      },
+    ];
+
+    return (
+      <Form form={form}>
+        <Form.Item style={style} rules={rules1} label="网站名称" name="siteName">
+          <Input />
+        </Form.Item>
+        <Form.Item style={style} rules={rules2} label="网站地址" name="url">
+          <Input />
+        </Form.Item>
+        <Button style={{ marginLeft: 5 }} type="primary" onClick={() => search()}>
+          搜索
+        </Button>
+      </Form>
+    );
+  };
+
   const columns: any = [
     {
       dataIndex: 'siteName',
@@ -98,6 +162,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   ];
   return (
     <Modal title="请选择网站" visible={props.visible} onCancel={props.onCancel} footer={null}>
+      {searchForm()}
       <Table
         size="small"
         pagination={{

@@ -61,6 +61,10 @@
         ],
       },
       {
+        path: '/release-note',
+        component: './ReleaseNote',
+      },
+      {
         component: './404',
       },
     ],

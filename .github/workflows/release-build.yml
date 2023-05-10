@@ -1,0 +1,81 @@
+name: release-build
+on:
+  push:
+    branches: [ master, build-* ]
+jobs:
+  build-executable-jar:
+    name: 编译可执行jar包
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取前台代码
+        uses: actions/checkout@v3
+        with:
+          repository: wrote-code/media-ui.git
+          ref: build-0.2.0-alpha
+          path: media-ui
+
+      - name: 设置node环境
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.17.6
+          cache: yarn
+          cache-dependency-path: media-ui/yarn.lock
+
+      - name: 编译前台代码
+        run: |
+          cd media-ui
+          echo node版本
+          node -v
+          echo yarn版本
+          yarn -v
+          yarn install
+          yarn build
+
+      - name: 拉取后台代码
+        uses: actions/checkout@v3
+        with:
+          repository: wrote-code/media.git
+          ref: package-0.2.1-alpha
+          path: media
+
+      - name: 设置java环境
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 8
+          cache: maven
+
+      - name: 复制前台产物和发行说明到静态文件目录
+        run: |
+          cd media
+          mkdir src/main/resources/static
+          cp -r ../media-ui/dist/* src/main/resources/static
+          cp releasenote.html src/main/resources/static
+          cp ../media-ui/releasenote-ui.html src/main/resources/static
+
+      - name: 设置git提交哈希值
+        run: |
+          cd media-ui
+          echo 前台代码版本
+          git log -1
+          git log -1 > ../media/src/main/resources/static/ui-version.txt
+          echo 后台代码版本
+          cd ../media
+          git log -1
+          git log -1 > src/main/resources/static/server-version.txt
+
+      - name: 编译后台代码
+        run: |
+          cd media
+          echo maven版本
+          mvn -v
+          echo java版本
+          java -version
+          mvn -B clean
+          mvn -DskipTests=true -B package
+
+      - name: 上传完整制品
+        uses: actions/upload-artifact@v3
+        with:
+          name: 可执行jar包
+          path: media/target/media-*.jar

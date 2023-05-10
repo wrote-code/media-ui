@@ -12,10 +12,11 @@ interface PropsType {
    * 关闭弹框的回调，即onOk和onCancel。
    */
   closeModal: () => void;
+  reload: () => void;
 }
 
 const AuthorModal: React.FC<PropsType> = (props) => {
-  const { visible, closeModal } = props;
+  const { visible, closeModal, reload } = props;
   const [form] = Form.useForm();
   const [selectedSite, setSelectedSite] = useState({});
   const [page, setPage] = useState(1);
@@ -50,6 +51,7 @@ const AuthorModal: React.FC<PropsType> = (props) => {
           },
         });
         closeModal();
+        reload();
       })
       .catch((errors) => {
         console.log(errors);
@@ -77,7 +79,7 @@ const AuthorModal: React.FC<PropsType> = (props) => {
         <Item name="userId" label="用户id">
           <Input />
         </Item>
-        <Item name="homepage" label="用户主页">
+        <Item name="homepage" label="用户主页" rules={[{ type: 'url' }]}>
           <Input />
         </Item>
         <Item name="siteName" label="网站" rules={[{ required: true }]}>
