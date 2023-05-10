@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: wrote-code/media-ui.git
-          # ref: build-0.2.0-alpha
+          ref: master
           path: media-ui
 
       - name: 设置node环境
@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: wrote-code/media.git
-          # ref: package-0.2.1-alpha
+          ref: master
           path: media
 
       - name: 设置java环境
