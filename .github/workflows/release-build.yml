@@ -1,7 +1,18 @@
 name: release-build
+env:
+  ui-dir: media-ui
+  server-dir: media
+
+  # 打包时使用的分支
+  ui-ref: master
+  server-ref: master
+  # 最终jar包名称
+  jar-name: media-2023.5-1.jar
+  # pom.xml中的工程版本
+  version: 0.2.1-alpha
 on:
   push:
-    branches: [ master, build-* ]
+    branches: [ master, package-*, dev ]
 jobs:
   build-executable-jar:
     name: 编译可执行jar包
@@ -23,13 +34,21 @@ jobs:
 
       - name: 编译前台代码
         run: |
+          echo ::group::当前环境
           cd media-ui
           echo node版本
           node -v
           echo yarn版本
           yarn -v
+          echo ::endgroup::
+
+          echo ::group::安装依赖
           yarn install
+          echo ::endgroup::
+
+          echo ::group::编译
           yarn build
+          echo ::endgroup::
 
       - name: 拉取后台代码
         uses: actions/checkout@v3
@@ -48,34 +67,58 @@ jobs:
       - name: 复制前台产物和发行说明到静态文件目录
         run: |
           cd media
+          echo ::group::复制前台产物
           mkdir src/main/resources/static
-          cp -r ../media-ui/dist/* src/main/resources/static
-          cp releasenote.html src/main/resources/static
-          cp ../media-ui/releasenote-ui.html src/main/resources/static
+          cp -rv ../media-ui/dist/* src/main/resources/static
+          ls -a src/main/resources/static
+          echo ::endgroup::
+
+          echo ::group::复制发行说明
+          cp -v releasenote.html src/main/resources/static
+          cp -v ../media-ui/releasenote-ui.html src/main/resources/static
+          echo ::endgroup::
 
       - name: 设置git提交哈希值
         run: |
           cd media-ui
-          echo 前台代码版本
+
+          echo ::group::前台代码版本
           git log -1
-          git log -1 > ../media/src/main/resources/static/ui-version.txt
-          echo 后台代码版本
+          touch ../media/src/main/resources/static/ui-$(git rev-parse ${{env.ui-ref}})
+          git log -1 >> ../media/src/main/resources/static/ui-$(git rev-parse ${{env.ui-ref}})
+          git branch --show-current >> ../media/src/main/resources/static/ui-$(git rev-parse ${{env.ui-ref}})
+          echo ::endgroup::
+
+          echo ::group::后台代码版本
           cd ../media
           git log -1
-          git log -1 > src/main/resources/static/server-version.txt
+          touch src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
+          git log -1 >> src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
+          git branch --show-current >> src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
+          echo ::endgroup::
 
       - name: 编译后台代码
         run: |
           cd media
+
+          echo ::group::环境版本::
           echo maven版本
           mvn -v
           echo java版本
           java -version
+          echo ::endgroup::
+
+          echo ::group::编译
           mvn -B clean
           mvn -DskipTests=true -B package
+          echo ::endgroup::
+
+          echo ::group::重命名jar包
+          mv -v target/media-${{env.version}}.jar target/${{env.jar-name}}
+          echo ::endgroup::
 
       - name: 上传完整制品
         uses: actions/upload-artifact@v3
         with:
           name: 可执行jar包
-          path: media/target/media-*.jar
+          path: media/target/${{env.jar-name}}
