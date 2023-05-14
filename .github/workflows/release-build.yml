@@ -4,10 +4,10 @@ env:
   server-dir: media
 
   # 打包时使用的分支
-  ui-ref: master
-  server-ref: master
+  ui-ref: dev
+  server-ref: dev
   # 最终jar包名称
-  jar-name: media-2023.5-1.jar
+  jar-name: media-dev.jar
   # pom.xml中的工程版本
   version: 0.2.1-alpha
 on:
