@@ -31,7 +31,6 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '文件名',
       dataIndex: 'filename',
-      width: 200,
       ellipsis: true,
       formItemProps: {
         rules: [
@@ -44,6 +43,7 @@ const Resource: React.FC<ResourceProps> = () => {
     },
     {
       title: '资源目录',
+      width: '30%',
       hideInSearch: true,
       dataIndex: 'dir',
       ellipsis: true,
@@ -62,12 +62,12 @@ const Resource: React.FC<ResourceProps> = () => {
       hideInSearch: true,
       width: 150,
     },
-    {
-      title: '专辑',
-      hideInSearch: true,
-      dataIndex: ['albumVo', 'albumName'],
-      width: 150,
-    },
+    // {
+    //   title: '专辑',
+    //   hideInSearch: true,
+    //   dataIndex: ['albumVo', 'albumName'],
+    //   width: 150,
+    // },
     {
       title: '创建时间',
       dataIndex: 'createTime',
