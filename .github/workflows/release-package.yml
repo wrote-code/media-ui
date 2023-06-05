@@ -3,17 +3,15 @@ env:
   ui-dir: media-ui
   server-dir: media
 
-  # 打包时使用的分支
-  ui-ref: master
-  server-ref: master
+  # 打包时使用的分支。前后台代码一期发版，分支相同
+  ui-ref: ${{github.ref_name}}
+  server-ref: ${{github.ref_name}}
   # 最终jar包名称
-  application-name: media-2023.5-1.jar
-  cli-name: cli-2023.5-1.jar
-  # pom.xml中的工程版本
-  version: 0.2.1-alpha
+  application-name: media-${{github.ref_name}}.jar
+  cli-name: cli-${{github.ref_name}}.jar
 on:
   push:
-    branches: [ master, package-* ]
+    branches: [ master, package-*, dev ]
 jobs:
   build-executable-jar:
     name: 编译可执行jar包
@@ -69,7 +67,7 @@ jobs:
         run: |
           cd media
           echo ::group::复制前台产物
-          mkdir server-dir/src/main/resources/static
+          mkdir -p application/src/main/resources/static
           cp -rv ../media-ui/dist/* application/src/main/resources/static
           ls -a application/src/main/resources/static
           echo ::endgroup::
@@ -115,8 +113,8 @@ jobs:
           echo ::endgroup::
 
           echo ::group::重命名jar包
-          mv -v application/target/application-${{env.version}}.jar ../${{env.application-name}}
-          mv -v cli/target/cli-${{env.version}}.jar ../cli-${{env.cli-name}}
+          mv -v application/target/*.jar ../${{env.application-name}}
+          mv -v cli/target/*.jar ../cli-${{env.cli-name}}
           echo ::endgroup::
 
       - name: 上传完整制品
@@ -124,5 +122,5 @@ jobs:
         with:
           name: 可执行jar包
           path: |
-              ./${{env.cli-name}}
-              ./${{env.application-name}}
+            ./${{env.cli-name}}
+            ./${{env.application-name}}
