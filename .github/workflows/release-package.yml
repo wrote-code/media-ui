@@ -114,7 +114,7 @@ jobs:
 
           echo ::group::重命名jar包
           mv -v application/target/*.jar ../${{env.application-name}}
-          mv -v cli/target/*.jar ../cli-${{env.cli-name}}
+          mv -v cli/target/*.jar ../${{env.cli-name}}
           echo ::endgroup::
 
       - name: 上传完整制品
