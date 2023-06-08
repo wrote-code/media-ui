@@ -11,7 +11,7 @@ const ReleaseNote: React.FC<PropsType> = () => {
   const [frontVersion, setFrontVersion] = useState();
 
   useEffect(() => {
-    request('http://localhost:9000/version/main', {
+    request('/api/version/main', {
       method: 'GET',
     })
       .then((v) => setVersion(v))
@@ -20,7 +20,7 @@ const ReleaseNote: React.FC<PropsType> = () => {
         setVersion(undefined);
       });
 
-    request('http://localhost:9000/version/backVersion', {
+    request('/api/version/backVersion', {
       method: 'GET',
     })
       .then((v) => setBackVersion(v))
@@ -29,7 +29,7 @@ const ReleaseNote: React.FC<PropsType> = () => {
         setBackVersion(undefined);
       });
 
-    request('http://localhost:9000/version/frontVersion', {
+    request('/api/version/frontVersion', {
       method: 'GET',
     })
       .then((v) => setFrontVersion(v))
