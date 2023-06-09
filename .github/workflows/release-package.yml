@@ -94,6 +94,11 @@ jobs:
           touch application/src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
           git log -1 >> application/src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
           git branch --show-current >> application/src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
+
+
+          touch cli/src/main/resources/cli-$(git rev-parse ${{env.server-ref}})
+          git log -1 >> cli/src/main/resources/cli-$(git rev-parse ${{env.server-ref}})
+          git branch --show-current >> cli/src/main/resources/cli-$(git rev-parse ${{env.server-ref}})
           echo ::endgroup::
 
       - name: 编译后台代码
