@@ -1,17 +1,52 @@
+import request from '@/utils/request';
 import { Typography } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const { Title, Paragraph, Link } = Typography;
 
 interface PropsType {}
 const ReleaseNote: React.FC<PropsType> = () => {
+  const [version, setVersion] = useState();
+  const [backVersion, setBackVersion] = useState();
+  const [frontVersion, setFrontVersion] = useState();
+
+  useEffect(() => {
+    request('/api/version/main', {
+      method: 'GET',
+    })
+      .then((v) => setVersion(v))
+      .catch((e) => {
+        console.error(e);
+        setVersion(undefined);
+      });
+
+    request('/api/version/backVersion', {
+      method: 'GET',
+    })
+      .then((v) => setBackVersion(v))
+      .catch((e) => {
+        console.error(e);
+        setBackVersion(undefined);
+      });
+
+    request('/api/version/frontVersion', {
+      method: 'GET',
+    })
+      .then((v) => setFrontVersion(v))
+      .catch((e) => {
+        console.error(e);
+        setFrontVersion(undefined);
+      });
+  }, []);
+
   return (
     <Typography>
       <Title level={3}>版本信息</Title>
       <Paragraph>
         <ul>
-          <li>前台版本：v0.2.0-alpha</li>
-          <li>后台版本：v0.2.1-alpha</li>
+          <li>发行版本：{version}</li>
+          <li>前台版本：{frontVersion}</li>
+          <li>后台版本：{backVersion}</li>
         </ul>
       </Paragraph>
       <Title level={3}>发行说明</Title>
