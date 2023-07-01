@@ -24,7 +24,7 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = (props) => {
   const [version, setVersion] = useState();
 
   useEffect(() => {
-    request('http://localhost:9000/version/main', {
+    request('/api/version/main', {
       method: 'GET',
     })
       .then((v) => setVersion(v))
