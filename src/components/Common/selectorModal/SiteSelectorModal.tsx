@@ -38,12 +38,16 @@ interface PropsType {
    * 当前选择的网站。第一次打开时为空。由父组件控制。
    */
   selectedSite: SiteVo;
+  /**
+   * 弹框标题
+   */
+  title?: string;
 }
 
 /**
  * 从列表中选择网站，将勾选的站点的id返回父组件（通过回调函数）。
  *
- * 此组件会从调用model:site/fetchSiteVoListPro来获取网站清单，默认情况下一次获取5个。目前
+ * 此组件会从调用model:site/querySiteList来获取网站清单，默认情况下一次获取5个。目前
  * 无法更改此默认值。
  *
  * @param props 属性
@@ -51,13 +55,13 @@ interface PropsType {
  */
 const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
-  const { siteList, total, currentPage, setCurrentPage } = props;
+  const { siteList, total, currentPage, setCurrentPage, title } = props;
   // 表格上方的搜索框
   const [form] = Form.useForm();
 
   useEffect(() => {
     dispatch({
-      type: 'site/fetchSiteVoListPro',
+      type: 'site/querySiteList',
       payload: {
         filter: {},
         sort: {},
@@ -78,7 +82,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const onPageChange = (page: number, pageSize: number) => {
     setCurrentPage(page);
     dispatch({
-      type: 'site/fetchSiteVoListPro',
+      type: 'site/querySiteList',
       payload: {
         filter: {},
         sort: {},
@@ -93,7 +97,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const search = () => {
     const values = form.getFieldsValue();
     dispatch({
-      type: 'site/fetchSiteVoListPro',
+      type: 'site/querySiteList',
       payload: {
         filter: {},
         sort: {},
@@ -119,7 +123,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
       },
       {
         whitespace: true,
-        message: '输入不能为空白字符'
+        message: '输入不能为空白字符',
       },
     ];
 
@@ -161,7 +165,12 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     },
   ];
   return (
-    <Modal title="请选择网站" visible={props.visible} onCancel={props.onCancel} footer={null}>
+    <Modal
+      title={title ? title : '选择网站'}
+      visible={props.visible}
+      onCancel={props.onCancel}
+      footer={null}
+    >
       {searchForm()}
       <Table
         size="small"

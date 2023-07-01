@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
-export async function fetchSiteVoListPro(data: any) {
-  return request('/api/site/fetchSiteVoListPro', {
+export async function querySiteList(data: any) {
+  return request('/api/site/querySiteList', {
     data: data,
     method: 'POST',
   });

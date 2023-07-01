@@ -3,8 +3,8 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import type { Settings as ProSettings } from '@ant-design/pro-layout';
 import { Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { ConnectProps, request } from 'umi';
-import { connect, Link } from 'umi';
+import type { ConnectProps } from 'umi';
+import { request, connect, Link } from 'umi';
 import styles from './index.less';
 
 export interface GlobalHeaderRightProps extends Partial<ConnectProps>, Partial<ProSettings> {
@@ -24,7 +24,7 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = (props) => {
   const [version, setVersion] = useState();
 
   useEffect(() => {
-    request('http://localhost:9000/version/main', {
+    request('/api/version/main', {
       method: 'GET',
     })
       .then((v) => setVersion(v))

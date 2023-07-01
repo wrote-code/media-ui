@@ -20,7 +20,6 @@ const Author: React.FC<AuthorStateType> = () => {
 
   const dispatch = useDispatch();
 
-
   const reload = () => {
     actionRef.current?.reload();
   };
@@ -126,16 +125,8 @@ const Author: React.FC<AuthorStateType> = () => {
           </Button>,
         ]}
       />
-      {authorModalVisible && <AuthorModal reload={reload} visible={authorModalVisible} closeModal={closeModal} />}
-      {siteSelectorVisible && (
-        <SiteSelectorModal
-          onSelect={onSiteSelect}
-          currentPage={page}
-          setCurrentPage={setPage}
-          selectedSite={selectedSites}
-          onCancel={() => setSiteSelectorVisible(false)}
-          visible={siteSelectorVisible}
-        />
+      {authorModalVisible && (
+        <AuthorModal reload={reload} visible={authorModalVisible} closeModal={closeModal} />
       )}
     </div>
   );

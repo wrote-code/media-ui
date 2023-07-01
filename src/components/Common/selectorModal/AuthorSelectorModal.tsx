@@ -39,12 +39,16 @@ interface PropsType {
    * 选择一行内容时的回调。回调中必须关闭弹框。由父组件控制。
    */
   onSelect: (record: AuthorVo) => void;
+  /**
+   * 弹框标题。
+   */
+  title?: string;
 }
 
 const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const { selectedAuthor, total, currentPage, setCurrentPage } = props;
+  const { selectedAuthor, total, currentPage, setCurrentPage, title } = props;
   useEffect(() => {
     dispatch({
       type: 'modal/selectAuthor/queryAuthorList',
@@ -81,11 +85,13 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   ];
 
   const onPageChange = (page) => {
+    const values = form.getFieldsValue();
     dispatch({
       type: 'modal/selectAuthor/queryAuthorList',
       payload: {
         filter: {},
         params: {
+          ...values,
           current: page,
           pageSize: 5,
         },
@@ -152,7 +158,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
 
   return (
     <Modal
-      title="新增资源"
+      title={title ? title : '选择作者'}
       onCancel={props.onCancel}
       onOk={() => props.onSelect}
       visible={props.visible}
