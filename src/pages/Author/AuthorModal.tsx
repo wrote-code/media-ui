@@ -90,6 +90,7 @@ const AuthorModal: React.FC<PropsType> = (props) => {
         </Item>
         {siteVisible && (
           <SiteSelectorModal
+            title="设置作者注册时用的网站"
             currentPage={page}
             setCurrentPage={setCurrentPage}
             selectedSite={selectedSite}
