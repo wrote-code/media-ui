@@ -11,7 +11,7 @@ env:
   cli-name: cli-${{github.ref_name}}.jar
 on:
   push:
-    branches: [ master, package-*, dev ]
+    branches: [ master, release-*, dev ]
 jobs:
   build-executable-jar:
     name: 编译可执行jar包
