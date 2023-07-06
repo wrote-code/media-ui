@@ -1,4 +1,4 @@
-import { addSite, deleteSite, fetchSiteVoListPro } from '@/services/site';
+import { addSite, deleteSite, querySiteList } from '@/services/site';
 import { parseResponse } from '@/utils/utils';
 import { message } from 'antd';
 import type { Effect, Reducer } from 'umi';
@@ -13,7 +13,7 @@ export interface SiteModelType {
   namespace: 'site';
   state: SiteStateType;
   effects: {
-    fetchSiteVoListPro: Effect;
+    querySiteList: Effect;
     addSite: Effect;
     deleteSite: Effect;
   };
@@ -35,8 +35,8 @@ const SiteModel: SiteModelType = {
         message.success('添加成功，请刷新页面查看结果');
       }
     },
-    *fetchSiteVoListPro({ payload }, { call, put }) {
-      const data = yield call(fetchSiteVoListPro, payload);
+    *querySiteList({ payload }, { call, put }) {
+      const data = yield call(querySiteList, payload);
       yield put({
         type: 'setSiteList',
         payload: data,

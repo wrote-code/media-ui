@@ -1,6 +1,6 @@
 import type { SiteStateType } from '@/models/site';
 import type { SiteVo } from '@/models/types';
-import { fetchSiteVoListPro } from '@/services/site';
+import { querySiteList } from '@/services/site';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import Button from 'antd/es/button';
@@ -87,7 +87,7 @@ const Site: React.FC<SiteStateType> = (props) => {
         rowKey="id"
         defaultSize="small"
         columns={columns}
-        request={async (params, sorter, filter) => fetchSiteVoListPro({ params, sorter, filter })}
+        request={async (params, sorter, filter) => querySiteList({ params, sorter, filter })}
         toolBarRender={() => (
           <Button
             onClick={() => {
