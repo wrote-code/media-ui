@@ -95,6 +95,10 @@ jobs:
           git log -1 >> application/src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
           git branch --show-current >> application/src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
 
+          echo ::group::系统版本
+          echo "main=v$(git branch --show-current)" > config/src/main/resources/media-application.properties
+
+          git branch --show-current >> application/src/main/resources/static/server-$(git rev-parse ${{env.server-ref}})
 
           touch cli/src/main/resources/cli-$(git rev-parse ${{env.server-ref}})
           git log -1 >> cli/src/main/resources/cli-$(git rev-parse ${{env.server-ref}})
