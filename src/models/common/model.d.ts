@@ -1,5 +1,5 @@
 import type { SelectAuthorStateType } from './selectorModal/selectAuthor';
 
-export interface SelectModalType {
+export interface SelectModelType {
   'modal/selectAuthor': SelectAuthorStateType;
 }

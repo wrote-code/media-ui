@@ -1,4 +1,4 @@
-import type { SelectModalType } from '@/models/common/modal';
+import type { SelectModelType } from '@/models/common/model';
 import type { AuthorVo } from '@/models/types';
 import { Button, Form, Input, Modal, Table } from 'antd';
 import type { Rule } from 'antd/lib/form';
@@ -176,7 +176,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   );
 };
 
-export default connect(({ 'modal/selectAuthor': { authorList, total } }: SelectModalType) => ({
+export default connect(({ 'modal/selectAuthor': { authorList, total } }: SelectModelType) => ({
   authorList: authorList,
   total: total,
 }))(AuthorSelectorModal);

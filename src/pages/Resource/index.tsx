@@ -1,9 +1,9 @@
 import type { ResourceStateType } from '@/models/resource/resource';
 import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
-import { ActionType, ProColumns } from '@ant-design/pro-table';
+import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Popconfirm, Button } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import React, { useRef } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
