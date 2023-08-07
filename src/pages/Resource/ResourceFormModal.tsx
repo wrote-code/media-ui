@@ -4,6 +4,7 @@ import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import { Button, Form } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'umi';
+import DirectorySelect from '@/components/Common/Select/DirectorySelect';
 
 interface FormType extends ResourceVo {
   /**
@@ -78,7 +79,7 @@ const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
       width={500}
     >
       <ProFormText label="资源名称" name="filename" rules={[{ required: true, max: 90 }]} />
-      <ProFormText label="资源目录" name="dir" rules={[{ required: true, max: 900 }]} />
+      <DirectorySelect />
       <ProFormText hidden={true} name="authorId" rules={[{ required: true, max: 90 }]} />
       <ProFormText
         fieldProps={{
