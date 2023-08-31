@@ -16,6 +16,7 @@ export interface DirectoryModelStateType {
 
 export interface DirectoryModelType {
   namespace: 'select/directory';
+  state: DirectoryModelStateType;
   effects: {
     /**
      * 获取根目录，也就是level=1或level=0的目录。
@@ -36,6 +37,10 @@ export interface DirectoryModelType {
 
 const DirectoryModel: DirectoryModelType = {
   namespace: 'select/directory',
+  state: {
+    newTreeData: [],
+    treeData: [],
+  },
   effects: {
     *queryRootDirectory({ payload }, { call, put }) {
       const response = yield call(queryRootDirectory, payload);
