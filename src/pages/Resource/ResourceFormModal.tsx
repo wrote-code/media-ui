@@ -79,7 +79,7 @@ const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
       width={500}
     >
       <ProFormText label="资源名称" name="filename" rules={[{ required: true, max: 90 }]} />
-      <DirectorySelect name="目录" />
+      <ProFormText label="资源目录" name="dir" rules={[{ required: true, max: 900 }]} />
       <ProFormText hidden={true} name="authorId" rules={[{ required: true, max: 90 }]} />
       <ProFormText
         fieldProps={{
