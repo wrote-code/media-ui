@@ -8,10 +8,6 @@ export interface DirectoryModelStateType {
    * 树的根节点数据。
    */
   treeData: Directory[];
-  /**
-   * 异步加载时后台返回的数据。
-   */
-  newTreeData: Directory[];
 }
 
 export interface DirectoryModelType {
@@ -38,7 +34,6 @@ export interface DirectoryModelType {
 const DirectoryModel: DirectoryModelType = {
   namespace: 'select/directory',
   state: {
-    newTreeData: [],
     treeData: [],
   },
   effects: {

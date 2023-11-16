@@ -1,5 +1,6 @@
 import type { ModelType } from '@/models/common/model';
 import { ProFormTreeSelect } from '@ant-design/pro-form';
+import type { ProFormFieldItemProps } from '@ant-design/pro-form/lib/interface';
 import React from 'react';
 import { connect } from 'umi';
 
@@ -9,6 +10,7 @@ interface DirectorySelectStateType {
    */
   name: string;
   placeHolder?: string;
+  fieldProps: ProFormFieldItemProps;
 }
 
 /**
@@ -16,12 +18,16 @@ interface DirectorySelectStateType {
  * @param props
  */
 const DirectorySelect: React.FC<DirectorySelectStateType> = (props) => {
-  const { name, placeHolder } = props;
+  const { placeHolder, fieldProps } = props;
 
-  return <ProFormTreeSelect name={name} placeholder={placeHolder ? placeHolder : '请选择目录'} />;
+  return (
+    <ProFormTreeSelect
+      {...fieldProps}
+      placeholder={placeHolder ? placeHolder : '请选择目录'}
+    />
+  );
 };
 
-export default connect(({ 'select/directory': { treeData, newTreeData } }: ModelType) => ({
+export default connect(({ 'select/directory': { treeData } }: ModelType) => ({
   treeData: treeData,
-  newTreeData: newTreeData,
 }))(DirectorySelect);
