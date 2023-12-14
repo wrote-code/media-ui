@@ -4,6 +4,7 @@ import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import { Button, Form } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'umi';
+import DirectorySelect from '@/components/Common/Select/DirectorySelect';
 
 interface FormType extends ResourceVo {
   /**
