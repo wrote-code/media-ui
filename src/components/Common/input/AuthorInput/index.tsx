@@ -36,7 +36,7 @@ export interface AuthorInputPropsType {
 }
 
 const AuthorInput: React.FC<AuthorInputPropsType> = (props) => {
-  const { form, labelName, valueName } = props;
+  const { form, labelName, valueName, title } = props;
 
   const [visible, setVisible] = useState(false);
   const [author, setAuthor] = useState({});
@@ -57,13 +57,14 @@ const AuthorInput: React.FC<AuthorInputPropsType> = (props) => {
 
   return (
     <div>
-      <Form form={form}>
-        <Form.Item name={labelName}>
-          <Input onClick={() => setVisible(true)} />
-        </Form.Item>
-        <Form.Item name={valueName} />
-      </Form>
+      <Form.Item name={labelName}>
+        <Input onClick={() => setVisible(true)} />
+      </Form.Item>
+      <Form.Item name={valueName} hidden={true}>
+        <Input />
+      </Form.Item>
       <AuthorSelectorModal
+        title={title}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         onCancel={() => onCancel()}

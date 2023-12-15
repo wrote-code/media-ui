@@ -1,3 +1,4 @@
+import AuthorInput from '@/components/Common/input/AuthorInput';
 import type { ResourceStateType } from '@/models/resource/resource';
 import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
@@ -58,7 +59,9 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '作者',
       dataIndex: ['authorVo', 'username'],
-      hideInSearch: true,
+      renderFormItem: (_item, _c, form) => {
+        return <AuthorInput form={form} labelName="username" valueName="id" />;
+      },
       width: 150,
     },
     // {
@@ -113,8 +116,9 @@ const Resource: React.FC<ResourceProps> = () => {
         defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) =>
-          fetchResourceListRequest({ params, sorter, filter }).then(v => {
-            if(v.success) {
+          fetchResourceListRequest({ params, sorter, filter }).then((v) => {
+            console.log('params', params);
+            if (v.success) {
               return v;
             } else {
               message.error(v.message);
