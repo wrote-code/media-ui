@@ -65,6 +65,11 @@
         component: './ReleaseNote',
       },
       {
+        path: '/demo',
+        component: './demo',
+        hideInMenu: true,
+      },
+      {
         component: './404',
       },
     ],

@@ -1,0 +1,19 @@
+import React from 'react';
+
+/*
+注意：
+1.这是一个用来测试组件的页面，文件名是index.tsx.backup，拉取代码后要手动复制并改名。
+2.改名后的文件index.tsx不会被提交到git仓库。
+3.备份文件禁止修改，修改后禁止提交。
+*/
+
+
+const Demo: React.FC<any> = () => {
+  return (
+    <div>
+      <p>这是一个测试页，修改本文件以查看组件效果</p>
+    </div>
+  );
+};
+
+export default Demo;
