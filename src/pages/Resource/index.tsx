@@ -60,7 +60,9 @@ const Resource: React.FC<ResourceProps> = () => {
       title: '作者',
       dataIndex: ['authorVo', 'username'],
       renderFormItem: (_item, _c, form) => {
-        return <AuthorInput form={form} labelName="username" valueName="id" />;
+        // 使用authorName和authorId，增加可读性，同时防止和resource的id混淆。
+        // 返回时username是嵌套属性，查询时不是嵌套属性
+        return <AuthorInput form={form} labelName="authorName" valueName="authorId" />;
       },
       width: 150,
     },
