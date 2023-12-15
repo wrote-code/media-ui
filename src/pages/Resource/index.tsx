@@ -1,9 +1,10 @@
+import AuthorInput from '@/components/Common/input/AuthorInput';
 import type { ResourceStateType } from '@/models/resource/resource';
 import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, message } from 'antd';
 import React, { useRef } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
@@ -44,7 +45,6 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '资源目录',
       width: '30%',
-      hideInSearch: true,
       dataIndex: 'dir',
       ellipsis: true,
       formItemProps: {
@@ -59,7 +59,11 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '作者',
       dataIndex: ['authorVo', 'username'],
-      hideInSearch: true,
+      renderFormItem: (_item, _c, form) => {
+        // 使用authorName和authorId，增加可读性，同时防止和resource的id混淆。
+        // 返回时username是嵌套属性，查询时不是嵌套属性
+        return <AuthorInput form={form} labelName="authorName" valueName="authorId" />;
+      },
       width: 150,
     },
     // {
@@ -102,6 +106,10 @@ const Resource: React.FC<ResourceProps> = () => {
     },
   ];
 
+  // request={async (params, sorter, filter) =>
+  //   fetchResourceListRequest({ params, sorter, filter })
+  // }
+
   return (
     <div>
       <ProTable<ResourceVo>
@@ -110,7 +118,14 @@ const Resource: React.FC<ResourceProps> = () => {
         defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) =>
-          fetchResourceListRequest({ params, sorter, filter })
+          fetchResourceListRequest({ params, sorter, filter }).then((v) => {
+            console.log('params', params);
+            if (v.success) {
+              return v;
+            } else {
+              message.error(v.message);
+            }
+          })
         }
         toolBarRender={() => <ResourceFormModal reload={reload} />}
       />
