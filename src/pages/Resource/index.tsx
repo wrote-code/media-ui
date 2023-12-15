@@ -3,7 +3,7 @@ import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm } from 'antd';
+import { Button, Popconfirm, message } from 'antd';
 import React, { useRef } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
@@ -44,7 +44,6 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '资源目录',
       width: '30%',
-      hideInSearch: true,
       dataIndex: 'dir',
       ellipsis: true,
       formItemProps: {
@@ -102,6 +101,10 @@ const Resource: React.FC<ResourceProps> = () => {
     },
   ];
 
+  // request={async (params, sorter, filter) =>
+  //   fetchResourceListRequest({ params, sorter, filter })
+  // }
+
   return (
     <div>
       <ProTable<ResourceVo>
@@ -110,7 +113,13 @@ const Resource: React.FC<ResourceProps> = () => {
         defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) =>
-          fetchResourceListRequest({ params, sorter, filter })
+          fetchResourceListRequest({ params, sorter, filter }).then(v => {
+            if(v.success) {
+              return v;
+            } else {
+              message.error(v.message);
+            }
+          })
         }
         toolBarRender={() => <ResourceFormModal reload={reload} />}
       />
