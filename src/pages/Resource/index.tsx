@@ -45,6 +45,7 @@ const Resource: React.FC<ResourceProps> = () => {
       dataIndex: 'filename',
       width: 100,
       ellipsis: true,
+      copyable: true,
       formItemProps: {
         rules: [
           {
@@ -59,6 +60,7 @@ const Resource: React.FC<ResourceProps> = () => {
       // width: '30%',
       dataIndex: 'dir',
       ellipsis: true,
+      copyable: true,
       formItemProps: {
         rules: [
           {
@@ -71,6 +73,8 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '作者',
       dataIndex: ['authorVo', 'username'],
+      ellipsis: true,
+      copyable: true,
       renderFormItem: (_item, _c, form) => {
         // 使用authorName和authorId，增加可读性，同时防止和resource的id混淆。
         // 返回时username是嵌套属性，查询时不是嵌套属性
