@@ -16,6 +16,7 @@ export async function addResource(payload: any) {
 }
 
 export async function fetchResourceListRequest(data: any) {
+  // todo 重复方法
   const url = '/api/resource/queryResourceList';
   return request(url, {
     data: data,
@@ -23,7 +24,7 @@ export async function fetchResourceListRequest(data: any) {
   });
 }
 
-export async function deleteResource(payload: string) {
+export async function deleteResource(payload: { resourceId: string; referenceId: string }) {
   return request('/api/resource/delete', {
     data: payload,
     method: 'POST',

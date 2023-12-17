@@ -4,7 +4,7 @@ import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm, Tag, message } from 'antd';
+import { Button, Popconfirm, Tag, Tooltip, message } from 'antd';
 import React, { useRef } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
@@ -12,6 +12,19 @@ interface ResourceProps {
   resourceList: ResourceVo[];
 }
 
+// 颜色数组，用于给标签着色
+const colorArray = [
+  '#ffa39e',
+  '#ffa940',
+  '#fff1b8',
+  '#ffc53d',
+  '#73d13d',
+  '#5cdbd3',
+  '#4096ff',
+  '#b37feb',
+  '#f759ab',
+  '#ffd6e7',
+];
 const Resource: React.FC<ResourceProps> = () => {
   const dispatch = useDispatch();
   const actionRef = useRef<ActionType>();
@@ -28,15 +41,27 @@ const Resource: React.FC<ResourceProps> = () => {
     reload();
   };
 
-  const renderTag = () => {
-    const tags = ['哈哈哈', '好好好', '活活火', '大大打', '嘿嘿嘿'];
-    return (
-      <React.Fragment>
-        {tags.map((e) => (
-          <Tag key={e}>{e}</Tag>
-        ))}
-      </React.Fragment>
+  const renderTag = (_dom: any, entity: ResourceVo) => {
+    // todo 1+n查询方案优化
+    // 为防止溢出，只显示前5个标签。标签按创建时间正序排列
+    const tags = () => (
+      <div>
+        <React.Fragment>
+          {entity.tagReferenceVoList.map((tag, index) => {
+            if (index >= 5) {
+              return '';
+            } else {
+              return (
+                <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
+                  {tag.tagVo.name}
+                </Tag>
+              );
+            }
+          })}
+        </React.Fragment>
+      </div>
     );
+    return <Tooltip title={tags()}>{tags()}</Tooltip>;
   };
 
   const columns: ProColumns<ResourceVo>[] = [
@@ -92,7 +117,8 @@ const Resource: React.FC<ResourceProps> = () => {
       title: '标签',
       hideInSearch: true,
       width: 330,
-      render: () => renderTag(),
+      ellipsis: true,
+      render: renderTag,
     },
     {
       title: '创建时间',
