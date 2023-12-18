@@ -5,29 +5,20 @@ import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Tag, Tooltip, message } from 'antd';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
+import ResourceTags from './ResourceTag';
+import TagDrawer from './TagDrawer';
 interface ResourceProps {
   resourceList: ResourceVo[];
 }
 
-// 颜色数组，用于给标签着色
-const colorArray = [
-  '#ffa39e',
-  '#ffa940',
-  '#fff1b8',
-  '#ffc53d',
-  '#73d13d',
-  '#5cdbd3',
-  '#4096ff',
-  '#b37feb',
-  '#f759ab',
-  '#ffd6e7',
-];
 const Resource: React.FC<ResourceProps> = () => {
   const dispatch = useDispatch();
   const actionRef = useRef<ActionType>();
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [resourceId, setResourceId] = useState('');
 
   const reload = () => {
     actionRef.current?.reload();
@@ -41,27 +32,26 @@ const Resource: React.FC<ResourceProps> = () => {
     reload();
   };
 
+  const onTagClick = (entity: ResourceVo) => {
+    if (entity.tagReferenceVoList && entity.tagReferenceVoList.length > 0) {
+      setResourceId(entity.id);
+      setDrawerVisible(true);
+    }
+  };
+
+  const onTagDrawerClose = () => {
+    setDrawerVisible(false);
+  };
+
   const renderTag = (_dom: any, entity: ResourceVo) => {
     // todo 1+n查询方案优化
-    // 为防止溢出，只显示前5个标签。标签按创建时间正序排列
-    const tags = () => (
-      <div>
-        <React.Fragment>
-          {entity.tagReferenceVoList.map((tag, index) => {
-            if (index >= 5) {
-              return '';
-            } else {
-              return (
-                <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
-                  {tag.tagVo.name}
-                </Tag>
-              );
-            }
-          })}
-        </React.Fragment>
-      </div>
+    return (
+      <Tooltip title={<ResourceTags tagList={entity.tagReferenceVoList} />}>
+        <div onClick={() => onTagClick(entity)}>
+          <ResourceTags tagList={entity.tagReferenceVoList} />
+        </div>
+      </Tooltip>
     );
-    return <Tooltip title={tags()}>{tags()}</Tooltip>;
   };
 
   const columns: ProColumns<ResourceVo>[] = [
@@ -169,6 +159,14 @@ const Resource: React.FC<ResourceProps> = () => {
         }
         toolBarRender={() => <ResourceFormModal reload={reload} />}
       />
+      {drawerVisible && (
+        <TagDrawer
+          onClose={onTagDrawerClose}
+          visible={drawerVisible}
+          resourceId={resourceId}
+          key={resourceId}
+        />
+      )}
     </div>
   );
 };

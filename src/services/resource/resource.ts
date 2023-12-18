@@ -30,3 +30,11 @@ export async function deleteResource(payload: { resourceId: string; referenceId:
     method: 'POST',
   });
 }
+
+export async function queryTags(payload: { resourceId: string }) {
+  return request('/api/resource/queryTags', {
+    data: payload,
+    params: payload,
+    method: 'POST',
+  });
+}

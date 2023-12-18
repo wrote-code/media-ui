@@ -1,7 +1,8 @@
 import {
   addResource,
   deleteResource,
-  fetchResourceList
+  fetchResourceList,
+  queryTags,
 } from '@/services/resource/resource';
 import { parseResponse } from '@/utils/utils';
 import { message } from 'antd';
@@ -11,20 +12,14 @@ import type { ResourceVo } from '../types';
 
 export interface ResourceStateType {
   resourceList: ResourceVo[];
-  /**
-   * key=key1,key2,key3...，后面的数字是render时的索引。
-   */
-  tagReferenceVoMap: Record<string, TagReferenceVo[]>;
+  tagList: TagReferenceVo[];
 }
 
 export interface ResourceModelType {
   namespace: 'resource';
   state: {
     resourceList: ResourceVo[];
-    /**
-     * key=key1,key2,key3...，后面的数字是render时的索引。
-     */
-    tagReferenceVoMap: Record<string, TagReferenceVo[]>;
+    tagList: TagReferenceVo[];
   };
   effects: {
     fetchResourceList: Effect;
@@ -32,10 +27,11 @@ export interface ResourceModelType {
     deleteResource: Effect;
     deleteTag: Effect;
     addTag: Effect;
+    fetchTagList: Effect;
   };
-  reducer: {
+  reducers: {
     setResourceList: Reducer<ResourceStateType>;
-    setTagReferenceVoMap: Reducer<ResourceStateType>;
+    setTagList: Reducer<ResourceStateType>;
   };
 }
 
@@ -43,7 +39,7 @@ const ResourceMode: ResourceModelType = {
   namespace: 'resource',
   state: {
     resourceList: [],
-    tagReferenceVoMap: {},
+    tagList: [],
   },
   effects: {
     *fetchResourceList(_, { call, put }) {
@@ -65,14 +61,29 @@ const ResourceMode: ResourceModelType = {
         message.success('删除成功');
       }
     },
+    *fetchTagList({ payload }, { call, put }) {
+      const data = yield call(queryTags, payload);
+      if (parseResponse(data)) {
+        yield put({
+          type: 'setTagList',
+          payload: data.data,
+        });
+      }
+    },
     *deleteTag({ payload }, { call }) {},
     *addTag({ payload }, { call }) {},
   },
-  reducer: {
+  reducers: {
     setResourceList(state, { payload }) {
       return {
         ...state,
         resourceList: payload,
+      };
+    },
+    setTagList(state, { payload }) {
+      return {
+        ...state,
+        tagList: payload,
       };
     },
   },
