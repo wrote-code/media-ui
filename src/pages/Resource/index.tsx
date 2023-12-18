@@ -1,13 +1,15 @@
 import AuthorInput from '@/components/Common/input/AuthorInput';
-import type { ResourceStateType } from '@/models/resource/resource';
+import type { ModelType } from '@/models/common/model';
 import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm, message } from 'antd';
-import React, { useRef } from 'react';
+import { Button, Popconfirm, Tooltip, message } from 'antd';
+import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
+import ResourceTags from './resourceTag';
+import TagDrawer from './TagDrawer';
 interface ResourceProps {
   resourceList: ResourceVo[];
 }
@@ -15,6 +17,8 @@ interface ResourceProps {
 const Resource: React.FC<ResourceProps> = () => {
   const dispatch = useDispatch();
   const actionRef = useRef<ActionType>();
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [resourceId, setResourceId] = useState('');
 
   const reload = () => {
     actionRef.current?.reload();
@@ -28,11 +32,33 @@ const Resource: React.FC<ResourceProps> = () => {
     reload();
   };
 
+  const onTagClick = (entity: ResourceVo) => {
+    setResourceId(entity.id);
+    setDrawerVisible(true);
+  };
+
+  const onTagDrawerClose = () => {
+    setDrawerVisible(false);
+  };
+
+  const renderTag = (_dom: any, entity: ResourceVo) => {
+    // todo 1+n查询方案优化
+    return (
+      <Tooltip title={<ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />}>
+        <div>
+          <ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />
+        </div>
+      </Tooltip>
+    );
+  };
+
   const columns: ProColumns<ResourceVo>[] = [
     {
       title: '文件名',
       dataIndex: 'filename',
+      width: 100,
       ellipsis: true,
+      copyable: true,
       formItemProps: {
         rules: [
           {
@@ -44,9 +70,10 @@ const Resource: React.FC<ResourceProps> = () => {
     },
     {
       title: '资源目录',
-      width: '30%',
+      // width: '30%',
       dataIndex: 'dir',
       ellipsis: true,
+      copyable: true,
       formItemProps: {
         rules: [
           {
@@ -59,12 +86,14 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '作者',
       dataIndex: ['authorVo', 'username'],
+      ellipsis: true,
+      copyable: true,
       renderFormItem: (_item, _c, form) => {
         // 使用authorName和authorId，增加可读性，同时防止和resource的id混淆。
         // 返回时username是嵌套属性，查询时不是嵌套属性
         return <AuthorInput form={form} labelName="authorName" valueName="authorId" />;
       },
-      width: 150,
+      width: 100,
     },
     // {
     //   title: '专辑',
@@ -73,17 +102,20 @@ const Resource: React.FC<ResourceProps> = () => {
     //   width: 150,
     // },
     {
+      title: '标签',
+      hideInSearch: true,
+      width: 330,
+      ellipsis: true,
+      onCell: (data) => ({
+        onClick: () => onTagClick(data),
+      }),
+      render: renderTag,
+    },
+    {
       title: '创建时间',
       dataIndex: 'createTime',
       valueType: 'dateTime',
       hideInSearch: true,
-      width: 150,
-    },
-    {
-      title: '更新时间',
-      dataIndex: 'updateTime',
-      hideInSearch: true,
-      valueType: 'dateTime',
       width: 150,
     },
     {
@@ -119,7 +151,6 @@ const Resource: React.FC<ResourceProps> = () => {
         columns={columns}
         request={async (params, sorter, filter) =>
           fetchResourceListRequest({ params, sorter, filter }).then((v) => {
-            console.log('params', params);
             if (v.success) {
               return v;
             } else {
@@ -129,10 +160,18 @@ const Resource: React.FC<ResourceProps> = () => {
         }
         toolBarRender={() => <ResourceFormModal reload={reload} />}
       />
+      {drawerVisible && (
+        <TagDrawer
+          onClose={onTagDrawerClose}
+          visible={drawerVisible}
+          resourceId={resourceId}
+          key={resourceId}
+        />
+      )}
     </div>
   );
 };
 
-export default connect(({ resourceList }: ResourceStateType) => ({
+export default connect(({ resource: { resourceList } }: ModelType) => ({
   resourceList,
 }))(Resource);

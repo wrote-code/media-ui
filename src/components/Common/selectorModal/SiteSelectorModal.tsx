@@ -1,3 +1,4 @@
+import type { ModelType } from '@/models/common/model';
 import type { SiteVo } from '@/models/types';
 import { Form, Input, Modal, Table } from 'antd';
 import Button from 'antd/es/button';
@@ -189,7 +190,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   );
 };
 
-export default connect(({ site }: any) => ({
-  siteList: site.siteList,
-  total: site.total,
+export default connect(({ site: { siteList, total } }: ModelType) => ({
+  siteList,
+  total,
 }))(SiteSelectorModal);
