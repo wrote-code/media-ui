@@ -75,7 +75,7 @@ const ResourceMode: ResourceModelType = {
     *deleteTag({ payload }, { call }) {
       const data = yield call(deleteTag, payload);
       if (parseResponse(data)) {
-        message.info('删除成功');
+        message.success('删除成功');
       }
     },
     *addTag({ payload }, { call }) {
