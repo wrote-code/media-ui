@@ -33,10 +33,8 @@ const Resource: React.FC<ResourceProps> = () => {
   };
 
   const onTagClick = (entity: ResourceVo) => {
-    if (entity.tagReferenceVoList && entity.tagReferenceVoList.length > 0) {
-      setResourceId(entity.id);
-      setDrawerVisible(true);
-    }
+    setResourceId(entity.id);
+    setDrawerVisible(true);
   };
 
   const onTagDrawerClose = () => {
@@ -47,7 +45,7 @@ const Resource: React.FC<ResourceProps> = () => {
     // todo 1+n查询方案优化
     return (
       <Tooltip title={<ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />}>
-        <div onClick={() => onTagClick(entity)}>
+        <div>
           <ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />
         </div>
       </Tooltip>
@@ -108,6 +106,9 @@ const Resource: React.FC<ResourceProps> = () => {
       hideInSearch: true,
       width: 330,
       ellipsis: true,
+      onCell: (data) => ({
+        onClick: () => onTagClick(data),
+      }),
       render: renderTag,
     },
     {
