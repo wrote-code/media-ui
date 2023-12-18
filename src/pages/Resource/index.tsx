@@ -10,6 +10,7 @@ import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
 import ResourceTags from './ResourceTag';
 import TagDrawer from './TagDrawer';
+import type { ModelType } from '@/models/common/model';
 interface ResourceProps {
   resourceList: ResourceVo[];
 }
@@ -171,6 +172,6 @@ const Resource: React.FC<ResourceProps> = () => {
   );
 };
 
-export default connect(({ resourceList }: ResourceStateType) => ({
+export default connect(({ resource: { resourceList } }: ModelType) => ({
   resourceList,
 }))(Resource);

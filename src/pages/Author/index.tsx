@@ -9,6 +9,7 @@ import { Button, Input, Popconfirm } from 'antd';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import AuthorModal from './AuthorModal';
+import type { ModelType } from '@/models/common/model';
 
 const Author: React.FC<AuthorStateType> = () => {
   const [authorModalVisible, setAuthorModalVisible] = useState(false);
@@ -132,6 +133,6 @@ const Author: React.FC<AuthorStateType> = () => {
   );
 };
 
-export default connect((state: AuthorStateType) => ({
-  ...state,
+export default connect(({ author }: ModelType) => ({
+  author,
 }))(Author);

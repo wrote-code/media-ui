@@ -1,4 +1,5 @@
 import SiteSelectorModal from '@/components/Common/selectorModal/SiteSelectorModal';
+import { ModelType } from '@/models/common/model';
 import type { SiteVo } from '@/models/types';
 import { Form, Input, Modal } from 'antd';
 import React, { useState } from 'react';
@@ -104,6 +105,6 @@ const AuthorModal: React.FC<PropsType> = (props) => {
   );
 };
 
-export default connect(() => ({
-  hello: 'hello',
+export default connect(({ author: { authorList } }: ModelType) => ({
+  authorList,
 }))(AuthorModal);

@@ -8,6 +8,7 @@ import Popconfirm from 'antd/es/popconfirm';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import NewSiteModal from './NewSiteModal';
+import { ModelType } from '@/models/common/model';
 
 const Site: React.FC<SiteStateType> = (props) => {
   const actionRef = useRef<ActionType>();
@@ -19,11 +20,9 @@ const Site: React.FC<SiteStateType> = (props) => {
     setNewSiteModalVisible(false);
   };
 
-
   const reload = () => {
     actionRef.current?.reload();
   };
-
 
   const deleteSite = (record: SiteVo) => {
     dispatch({
@@ -105,6 +104,6 @@ const Site: React.FC<SiteStateType> = (props) => {
   );
 };
 
-export default connect(({ siteList }: SiteStateType) => ({
+export default connect(({ site: { siteList } }: ModelType) => ({
   siteList,
 }))(Site);

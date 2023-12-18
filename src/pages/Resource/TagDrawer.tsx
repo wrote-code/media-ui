@@ -4,6 +4,7 @@ import { Drawer } from 'antd';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceTags from './ResourceTag';
+import type { ModelType } from '@/models/common/model';
 
 export interface TagDrawerPropsType {
   tagList: TagReferenceVo[];
@@ -35,6 +36,6 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
   );
 };
 
-export default connect(({ resource }) => ({
-  tagList: resource.tagList,
+export default connect(({ resource: { tagList } }: ModelType) => ({
+  tagList,
 }))(TagDrawer);
