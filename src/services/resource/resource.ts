@@ -48,7 +48,7 @@ export async function deleteTag(payload: { resourceId: string; referenceId: stri
 }
 
 export async function addTag(payload: { resourceId: string; tagName: string }) {
-  return request('//api/resource/addTag', {
+  return request('/api/resource/addTag', {
     data: payload,
     method: 'POST',
     requestType: 'form',
