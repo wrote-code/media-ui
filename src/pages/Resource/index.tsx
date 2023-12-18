@@ -1,16 +1,15 @@
 import AuthorInput from '@/components/Common/input/AuthorInput';
-import type { ResourceStateType } from '@/models/resource/resource';
+import type { ModelType } from '@/models/common/model';
 import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm, Tag, Tooltip, message } from 'antd';
+import { Button, Popconfirm, Tooltip, message } from 'antd';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
-import ResourceTags from './ResourceTag';
+import ResourceTags from './resourceTag';
 import TagDrawer from './TagDrawer';
-import type { ModelType } from '@/models/common/model';
 interface ResourceProps {
   resourceList: ResourceVo[];
 }
@@ -47,9 +46,9 @@ const Resource: React.FC<ResourceProps> = () => {
   const renderTag = (_dom: any, entity: ResourceVo) => {
     // todo 1+n查询方案优化
     return (
-      <Tooltip title={<ResourceTags tagList={entity.tagReferenceVoList} />}>
+      <Tooltip title={<ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />}>
         <div onClick={() => onTagClick(entity)}>
-          <ResourceTags tagList={entity.tagReferenceVoList} />
+          <ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />
         </div>
       </Tooltip>
     );

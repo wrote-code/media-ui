@@ -1,6 +1,8 @@
 import {
   addResource,
+  addTag,
   deleteResource,
+  deleteTag,
   fetchResourceList,
   queryTags,
 } from '@/services/resource/resource';
@@ -70,8 +72,16 @@ const ResourceMode: ResourceModelType = {
         });
       }
     },
-    *deleteTag({ payload }, { call }) {},
-    *addTag({ payload }, { call }) {},
+    *deleteTag({ payload }, { call }) {
+      const data = yield call(deleteTag, payload);
+      if (parseResponse(data)) {
+        message.info('删除成功');
+      }
+    },
+    *addTag({ payload }, { call }) {
+      const data = yield call(addTag, payload);
+      parseResponse(data);
+    },
   },
   reducers: {
     setResourceList(state, { payload }) {
