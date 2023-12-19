@@ -45,7 +45,15 @@ const Resource: React.FC<ResourceProps> = () => {
   const renderTag = (_dom: any, entity: ResourceVo) => {
     // todo 1+n查询方案优化
     return (
-      <Tooltip title={<ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />}>
+      <Tooltip
+        title={
+          <ResourceTags
+            resourceId={entity.id}
+            tagList={entity.tagReferenceVoList}
+            maxTagCount={3}
+          />
+        }
+      >
         <div>
           <ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />
         </div>

@@ -23,10 +23,14 @@ export interface ResourceTagPropsType {
   tagList: TagReferenceVo[];
   editable?: boolean;
   resourceId?: string;
+  /**
+   * 最多显示几个标签，没有传入时显示全部标签。
+   */
+  maxTagCount?: number;
 }
 
 const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsType) => {
-  const { tagList, editable, resourceId } = props;
+  const { tagList, editable, resourceId, maxTagCount } = props;
   const [showInput, setShowInput] = useState(false);
   const [newTag, setNewTag] = useState('');
   const dispatch = useDispatch();
@@ -59,11 +63,16 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
   };
 
   const renderUnEditableTag = () => {
+    const tagCount = maxTagCount ?? 5;
     return (
       <React.Fragment>
         {tagList.map((tag, index) => {
-          if (index >= 5) {
-            return '';
+          if (maxTagCount && index == tagCount) {
+            return (
+              <p key={tag.tagVo.id}>{`点击单元格查看剩余${tagList.length - tagCount}个标签`}</p>
+            );
+          } else if (index > tagCount) {
+            return null;
           } else {
             return (
               <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
