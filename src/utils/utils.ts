@@ -32,7 +32,7 @@ export const getPageQuery = () => parse(window.location.href.split('?')[1]);
  */
 export const parseResponse = (response: DataObject): boolean => {
   if (response.statusCode !== '00000000') {
-    message.error(response.message);
+    message.error(response.statusCode + ' ' + response.message);
     // 报错情况下，若data是string，则显示报错信息，比如没有通过hibernate-validate校验
     if (typeof response.data == 'string') {
       message.warn(response.data);

@@ -57,6 +57,14 @@ export interface PageObject {
    * 数据列表。
    */
   dataList: any[];
+  /**
+   * 错误消息。
+   */
+  errorMessage?: string;
+  /**
+   * 请求是否成功。
+   */
+  success: boolean;
 }
 
 export interface GlobalModelType {

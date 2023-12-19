@@ -131,6 +131,10 @@ export interface ResourceVo {
    * 更新时间
    */
   updateTime: Date;
+  /**
+   * 标签。
+   */
+  tagReferenceVoList: TagReferenceVo[];
 }
 
 export interface ResourceTypeMapVo {
@@ -249,4 +253,50 @@ export interface Directory {
    * 子目录。
    */
   children: Directory[];
+}
+
+export interface TagVo {
+  /**
+   * 主键
+   */
+  id: string;
+
+  /**
+   * 名称
+   */
+  name: string;
+
+  /**
+   * 创建时间
+   */
+  createTime: any;
+}
+
+export default interface TagReferenceVo {
+  serialVersionUID?: number;
+
+  /**
+   * 主键
+   */
+  id: string;
+
+  /**
+   * 资源id
+   */
+  resourceId: string;
+
+  /**
+   * 标签id
+   */
+  tagVo: TagVo;
+
+  /**
+   * 引用类型1:资源
+   */
+  referenceType: number;
+
+  /**
+   * 引用时间。
+   */
+  referTime: any;
 }
