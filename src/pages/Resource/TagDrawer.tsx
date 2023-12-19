@@ -3,7 +3,7 @@ import type TagReferenceVo from '@/models/types';
 import { Drawer } from 'antd';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
-import ResourceTags from './resourceTag';
+import ResourceTags from './ResourceTag';
 
 export interface TagDrawerPropsType {
   tagList: TagReferenceVo[];

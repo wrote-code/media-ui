@@ -45,6 +45,7 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
         tagName: newTag,
       },
     });
+    setNewTag('');
   };
 
   const deleteTag = (tag: TagReferenceVo) => {
@@ -114,10 +115,21 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
   };
 
   return (
-    <React.Fragment>
+    <>
+      {editable && (
+        <Input
+          ref={editInputRef}
+          onChange={handleInputChange}
+          type="text"
+          size="small"
+          style={{ marginBottom: 5 }}
+          value={newTag}
+          onPressEnter={addNewTag}
+        />
+      )}
       {editable && renderEditableTag()}
       {!editable && renderUnEditableTag()}
-    </React.Fragment>
+    </>
   );
 };
 

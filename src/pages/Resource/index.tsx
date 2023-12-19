@@ -8,7 +8,7 @@ import { Button, Popconfirm, Tooltip, message } from 'antd';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
-import ResourceTags from './resourceTag';
+import ResourceTags from './ResourceTag';
 import TagDrawer from './TagDrawer';
 interface ResourceProps {
   resourceList: ResourceVo[];
@@ -39,6 +39,7 @@ const Resource: React.FC<ResourceProps> = () => {
 
   const onTagDrawerClose = () => {
     setDrawerVisible(false);
+    actionRef.current?.reload();
   };
 
   const renderTag = (_dom: any, entity: ResourceVo) => {

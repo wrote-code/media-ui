@@ -78,9 +78,15 @@ const ResourceMode: ResourceModelType = {
         message.success('删除成功');
       }
     },
-    *addTag({ payload }, { call }) {
+    *addTag({ payload }, { call, put }) {
       const data = yield call(addTag, payload);
       parseResponse(data);
+      yield put({
+        type: 'fetchTagList',
+        payload: {
+          ...payload,
+        },
+      });
     },
   },
   reducers: {
