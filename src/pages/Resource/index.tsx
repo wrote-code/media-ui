@@ -50,7 +50,7 @@ const Resource: React.FC<ResourceProps> = () => {
           <ResourceTags
             resourceId={entity.id}
             tagList={entity.tagReferenceVoList}
-            maxTagCount={3}
+            maxTagCount={5}
           />
         }
       >

@@ -69,14 +69,14 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
         {tagList.map((tag, index) => {
           if (maxTagCount && index == tagCount) {
             return (
-              <p key={tag.tagVo.id}>{`点击单元格查看剩余${tagList.length - tagCount}个标签`}</p>
+              <p key={tag.tagVo?.id}>{`点击单元格查看剩余${tagList.length - tagCount}个标签`}</p>
             );
           } else if (index > tagCount) {
             return null;
           } else {
             return (
               <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
-                {tag.tagVo.name}
+                {tag.tagVo?.name}
               </Tag>
             );
           }
@@ -98,7 +98,7 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
               closable={index < tagLength}
               onClose={() => deleteTag(tag)}
             >
-              {tag.tagVo.name}
+              {tag.tagVo?.name}
             </Tag>
           );
         })}
