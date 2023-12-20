@@ -42,6 +42,9 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
 
   const addNewTag = () => {
     setShowInput(false);
+    if(newTag.length == 0) {
+      return;
+    }
     dispatch({
       type: 'resource/addTag',
       payload: {
@@ -136,8 +139,7 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
           onPressEnter={addNewTag}
         />
       )}
-      {editable && renderEditableTag()}
-      {!editable && renderUnEditableTag()}
+      {renderUnEditableTag()}
     </>
   );
 };

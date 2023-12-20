@@ -1,6 +1,7 @@
 import type { ModelType } from '@/models/common/model';
 import type TagReferenceVo from '@/models/types';
 import { Drawer } from 'antd';
+import type { ReactNode } from 'react';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceTags from './ResourceTag';
@@ -13,10 +14,14 @@ export interface TagDrawerPropsType {
    * 关闭时调用。
    */
   onClose: () => void;
+  /**
+   * 抽屉标题。
+   */
+  renderTitle?: ReactNode;
 }
 
 const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
-  const { resourceId, tagList, visible, onClose } = props;
+  const { resourceId, tagList, visible, onClose, renderTitle } = props;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +34,7 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
   }, [dispatch, resourceId]);
 
   return (
-    <Drawer title="标签" onClose={onClose} visible={visible} placement="right">
+    <Drawer title={renderTitle} onClose={onClose} visible={visible} placement="right">
       <ResourceTags resourceId={resourceId} editable={true} tagList={tagList || []} />
     </Drawer>
   );

@@ -4,7 +4,7 @@ import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm, Tooltip, message } from 'antd';
+import { Button, Popconfirm, Tag, Tooltip, message } from 'antd';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
@@ -19,6 +19,7 @@ const Resource: React.FC<ResourceProps> = () => {
   const actionRef = useRef<ActionType>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [resourceId, setResourceId] = useState('');
+  const [currentResource, setCurrentResource] = useState<ResourceVo>();
 
   const reload = () => {
     actionRef.current?.reload();
@@ -34,6 +35,7 @@ const Resource: React.FC<ResourceProps> = () => {
 
   const onTagClick = (entity: ResourceVo) => {
     setResourceId(entity.id);
+    setCurrentResource(entity);
     setDrawerVisible(true);
   };
 
@@ -151,6 +153,10 @@ const Resource: React.FC<ResourceProps> = () => {
   //   fetchResourceListRequest({ params, sorter, filter })
   // }
 
+  const renderTagDrawerTitle = () => {
+    return <span>当前文件：{`${currentResource?.dir}${currentResource?.filename}`}</span>;
+  };
+
   return (
     <div>
       <ProTable<ResourceVo>
@@ -174,6 +180,7 @@ const Resource: React.FC<ResourceProps> = () => {
           onClose={onTagDrawerClose}
           visible={drawerVisible}
           resourceId={resourceId}
+          renderTitle={renderTagDrawerTitle()}
           key={resourceId}
         />
       )}
