@@ -1,7 +1,6 @@
 import type TagReferenceVo from '@/models/types';
-import { PlusOutlined } from '@ant-design/icons';
-import { Input, Tag } from 'antd';
-import React, { useRef, useState } from 'react';
+import { Tag } from 'antd';
+import React from 'react';
 import { useDispatch } from 'umi';
 import './resourceTag.css';
 
@@ -23,54 +22,35 @@ export interface ResourceTagPropsType {
   tagList: TagReferenceVo[];
   editable?: boolean;
   resourceId?: string;
+  totalCount?: number;
 }
 
 const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsType) => {
-  const { tagList, editable, resourceId } = props;
-  const [showInput, setShowInput] = useState(false);
-  const [newTag, setNewTag] = useState('');
+  const { tagList, editable, totalCount, resourceId } = props;
   const dispatch = useDispatch();
-  const editInputRef = useRef(null);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTag(e.target.value);
-  };
-
-  const addNewTag = () => {
-    setShowInput(false);
-    dispatch({
-      type: 'resource/addTag',
-      payload: {
-        resourceId,
-        tagName: newTag,
-      },
-    });
-  };
 
   const deleteTag = (tag: TagReferenceVo) => {
     dispatch({
       type: 'resource/deleteTag',
       payload: {
-        resourceId: tag.resourceId,
+        resourceId: resourceId,
         referenceId: tag.id,
       },
     });
   };
 
   const renderUnEditableTag = () => {
+    const leftCount = totalCount ? totalCount - 5 : -1;
     return (
       <React.Fragment>
         {tagList.map((tag, index) => {
-          if (index >= 5) {
-            return '';
-          } else {
-            return (
-              <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
-                {tag.tagVo.name}
-              </Tag>
-            );
-          }
+          return (
+            <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
+              {tag.tagVo?.name}
+            </Tag>
+          );
         })}
+        {leftCount > 0 && `点击单元格查看剩余${leftCount}个标签`}
       </React.Fragment>
     );
   };
@@ -88,27 +68,10 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
               closable={index < tagLength}
               onClose={() => deleteTag(tag)}
             >
-              {tag.tagVo.name}
+              {tag.tagVo?.name}
             </Tag>
           );
         })}
-        {showInput && (
-          <Input
-            ref={editInputRef}
-            onChange={handleInputChange}
-            type="text"
-            size="small"
-            className="tag-input"
-            value={newTag}
-            onBlur={addNewTag}
-            onPressEnter={addNewTag}
-          />
-        )}
-        {!showInput && (
-          <Tag key={0} className="site-tag-plus" onClick={() => setShowInput(true)}>
-            <PlusOutlined /> 新标签
-          </Tag>
-        )}
       </React.Fragment>
     );
   };

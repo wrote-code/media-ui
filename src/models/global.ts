@@ -18,7 +18,7 @@ export interface GlobalModelState {
 /**
  * 通用返回对象
  */
-export interface DataObject {
+export interface DataObject<T> {
   /**
    * 状态码。
    */
@@ -26,7 +26,7 @@ export interface DataObject {
   /**
    * 数据。
    */
-  data: any;
+  data: T;
   /**
    * 提示信息。
    */

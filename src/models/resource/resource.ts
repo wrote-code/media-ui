@@ -14,6 +14,9 @@ import type { ResourceVo } from '../types';
 
 export interface ResourceStateType {
   resourceList: ResourceVo[];
+  /**
+   * 指定资源拥有的标签。
+   */
   tagList: TagReferenceVo[];
 }
 
@@ -78,9 +81,15 @@ const ResourceMode: ResourceModelType = {
         message.success('删除成功');
       }
     },
-    *addTag({ payload }, { call }) {
+    *addTag({ payload }, { call, put }) {
       const data = yield call(addTag, payload);
       parseResponse(data);
+      yield put({
+        type: 'fetchTagList',
+        payload: {
+          ...payload,
+        },
+      });
     },
   },
   reducers: {

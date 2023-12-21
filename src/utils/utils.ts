@@ -1,5 +1,7 @@
 import type { DataObject } from '@/models/global';
+import { ProTableObject } from '@/models/types';
 import { message } from 'antd';
+import { response } from 'express';
 import { parse } from 'querystring';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
@@ -27,16 +29,24 @@ export const isAntDesignProOrDev = (): boolean => {
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
 /**
  * 解析相应数据，当响应代码不是200且message不为空时，显示message。
- * @param response 响应数据
+ * @param r1 响应数据
  * @returns 操作成功返回true,失败返回false。
  */
-export const parseResponse = (response: DataObject): boolean => {
-  if (response.statusCode !== '00000000') {
-    message.error(response.statusCode + ' ' + response.message);
+export const parseResponse = (r1: DataObject<T>): boolean => {
+  if (r1.statusCode !== '00000000') {
+    message.error(r1.statusCode + ' ' + r1.message);
     // 报错情况下，若data是string，则显示报错信息，比如没有通过hibernate-validate校验
-    if (typeof response.data == 'string') {
-      message.warn(response.data);
+    if (typeof r1.data == 'string') {
+      message.warn(r1.data);
     }
+    return false;
+  }
+  return true;
+};
+
+export const parseTableResponse = (r2: ProTableObject<T>): boolean => {
+  if (!r2.success) {
+    message.error(r2.message);
     return false;
   }
   return true;

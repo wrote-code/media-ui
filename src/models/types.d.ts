@@ -135,6 +135,10 @@ export interface ResourceVo {
    * 标签。
    */
   tagReferenceVoList: TagReferenceVo[];
+  /**
+   * 标签数量。
+   */
+  tagCount: number;
 }
 
 export interface ResourceTypeMapVo {
@@ -299,4 +303,13 @@ export default interface TagReferenceVo {
    * 引用时间。
    */
   referTime: any;
+}
+
+export interface ProTableObject<T> {
+  page: number;
+  pageSize: number;
+  total: number;
+  data: T[];
+  message: string;
+  success: boolean;
 }
