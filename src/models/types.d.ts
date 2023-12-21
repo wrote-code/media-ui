@@ -135,6 +135,10 @@ export interface ResourceVo {
    * 标签。
    */
   tagReferenceVoList: TagReferenceVo[];
+  /**
+   * 标签数量。
+   */
+  tagCount: number;
 }
 
 export interface ResourceTypeMapVo {

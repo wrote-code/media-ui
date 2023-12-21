@@ -4,7 +4,8 @@ import type { ResourceVo } from '@/models/types';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm, Tag, Tooltip, message } from 'antd';
+import { Button, Popconfirm, Tooltip, message } from 'antd';
+import copy from 'copy-to-clipboard';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
@@ -52,24 +53,44 @@ const Resource: React.FC<ResourceProps> = () => {
           <ResourceTags
             resourceId={entity.id}
             tagList={entity.tagReferenceVoList}
-            maxTagCount={5}
+            totalCount={entity.tagCount}
           />
         }
       >
         <div>
-          <ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />
+          <ResourceTags
+            totalCount={entity.tagCount}
+            resourceId={entity.id}
+            tagList={entity.tagReferenceVoList}
+          />
         </div>
       </Tooltip>
     );
+  };
+
+  const onFileNameCellClick = (data: ResourceVo) => {
+    const onClick = () => {
+      const success = copy(`${data.dir}${data.filename}`);
+      if (success) {
+        message.success('全路径复制成功');
+      } else {
+        // 显示失败消息影响用户体验
+        console.log('全路径复制失败');
+      }
+    };
+    return {
+      onClick: onClick,
+    };
   };
 
   const columns: ProColumns<ResourceVo>[] = [
     {
       title: '文件名',
       dataIndex: 'filename',
-      width: 100,
+      width: 200,
       ellipsis: true,
       copyable: true,
+      onCell: onFileNameCellClick,
       formItemProps: {
         rules: [
           {

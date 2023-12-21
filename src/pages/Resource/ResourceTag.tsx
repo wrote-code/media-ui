@@ -22,45 +22,35 @@ export interface ResourceTagPropsType {
   tagList: TagReferenceVo[];
   editable?: boolean;
   resourceId?: string;
-  /**
-   * 最多显示几个标签，没有传入时显示全部标签。
-   */
-  maxTagCount?: number;
+  totalCount?: number;
 }
 
 const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsType) => {
-  const { tagList, maxTagCount, editable } = props;
+  const { tagList, editable, totalCount, resourceId } = props;
   const dispatch = useDispatch();
 
   const deleteTag = (tag: TagReferenceVo) => {
     dispatch({
       type: 'resource/deleteTag',
       payload: {
-        resourceId: tag.resourceId,
+        resourceId: resourceId,
         referenceId: tag.id,
       },
     });
   };
 
   const renderUnEditableTag = () => {
-    const tagCount = maxTagCount ?? 5;
+    const leftCount = totalCount ? totalCount - 5 : -1;
     return (
       <React.Fragment>
         {tagList.map((tag, index) => {
-          if (maxTagCount && index == tagCount) {
-            return (
-              <p key={tag.tagVo?.id}>{`点击单元格查看剩余${tagList.length - tagCount}个标签`}</p>
-            );
-          } else if (index > tagCount) {
-            return null;
-          } else {
-            return (
-              <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
-                {tag.tagVo?.name}
-              </Tag>
-            );
-          }
+          return (
+            <Tag color={colorArray[index % 10]} key={tag.id} style={{ color: 'black' }}>
+              {tag.tagVo?.name}
+            </Tag>
+          );
         })}
+        {leftCount > 0 && `点击单元格查看剩余${leftCount}个标签`}
       </React.Fragment>
     );
   };
