@@ -1,12 +1,11 @@
 import type { ModelType } from '@/models/common/model';
 import type TagReferenceVo from '@/models/types';
-import { Drawer, Input, Tag } from 'antd';
-import type { MouseEvent, ReactNode } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
-import { TagModelType, connect, useDispatch } from 'umi';
-import ResourceTags from './ResourceTag';
 import type { TagVo } from '@/models/types';
-import { debounce, throttle } from 'lodash';
+import { Button, Drawer, Input, Tag, message } from 'antd';
+import type { ReactNode } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { connect, useDispatch } from 'umi';
+import ResourceTags from './ResourceTag';
 
 const colorArray = [
   '#ffa39e',
@@ -58,18 +57,12 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     });
   }, [dispatch, resourceId]);
 
-  // todo 节流
+  // todo 防抖
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTag(e.target.value);
     if (newTag.length == 0) {
       return;
     }
-    dispatch({
-      type: 'tag/queryTagList',
-      payload: {
-        name: newTag,
-      },
-    });
   };
 
   const addNewTag = () => {
@@ -86,12 +79,13 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     setNewTag('');
   };
 
-  const addTagByClick = (e: MouseEvent, tag: TagVo) => {
+  // todo 防抖
+  const addTagByClick = (tag: TagVo) => {
     dispatch({
       type: 'resource/addTag',
       payload: {
         resourceId,
-        tagName: tag.id,
+        tagName: tag.name,
       },
     });
   };
@@ -105,6 +99,19 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     });
   };
 
+  const queryTagsList = () => {
+    if (newTag.length == 0) {
+      message.warn('输入内容为空');
+      return;
+    }
+    dispatch({
+      type: 'tag/queryTagList',
+      payload: {
+        name: newTag,
+      },
+    });
+  };
+
   /**
    * 选然searchTag查到的标签，点击标签可以为当前资源添加标签。
    */
@@ -115,9 +122,8 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
           return (
             <Tag
               color={colorArray[index % 10]}
-              onClick={(e) => {
-                console.log(e.target);
-              }}
+              style={{ color: 'black' }}
+              onClick={() => addTagByClick(tag)}
               key={tag.id}
             >
               {tag.name}
@@ -131,6 +137,7 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
   return (
     <Drawer title={renderTitle} onClose={closeDrawer} visible={visible} placement="right">
       <Input
+        placeholder="按回车添加标签，点击模糊查询查看相似标签"
         ref={editInputRef}
         onChange={handleInputChange}
         type="text"
@@ -140,8 +147,19 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
         onPressEnter={addNewTag}
       />
       <ResourceTags resourceId={resourceId} editable={true} tagList={tagList || []} />
-      <p>匹配的标签：</p>
-      {renderTagArea()}
+      <div
+        style={{ marginBottom: 10, marginTop: 10, paddingTop: 5, borderTop: 'solid 1px lightblue' }}
+      >
+        <Button
+          size="small"
+          type="primary"
+          style={{ display: 'flex', marginBottom: 5 }}
+          onClick={queryTagsList}
+        >
+          模糊查询
+        </Button>
+        {renderTagArea()}
+      </div>
     </Drawer>
   );
 };

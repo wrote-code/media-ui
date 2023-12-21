@@ -1,7 +1,6 @@
 import type TagReferenceVo from '@/models/types';
-import { PlusOutlined } from '@ant-design/icons';
-import { Input, Tag } from 'antd';
-import React, { useRef, useState } from 'react';
+import { Tag } from 'antd';
+import React from 'react';
 import { useDispatch } from 'umi';
 import './resourceTag.css';
 
@@ -30,30 +29,8 @@ export interface ResourceTagPropsType {
 }
 
 const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsType) => {
-  const { tagList, resourceId, maxTagCount } = props;
-  const [showInput, setShowInput] = useState(false);
-  const [newTag, setNewTag] = useState('');
+  const { tagList, maxTagCount, editable } = props;
   const dispatch = useDispatch();
-  const editInputRef = useRef(null);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTag(e.target.value);
-  };
-
-  const addNewTag = () => {
-    setShowInput(false);
-    if (newTag.length == 0) {
-      return;
-    }
-    dispatch({
-      type: 'resource/addTag',
-      payload: {
-        resourceId,
-        tagName: newTag,
-      },
-    });
-    setNewTag('');
-  };
 
   const deleteTag = (tag: TagReferenceVo) => {
     dispatch({
@@ -88,7 +65,6 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
     );
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderEditableTag = () => {
     const tagLength = tagList.length;
     return (
@@ -106,28 +82,16 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
             </Tag>
           );
         })}
-        {showInput && (
-          <Input
-            ref={editInputRef}
-            onChange={handleInputChange}
-            type="text"
-            size="small"
-            className="tag-input"
-            value={newTag}
-            onBlur={addNewTag}
-            onPressEnter={addNewTag}
-          />
-        )}
-        {!showInput && (
-          <Tag key={0} className="site-tag-plus" onClick={() => setShowInput(true)}>
-            <PlusOutlined /> 新标签
-          </Tag>
-        )}
       </React.Fragment>
     );
   };
 
-  return <>{renderUnEditableTag()}</>;
+  return (
+    <React.Fragment>
+      {editable && renderEditableTag()}
+      {!editable && renderUnEditableTag()}
+    </React.Fragment>
+  );
 };
 
 export default ResourceTags;
