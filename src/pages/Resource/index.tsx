@@ -5,10 +5,11 @@ import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Tooltip, message } from 'antd';
+import copy from 'copy-to-clipboard';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
-import ResourceTags from './resourceTag';
+import ResourceTags from './ResourceTag';
 import TagDrawer from './TagDrawer';
 interface ResourceProps {
   resourceList: ResourceVo[];
@@ -19,6 +20,7 @@ const Resource: React.FC<ResourceProps> = () => {
   const actionRef = useRef<ActionType>();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [resourceId, setResourceId] = useState('');
+  const [currentResource, setCurrentResource] = useState<ResourceVo>();
 
   const reload = () => {
     actionRef.current?.reload();
@@ -34,31 +36,61 @@ const Resource: React.FC<ResourceProps> = () => {
 
   const onTagClick = (entity: ResourceVo) => {
     setResourceId(entity.id);
+    setCurrentResource(entity);
     setDrawerVisible(true);
   };
 
   const onTagDrawerClose = () => {
     setDrawerVisible(false);
+    actionRef.current?.reload();
   };
 
   const renderTag = (_dom: any, entity: ResourceVo) => {
     // todo 1+n查询方案优化
     return (
-      <Tooltip title={<ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />}>
+      <Tooltip
+        title={
+          <ResourceTags
+            resourceId={entity.id}
+            tagList={entity.tagReferenceVoList}
+            totalCount={entity.tagCount}
+          />
+        }
+      >
         <div>
-          <ResourceTags resourceId={entity.id} tagList={entity.tagReferenceVoList} />
+          <ResourceTags
+            totalCount={entity.tagCount}
+            resourceId={entity.id}
+            tagList={entity.tagReferenceVoList}
+          />
         </div>
       </Tooltip>
     );
+  };
+
+  const onFileNameCellClick = (data: ResourceVo) => {
+    const onClick = () => {
+      const success = copy(`${data.dir}${data.filename}`);
+      if (success) {
+        message.success('全路径复制成功');
+      } else {
+        // 显示失败消息影响用户体验
+        console.log('全路径复制失败');
+      }
+    };
+    return {
+      onClick: onClick,
+    };
   };
 
   const columns: ProColumns<ResourceVo>[] = [
     {
       title: '文件名',
       dataIndex: 'filename',
-      width: 100,
+      width: 200,
       ellipsis: true,
       copyable: true,
+      onCell: onFileNameCellClick,
       formItemProps: {
         rules: [
           {
@@ -142,6 +174,10 @@ const Resource: React.FC<ResourceProps> = () => {
   //   fetchResourceListRequest({ params, sorter, filter })
   // }
 
+  const renderTagDrawerTitle = () => {
+    return <span>当前文件：{`${currentResource?.dir}${currentResource?.filename}`}</span>;
+  };
+
   return (
     <div>
       <ProTable<ResourceVo>
@@ -165,7 +201,9 @@ const Resource: React.FC<ResourceProps> = () => {
           onClose={onTagDrawerClose}
           visible={drawerVisible}
           resourceId={resourceId}
+          renderTitle={renderTagDrawerTitle()}
           key={resourceId}
+          setVisible={setDrawerVisible}
         />
       )}
     </div>
