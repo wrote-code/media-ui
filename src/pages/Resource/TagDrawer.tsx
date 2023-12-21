@@ -66,7 +66,8 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
   };
 
   const addNewTag = () => {
-    if (newTag.length == 0) {
+    if (newTag.length == 0 || newTag.length > 10) {
+      message.warn('标签为空或超过10位')
       return;
     }
     dispatch({
