@@ -38,7 +38,7 @@ screenshot
 build
 
 # 其他
-todo.txt
+todo.md
 dev-build.bat
 # 测试页面不用提交,提交的是index.tsx.backup
 src/pages/demo/
