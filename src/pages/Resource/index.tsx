@@ -182,6 +182,7 @@ const Resource: React.FC<ResourceProps> = () => {
           resourceId={resourceId}
           renderTitle={renderTagDrawerTitle()}
           key={resourceId}
+          setVisible={setDrawerVisible}
         />
       )}
     </div>

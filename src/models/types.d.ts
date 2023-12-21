@@ -300,3 +300,12 @@ export default interface TagReferenceVo {
    */
   referTime: any;
 }
+
+export interface ProTableObject<T> {
+  page: number;
+  pageSize: number;
+  total: number;
+  data: T[];
+  message: string;
+  success: boolean;
+}

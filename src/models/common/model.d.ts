@@ -4,6 +4,7 @@ import type {
   ResourceStateType,
   SelectAuthorStateType,
   DirectoryModelStateType,
+  TagStateType,
 } from 'umi';
 
 export interface ModelType {
@@ -12,4 +13,5 @@ export interface ModelType {
   resource: ResourceStateType;
   author: AuthorStateType;
   site: SiteStateType;
+  tag: TagStateType;
 }

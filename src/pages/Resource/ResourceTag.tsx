@@ -30,7 +30,7 @@ export interface ResourceTagPropsType {
 }
 
 const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsType) => {
-  const { tagList, editable, resourceId, maxTagCount } = props;
+  const { tagList, resourceId, maxTagCount } = props;
   const [showInput, setShowInput] = useState(false);
   const [newTag, setNewTag] = useState('');
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
 
   const addNewTag = () => {
     setShowInput(false);
-    if(newTag.length == 0) {
+    if (newTag.length == 0) {
       return;
     }
     dispatch({
@@ -88,6 +88,7 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const renderEditableTag = () => {
     const tagLength = tagList.length;
     return (
@@ -126,22 +127,7 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
     );
   };
 
-  return (
-    <>
-      {editable && (
-        <Input
-          ref={editInputRef}
-          onChange={handleInputChange}
-          type="text"
-          size="small"
-          style={{ marginBottom: 5 }}
-          value={newTag}
-          onPressEnter={addNewTag}
-        />
-      )}
-      {renderUnEditableTag()}
-    </>
-  );
+  return <>{renderUnEditableTag()}</>;
 };
 
 export default ResourceTags;

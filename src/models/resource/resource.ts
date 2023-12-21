@@ -14,6 +14,9 @@ import type { ResourceVo } from '../types';
 
 export interface ResourceStateType {
   resourceList: ResourceVo[];
+  /**
+   * 指定资源拥有的标签。
+   */
   tagList: TagReferenceVo[];
 }
 
