@@ -61,13 +61,13 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
       payload: {
         filter: {},
         params: {
-          current: 1,
+          current: currentPage,
           pageSize: 5,
         },
         sort: {},
       },
     });
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
 
   const rowSelection = {
     type: 'radio',
@@ -162,6 +162,13 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     );
   };
 
+  const onRow: (data: AuthorVo) => React.HTMLAttributes<any> = (data: AuthorVo) => ({
+    onClick: () => {
+      props.onSelect(data);
+      form.resetFields();
+    },
+  });
+
   return (
     <Modal
       title={title ?? '选择作者'}
@@ -172,10 +179,10 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         <Button key={1} onClick={() => setModalVisible(true)}>
           添加
         </Button>,
-        <Button key={2} onClick={() => setModalVisible(true)}>
+        <Button key={2} onClick={props.onCancel}>
           取消
         </Button>,
-        <Button key={3} type="primary" onClick={() => setModalVisible(true)}>
+        <Button key={3} type="primary" onClick={() => props.onSelect}>
           确定
         </Button>,
       ]}
@@ -188,6 +195,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         size="small"
         rowKey="id"
         pagination={pagination}
+        onRow={onRow}
       />
       {addButton && (
         <AuthorModal
