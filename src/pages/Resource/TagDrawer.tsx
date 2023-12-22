@@ -6,7 +6,7 @@ import { Button, Drawer, Input, Tag, message } from 'antd';
 import type { ReactNode } from 'react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
-import ResourceTags from './ResourceTag';
+import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 
 const colorArray = [
   '#ffa39e',

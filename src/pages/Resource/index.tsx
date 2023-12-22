@@ -9,7 +9,7 @@ import copy from 'copy-to-clipboard';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import ResourceFormModal from './ResourceFormModal';
-import ResourceTags from './ResourceTag';
+import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 import TagDrawer from './TagDrawer';
 interface ResourceProps {
   resourceList: ResourceVo[];
