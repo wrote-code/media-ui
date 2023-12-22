@@ -76,7 +76,10 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
 
   const rowSelection = {
     type: 'radio',
-    onSelect: props.onSelect,
+    onSelect: (record: SiteVo) => {
+      props.onSelect(record);
+      form.resetFields();
+    },
     selectedRowKeys: props.selectedSite == null ? [] : [props.selectedSite.id],
   };
 
