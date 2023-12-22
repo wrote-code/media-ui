@@ -30,7 +30,6 @@ const RateTag: React.FC<PropsType> = (props: PropsType) => {
   const { setRate, rate, unsetRate, rateTagList } = props;
 
   const setRateId = (data: TagVo) => {
-    console.log(data);
     setRate(data.id);
   };
 

@@ -12,6 +12,10 @@ export interface TagStateType {
    * 评分标签。
    */
   rateTagList: TagVo[];
+  /**
+   * 用来标记收藏行为的标签。
+   */
+  favoriteTagList: TagVo[];
 }
 
 export interface TagModelType {
@@ -20,16 +24,19 @@ export interface TagModelType {
   effects: {
     queryTagList: Effect;
     queryRateTagList: Effect;
+    queryFavoriteTag: Effect;
   };
   reducers: {
     setTagList: Reducer<TagStateType>;
     setRateTagList: Reducer<TagStateType>;
+    setFavoriteTagList: Reducer<TagStateType>;
   };
 }
 
 const model: TagModelType = {
   namespace: 'tag',
   state: {
+    favoriteTagList: [],
     tagList: [],
     rateTagList: [],
   },
@@ -52,6 +59,15 @@ const model: TagModelType = {
         });
       }
     },
+    *queryFavoriteTag({ payload }, { call, put }) {
+      const data: ProTableObject<TagVo> = yield call(queryTagList, payload);
+      if (parseTableResponse(data)) {
+        yield put({
+          type: 'setFavoriteTagList',
+          payload: data.data,
+        });
+      }
+    },
   },
   reducers: {
     setTagList(state, { payload }) {
@@ -64,6 +80,12 @@ const model: TagModelType = {
       return {
         ...state,
         rateTagList: payload,
+      };
+    },
+    setFavoriteTagList(state: TagStateType, { payload }) {
+      return {
+        ...state,
+        favoriteTagList: payload,
       };
     },
   },
