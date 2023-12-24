@@ -36,18 +36,21 @@ const RateTag: React.FC<PropsType> = (props: PropsType) => {
   useEffect(() => {
     // 查询当前资源的评分。
     dispatch({
-      type: 'tag/queryTagReferenceList',
+      type: 'tag/queryCurrentRate',
       payload: {
-        currentPate: 1,
-        pageSize: 10,
-        resourceId: resourceId,
+        params: {
+          currentPate: 1,
+          pageSize: 10,
+          resourceId: resourceId,
+          rate: true,
+        },
       },
     });
   }, [dispatch, resourceId]);
 
   const setRate = (rate: TagVo) => {
     dispatch({
-      type: 'tag/addTag',
+      type: 'tag/addRate',
       payload: {
         resourceId,
         tagId: rate.id,

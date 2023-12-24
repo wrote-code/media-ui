@@ -1,3 +1,4 @@
+import FavoriteTag from '@/components/Common/tagFc/FavoriteTag';
 import RateTag from '@/components/Common/tagFc/RateTag';
 import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 import type { ModelType } from '@/models/common/model';
@@ -155,6 +156,10 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
       <RateTag resourceId={resourceId} />
       <Divider style={dividerStyle} orientation="left">
         收藏
+      </Divider>
+      <FavoriteTag resourceId={resourceId} />
+      <Divider style={dividerStyle} orientation="left">
+        当前标签
       </Divider>
       <ResourceTags resourceId={resourceId} editable={true} tagList={tagList || []} />
       {dbTagList && dbTagList.length > 0 ? (

@@ -1,22 +1,23 @@
 import type { ModelType } from '@/models/common/model';
+import type TagReferenceVo from '@/models/types';
 import type { TagVo } from '@/models/types';
-import type { CSSProperties } from 'react';
+import { Tag } from 'antd';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
 
 export interface PropsType {
-  onClick: (tag: TagVo[]) => void;
-  favorite: boolean;
+  resourceId: string;
   favoriteTagList: TagVo[];
+  currentFavorite: TagReferenceVo | null;
 }
 
 const FavoriteTag: React.FC<PropsType> = (props: PropsType) => {
-  const { onClick, favorite, favoriteTagList } = props;
+  const { favoriteTagList, resourceId, currentFavorite } = props;
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({
-      type: 'tag/queryRateTagList',
+      type: 'tag/queryFavoriteTag',
       payload: {
         currentPate: 1,
         pageSize: 1,
@@ -25,27 +26,39 @@ const FavoriteTag: React.FC<PropsType> = (props: PropsType) => {
     });
   }, [dispatch]);
 
-  const spanStyle: CSSProperties = {
-    padding: 5,
-    margin: 5,
-    background: 'red',
-    color: 'white',
-    border: '1px solid grey',
-    borderRadius: 5,
-  };
+  useEffect(() => {
+    dispatch({
+      type: 'tag/queryCurrentFavorite',
+      payload: {
+        params: {
+          currentPate: 1,
+          pageSize: 10,
+          resourceId: resourceId,
+          favorite: true,
+        },
+      },
+    });
+  }, [dispatch, resourceId]);
 
-  const favoriteStyle: CSSProperties = {
-    ...spanStyle,
-    background: 'lightgreen',
+  const toggleFavorite = () => {
+    dispatch({
+      type: 'tag/addFavorite',
+      payload: {
+        tagReferenceId: currentFavorite?.id,
+        tagId: favoriteTagList[0].id,
+        resourceId: resourceId,
+      },
+    });
   };
 
   return (
-    <span style={favorite ? favoriteStyle : spanStyle} onClick={() => onClick(favoriteTagList)}>
-      收藏
-    </span>
+    <Tag color="#ff0000" onClick={toggleFavorite}>
+      添加收藏
+    </Tag>
   );
 };
 
-export default connect(({ tag: { favoriteTagList } }: ModelType) => ({ favoriteTagList }))(
-  FavoriteTag,
-);
+export default connect(({ tag: { favoriteTagList, currentFavorite } }: ModelType) => ({
+  favoriteTagList,
+  currentFavorite,
+}))(FavoriteTag);
