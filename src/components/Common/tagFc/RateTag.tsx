@@ -1,6 +1,6 @@
 import type { ModelType } from '@/models/common/model';
-import type { TagVo } from '@/models/types';
 import type TagReferenceVo from '@/models/types';
+import type { TagVo } from '@/models/types';
 import { Tag } from 'antd';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';
@@ -26,7 +26,7 @@ const RateTag: React.FC<PropsType> = (props: PropsType) => {
     dispatch({
       type: 'tag/queryRateTagList',
       payload: {
-        currentPate: 1,
+        current: 1,
         pageSize: 10,
         rate: true,
       },
@@ -39,7 +39,7 @@ const RateTag: React.FC<PropsType> = (props: PropsType) => {
       type: 'tag/queryCurrentRate',
       payload: {
         params: {
-          currentPate: 1,
+          current: 1,
           pageSize: 10,
           resourceId: resourceId,
           rate: true,

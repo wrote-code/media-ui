@@ -19,8 +19,8 @@ const FavoriteTag: React.FC<PropsType> = (props: PropsType) => {
     dispatch({
       type: 'tag/queryFavoriteTag',
       payload: {
-        currentPate: 1,
-        pageSize: 1,
+        current: 1,
+        pageSize: 10,
         favourite: true,
       },
     });
@@ -31,7 +31,7 @@ const FavoriteTag: React.FC<PropsType> = (props: PropsType) => {
       type: 'tag/queryCurrentFavorite',
       payload: {
         params: {
-          currentPate: 1,
+          current: 1,
           pageSize: 10,
           resourceId: resourceId,
           favorite: true,
@@ -42,7 +42,7 @@ const FavoriteTag: React.FC<PropsType> = (props: PropsType) => {
 
   const toggleFavorite = () => {
     dispatch({
-      type: 'tag/addFavorite',
+      type: 'tag/toggleFavorite',
       payload: {
         tagReferenceId: currentFavorite?.id,
         tagId: favoriteTagList[0].id,
@@ -51,11 +51,15 @@ const FavoriteTag: React.FC<PropsType> = (props: PropsType) => {
     });
   };
 
-  return (
-    <Tag color="#ff0000" onClick={toggleFavorite}>
-      添加收藏
-    </Tag>
-  );
+  if (currentFavorite) {
+    return (
+      <Tag color="#ff0000" onClick={toggleFavorite}>
+        取消收藏
+      </Tag>
+    );
+  } else {
+    return <Tag onClick={toggleFavorite}>添加收藏</Tag>;
+  }
 };
 
 export default connect(({ tag: { favoriteTagList, currentFavorite } }: ModelType) => ({

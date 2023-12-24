@@ -4,6 +4,10 @@ import type { Effect, Reducer } from 'umi';
 import type TagReferenceVo from './types';
 import type { ProTableObject, TagVo } from './types';
 import type { TableResponse } from './types/response/table';
+import { deleteTag } from '@/services/resource/resource';
+import { message } from 'antd';
+import type { ResponseData } from './types/response/response';
+import { StatusCode } from './types/response/enum';
 
 export interface TagStateType {
   /**
@@ -55,7 +59,7 @@ export interface TagModelType {
     /**
      * 添加收藏。
      */
-    addFavorite: Effect;
+    toggleFavorite: Effect;
     /**
      * 查询当前资源是否被收藏，tag_reference表resource_id=当前资源且name=收藏。
      */
@@ -133,32 +137,45 @@ const model: TagModelType = {
         });
       }
     },
-    *addFavorite({ payload }, { call, put }) {
-      const data: TableResponse<TagReferenceVo> = yield call(addTag, payload);
-      if (parseResponse(data)) {
-        yield put({
-          type: 'resource/fetchTagList',
-          payload: {
-            resourceId: payload.resourceId,
-          },
+    *toggleFavorite({ payload }, { call, put }) {
+      if (payload.tagReferenceId) {
+        const data = yield call(deleteTag, {
+          resourceId: payload.resourceId,
+          referenceId: payload.tagReferenceId,
         });
-        yield put({
-          type: 'queryCurrentFavorite',
-          payload: {
-            params: {
-              resourceId: payload.resourceId,
-              favorite: true,
-            },
-          },
-        });
+        if (data.statusCode != StatusCode.success) {
+          message.error('取消收藏失败');
+        }
+      } else {
+        const data: ResponseData<TagReferenceVo> = yield call(addTag, payload);
+        if (data.statusCode !== StatusCode.success) {
+          message.error('收藏失败');
+        }
       }
+      yield put({
+        type: 'resource/fetchTagList',
+        payload: {
+          resourceId: payload.resourceId,
+        },
+      });
+      yield put({
+        type: 'queryCurrentFavorite',
+        payload: {
+          params: {
+            resourceId: payload.resourceId,
+            favorite: true,
+            pageSize: 10,
+            current: 1,
+          },
+        },
+      });
     },
     *queryCurrentFavorite({ payload }, { call, put }) {
       const data: TableResponse<TagReferenceVo> = yield call(queryTagReferenceList, payload);
-      if (parseTableResponse(data) && data.data.length === 1) {
+      if (parseTableResponse(data)) {
         yield put({
           type: 'setCurrentFavorite',
-          payload: data.data[0],
+          payload: data.data.length === 1 ? data.data[0] : null,
         });
       }
     },
