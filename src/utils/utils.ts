@@ -1,5 +1,6 @@
 import type { DataObject } from '@/models/global';
 import { ProTableObject } from '@/models/types';
+import { TableResponse } from '@/models/types/response/table';
 import { message } from 'antd';
 import { response } from 'express';
 import { parse } from 'querystring';
@@ -44,7 +45,7 @@ export const parseResponse = (r1: DataObject<T>): boolean => {
   return true;
 };
 
-export const parseTableResponse = (r2: ProTableObject<T>): boolean => {
+export const parseTableResponse = (r2: ProTableObject<T>| TableResponse<T>): boolean => {
   if (!r2.success) {
     message.error(r2.message);
     return false;

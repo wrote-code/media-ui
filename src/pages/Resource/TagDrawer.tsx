@@ -1,11 +1,14 @@
+import FavoriteTag from '@/components/Common/tagFc/FavoriteTag';
+import RateTag from '@/components/Common/tagFc/RateTag';
+import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 import type { ModelType } from '@/models/common/model';
 import type TagReferenceVo from '@/models/types';
 import type { TagVo } from '@/models/types';
-import { Button, Drawer, Input, Tag, message } from 'antd';
-import type { ReactNode } from 'react';
+import { useDebounceFn } from 'ahooks';
+import { Divider, Drawer, Input, Tag, message } from 'antd';
+import type { CSSProperties, ReactNode } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
-import ResourceTags from './ResourceTag';
 
 const colorArray = [
   '#ffa39e',
@@ -44,7 +47,7 @@ export interface TagDrawerPropsType {
 
 const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
   const { resourceId, tagList, visible, onClose, renderTitle, dbTagList, setVisible } = props;
-  const [newTag, setNewTag] = useState('');
+  const [newTag, setNewTag] = useState('hhh');
   const dispatch = useDispatch();
   const editInputRef = useRef(null);
 
@@ -57,17 +60,26 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     });
   }, [dispatch, resourceId]);
 
-  // todo 防抖
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTag(e.target.value);
-    if (newTag.length == 0) {
-      return;
-    }
-  };
+  const { run: handleInputChange } = useDebounceFn(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setNewTag(value);
+      if (value.length == 0) {
+        return;
+      }
+      dispatch({
+        type: 'tag/queryTagList',
+        payload: {
+          name: value,
+        },
+      });
+    },
+    { wait: 500 },
+  );
 
   const addNewTag = () => {
     if (newTag.length == 0 || newTag.length > 10) {
-      message.warn('标签为空或超过10位')
+      message.warn('标签为空或超过10位');
       return;
     }
     dispatch({
@@ -80,7 +92,6 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     setNewTag('');
   };
 
-  // todo 防抖
   const addTagByClick = (tag: TagVo) => {
     dispatch({
       type: 'resource/addTag',
@@ -97,19 +108,6 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     dispatch({
       type: 'tag/setTagList',
       payload: [],
-    });
-  };
-
-  const queryTagsList = () => {
-    if (newTag.length == 0) {
-      message.warn('输入内容为空');
-      return;
-    }
-    dispatch({
-      type: 'tag/queryTagList',
-      payload: {
-        name: newTag,
-      },
     });
   };
 
@@ -135,6 +133,12 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     );
   };
 
+  const dividerStyle: CSSProperties = {
+    marginBottom: 10,
+    marginTop: 10,
+    paddingTop: 5,
+  };
+
   return (
     <Drawer title={renderTitle} onClose={closeDrawer} visible={visible} placement="right">
       <Input
@@ -144,23 +148,26 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
         type="text"
         size="small"
         style={{ marginBottom: 5 }}
-        value={newTag}
         onPressEnter={addNewTag}
       />
+      <Divider style={dividerStyle} orientation="left">
+        评分
+      </Divider>
+      <RateTag resourceId={resourceId} />
+      <Divider style={dividerStyle} orientation="left">
+        收藏
+      </Divider>
+      <FavoriteTag resourceId={resourceId} />
+      <Divider style={dividerStyle} orientation="left">
+        当前标签
+      </Divider>
       <ResourceTags resourceId={resourceId} editable={true} tagList={tagList || []} />
-      <div
-        style={{ marginBottom: 10, marginTop: 10, paddingTop: 5, borderTop: 'solid 1px lightblue' }}
-      >
-        <Button
-          size="small"
-          type="primary"
-          style={{ display: 'flex', marginBottom: 5 }}
-          onClick={queryTagsList}
-        >
-          模糊查询
-        </Button>
-        {renderTagArea()}
-      </div>
+      {dbTagList && dbTagList.length > 0 ? (
+        <Divider style={dividerStyle} orientation="left">
+          搜索结果
+        </Divider>
+      ) : null}
+      {renderTagArea()}
     </Drawer>
   );
 };

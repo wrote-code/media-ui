@@ -1,9 +1,10 @@
 import type { ModelType } from '@/models/common/model';
 import type { AuthorVo } from '@/models/types';
+import AuthorModal from '@/pages/Author/AuthorModal';
 import { Button, Form, Input, Modal, Table } from 'antd';
 import type { Rule } from 'antd/lib/form';
 import type { ColumnsType, TablePaginationConfig } from 'antd/lib/table';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 
 interface PropsType {
@@ -43,25 +44,30 @@ interface PropsType {
    * 弹框标题。
    */
   title?: string;
+  /**
+   * 新增按钮，默认false。
+   */
+  addButton?: boolean;
 }
 
 const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const { selectedAuthor, total, currentPage, setCurrentPage, title } = props;
+  const [modalVisible, setModalVisible] = useState(false);
+  const { selectedAuthor, total, currentPage, setCurrentPage, title, addButton } = props;
   useEffect(() => {
     dispatch({
       type: 'modal/selectAuthor/queryAuthorList',
       payload: {
         filter: {},
         params: {
-          current: 1,
+          current: currentPage,
           pageSize: 5,
         },
         sort: {},
       },
     });
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
 
   const rowSelection = {
     type: 'radio',
@@ -156,12 +162,30 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
     );
   };
 
+  const onRow: (data: AuthorVo) => React.HTMLAttributes<any> = (data: AuthorVo) => ({
+    onClick: () => {
+      props.onSelect(data);
+      form.resetFields();
+    },
+  });
+
   return (
     <Modal
-      title={title ? title : '选择作者'}
+      title={title ?? '选择作者'}
       onCancel={props.onCancel}
       onOk={() => props.onSelect}
       visible={props.visible}
+      footer={[
+        <Button key={1} onClick={() => setModalVisible(true)}>
+          添加
+        </Button>,
+        <Button key={2} onClick={props.onCancel}>
+          取消
+        </Button>,
+        <Button key={3} type="primary" onClick={() => props.onSelect}>
+          确定
+        </Button>,
+      ]}
     >
       {searchForm()}
       <Table
@@ -171,7 +195,15 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         size="small"
         rowKey="id"
         pagination={pagination}
+        onRow={onRow}
       />
+      {addButton && (
+        <AuthorModal
+          closeModal={() => setModalVisible(false)}
+          visible={modalVisible}
+          reload={search}
+        />
+      )}
     </Modal>
   );
 };

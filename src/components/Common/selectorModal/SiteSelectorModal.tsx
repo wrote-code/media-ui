@@ -76,9 +76,19 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
 
   const rowSelection = {
     type: 'radio',
-    onSelect: props.onSelect,
+    onSelect: (record: SiteVo) => {
+      props.onSelect(record);
+      form.resetFields();
+    },
     selectedRowKeys: props.selectedSite == null ? [] : [props.selectedSite.id],
   };
+
+  const onRow: (data: SiteVo) => React.HTMLAttributes<any> = (data: SiteVo) => ({
+    onClick: () => {
+      props.onSelect(data);
+      form.resetFields();
+    },
+  });
 
   const onPageChange = (page: number, pageSize: number) => {
     setCurrentPage(page);
@@ -165,6 +175,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
       title: '网址',
     },
   ];
+
   return (
     <Modal
       title={title ? title : '选择网站'}
@@ -182,6 +193,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
           onChange: onPageChange,
         }}
         rowSelection={rowSelection}
+        onRow={onRow}
         rowKey="id"
         columns={columns}
         dataSource={siteList}
