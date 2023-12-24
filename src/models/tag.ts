@@ -1,7 +1,9 @@
-import { queryTagList } from '@/services/tag';
-import { parseTableResponse } from '@/utils/utils';
+import { addTag, queryTagList, queryTagReferenceList } from '@/services/tag';
+import { parseResponse, parseTableResponse } from '@/utils/utils';
 import type { Effect, Reducer } from 'umi';
+import type TagReferenceVo from './types';
 import type { ProTableObject, TagVo } from './types';
+import type { TableResponse } from './types/response/table';
 
 export interface TagStateType {
   /**
@@ -16,6 +18,7 @@ export interface TagStateType {
    * 用来标记收藏行为的标签。
    */
   favoriteTagList: TagVo[];
+  currentRate: TagReferenceVo | null;
 }
 
 export interface TagModelType {
@@ -25,11 +28,14 @@ export interface TagModelType {
     queryTagList: Effect;
     queryRateTagList: Effect;
     queryFavoriteTag: Effect;
+    queryCurrentRate: Effect;
+    addTag: Effect;
   };
   reducers: {
     setTagList: Reducer<TagStateType>;
     setRateTagList: Reducer<TagStateType>;
     setFavoriteTagList: Reducer<TagStateType>;
+    setCurrentTagRef: Reducer<TagReferenceVo>;
   };
 }
 
@@ -39,6 +45,7 @@ const model: TagModelType = {
     favoriteTagList: [],
     tagList: [],
     rateTagList: [],
+    currentRate: null,
   },
   effects: {
     *queryTagList({ payload }, { call, put }) {
@@ -68,6 +75,26 @@ const model: TagModelType = {
         });
       }
     },
+    *queryCurrentRate({ payload }, { call, put }) {
+      const data: ProTableObject<TagReferenceVo> = yield call(queryTagReferenceList, payload);
+      if (parseTableResponse(data)) {
+        if (data?.data.length > 0) {
+          yield put({
+            type: 'setCurrentTagRef',
+            payload: data.data[0],
+          });
+        }
+      }
+    },
+    *addTag({ payload }, { call, put }) {
+      const data: TableResponse<TagReferenceVo> = yield call(addTag, payload);
+      if (parseResponse(data)) {
+        yield put({
+          type: 'setCurrentTagRef',
+          payload: data.data,
+        });
+      }
+    },
   },
   reducers: {
     setTagList(state, { payload }) {
@@ -86,6 +113,12 @@ const model: TagModelType = {
       return {
         ...state,
         favoriteTagList: payload,
+      };
+    },
+    setCurrentTagRef(state, { payload }) {
+      return {
+        ...state,
+        currentRate: payload,
       };
     },
   },
