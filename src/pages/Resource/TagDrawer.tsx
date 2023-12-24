@@ -1,12 +1,13 @@
+import RateTag from '@/components/Common/tagFc/RateTag';
+import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 import type { ModelType } from '@/models/common/model';
 import type TagReferenceVo from '@/models/types';
 import type { TagVo } from '@/models/types';
 import { useDebounceFn } from 'ahooks';
-import { Button, Drawer, Input, Tag, message } from 'antd';
-import type { ReactNode } from 'react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Divider, Drawer, Input, Tag, message } from 'antd';
+import type { CSSProperties, ReactNode } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
-import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 
 const colorArray = [
   '#ffa39e',
@@ -131,6 +132,12 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     );
   };
 
+  const dividerStyle: CSSProperties = {
+    marginBottom: 10,
+    marginTop: 10,
+    paddingTop: 5,
+  };
+
   return (
     <Drawer title={renderTitle} onClose={closeDrawer} visible={visible} placement="right">
       <Input
@@ -142,12 +149,20 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
         style={{ marginBottom: 5 }}
         onPressEnter={addNewTag}
       />
+      <Divider style={dividerStyle} orientation="left">
+        评分
+      </Divider>
+      <RateTag resourceId={resourceId} />
+      <Divider style={dividerStyle} orientation="left">
+        收藏
+      </Divider>
       <ResourceTags resourceId={resourceId} editable={true} tagList={tagList || []} />
-      <div
-        style={{ marginBottom: 10, marginTop: 10, paddingTop: 5, borderTop: 'solid 1px lightblue' }}
-      >
-        {renderTagArea()}
-      </div>
+      {dbTagList && dbTagList.length > 0 ? (
+        <Divider style={dividerStyle} orientation="left">
+          搜索结果
+        </Divider>
+      ) : null}
+      {renderTagArea()}
     </Drawer>
   );
 };
