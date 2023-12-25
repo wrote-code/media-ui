@@ -91,6 +91,7 @@ const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
       />
       {authorVisible && (
         <AuthorSelectorModal
+          addButton
           title="设置资源创建者"
           currentPage={currentPage}
           selectedAuthor={selectedAuthor}
