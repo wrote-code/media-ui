@@ -114,13 +114,11 @@ const model: TagModelType = {
     *queryCurrentRate({ payload }, { call, put }) {
       const data: ProTableObject<TagReferenceVo> = yield call(queryTagReferenceList, payload);
       if (parseTableResponse(data)) {
-        if (data?.data.length > 0) {
           yield put({
             type: 'setCurrentRate',
             payload: data.data[0],
           });
         }
-      }
     },
     *addRate({ payload }, { call, put }) {
       const data: TableResponse<TagReferenceVo> = yield call(addTag, payload);
