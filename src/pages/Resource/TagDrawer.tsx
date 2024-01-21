@@ -47,7 +47,7 @@ export interface TagDrawerPropsType {
 
 const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
   const { resourceId, tagList, visible, onClose, renderTitle, dbTagList, setVisible } = props;
-  const [newTag, setNewTag] = useState('hhh');
+  const [newTag, setNewTag] = useState();
   const dispatch = useDispatch();
   const editInputRef = useRef(null);
 
