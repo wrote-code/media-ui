@@ -70,7 +70,8 @@ const Resource: React.FC<ResourceProps> = () => {
 
   const onFileNameCellClick = (data: ResourceVo) => {
     const onClick = () => {
-      const success = copy(`${data.dir}${data.filename}`);
+      const path = data.dir + data.filename;
+      const success = copy(path.replaceAll('/', '\\'));
       if (success) {
         message.success('全路径复制成功');
       } else {
