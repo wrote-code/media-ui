@@ -68,9 +68,10 @@ const Resource: React.FC<ResourceProps> = () => {
     );
   };
 
-  const onFileNameCellClick = (data: ResourceVo) => {
+  const copyAbsolutePath = (data: ResourceVo) => {
     const onClick = () => {
-      const success = copy(`${data.dir}${data.filename}`);
+      const path = data.dir + data.filename;
+      const success = copy(path.replaceAll('/', '\\'));
       if (success) {
         message.success('全路径复制成功');
       } else {
@@ -87,10 +88,9 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '文件名',
       dataIndex: 'filename',
-      width: 200,
+      width: 350,
       ellipsis: true,
       copyable: true,
-      onCell: onFileNameCellClick,
       formItemProps: {
         rules: [
           {
@@ -153,18 +153,21 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '操作',
       hideInSearch: true,
-      width: 50,
+      width: 140,
       render: (_, entity: ResourceVo) => {
         return (
-          <Popconfirm
-            title="确认删除"
-            okButtonProps={{ danger: true, type: 'primary' }}
-            onConfirm={() => deleteResource(entity.id)}
-          >
-            <Button size="small" type="primary" danger>
-              删除
-            </Button>
-          </Popconfirm>
+          <>
+            <Popconfirm
+              title="确认删除"
+              okButtonProps={{ danger: true, type: 'primary' }}
+              onConfirm={() => deleteResource(entity.id)}
+            >
+              <Button size="small" type="primary" danger>
+                删除
+              </Button>
+            </Popconfirm>
+            <Button size='small' onClick={() => copyAbsolutePath(entity)}>复制路径</Button>
+          </>
         );
       },
     },
