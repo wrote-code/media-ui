@@ -69,19 +69,14 @@ const Resource: React.FC<ResourceProps> = () => {
   };
 
   const copyAbsolutePath = (data: ResourceVo) => {
-    const onClick = () => {
-      const path = data.dir + data.filename;
-      const success = copy(path.replaceAll('/', '\\'));
-      if (success) {
-        message.success('全路径复制成功');
-      } else {
-        // 显示失败消息影响用户体验
-        console.log('全路径复制失败');
-      }
-    };
-    return {
-      onClick: onClick,
-    };
+    const path = data.dir + data.filename;
+    const success = copy(path.replaceAll('/', '\\'));
+    if (success) {
+      message.success('全路径复制成功');
+    } else {
+      // 显示失败消息影响用户体验
+      console.log('全路径复制失败');
+    }
   };
 
   const columns: ProColumns<ResourceVo>[] = [
@@ -166,7 +161,9 @@ const Resource: React.FC<ResourceProps> = () => {
                 删除
               </Button>
             </Popconfirm>
-            <Button size='small' onClick={() => copyAbsolutePath(entity)}>复制路径</Button>
+            <Button size="small" onClick={() => copyAbsolutePath(entity)}>
+              复制路径
+            </Button>
           </>
         );
       },
