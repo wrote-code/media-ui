@@ -1,8 +1,6 @@
 import type { DataObject } from '@/models/global';
-import { ProTableObject } from '@/types/entity';
-import { TableResponse } from '@/types/response/table';
+import { ProTableObject, TableResponse } from '@/types/response/table';
 import { message } from 'antd';
-import { response } from 'express';
 import { parse } from 'querystring';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
@@ -33,7 +31,7 @@ export const getPageQuery = () => parse(window.location.href.split('?')[1]);
  * @param r1 响应数据
  * @returns 操作成功返回true,失败返回false。
  */
-export const parseResponse = (r1: DataObject<T>): boolean => {
+export const parseResponse = <T>(r1: DataObject<T>): boolean => {
   if (r1.statusCode !== '00000000') {
     message.error(r1.statusCode + ' ' + r1.message);
     // 报错情况下，若data是string，则显示报错信息，比如没有通过hibernate-validate校验
@@ -45,7 +43,7 @@ export const parseResponse = (r1: DataObject<T>): boolean => {
   return true;
 };
 
-export const parseTableResponse = (r2: ProTableObject<T>| TableResponse<T>): boolean => {
+export const parseTableResponse = <T>(r2: TableResponse<T>): boolean => {
   if (!r2.success) {
     message.error(r2.message);
     return false;
