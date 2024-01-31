@@ -1,6 +1,6 @@
 import type { DataObject } from '@/models/global';
 import { ProTableObject } from '@/models/types';
-import { TableResponse } from '@/models/types/response/table';
+import { TableResponse } from '@/types/response/table';
 import { message } from 'antd';
 import { response } from 'express';
 import { parse } from 'querystring';
