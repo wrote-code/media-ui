@@ -1,4 +1,4 @@
-import type { AuthorVo } from './types';
+import type { AuthorVo } from '../types/entity';
 import type { Effect, Reducer } from 'umi';
 import { addAuthor, deleteAuthor, queryList } from '@/services/author';
 import { parseResponse } from '@/utils/utils';

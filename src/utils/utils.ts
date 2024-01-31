@@ -1,5 +1,5 @@
 import type { DataObject } from '@/models/global';
-import { ProTableObject } from '@/models/types';
+import { ProTableObject } from '@/types/entity';
 import { TableResponse } from '@/types/response/table';
 import { message } from 'antd';
 import { response } from 'express';

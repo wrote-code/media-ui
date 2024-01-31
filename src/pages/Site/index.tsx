@@ -1,5 +1,5 @@
 import type { SiteStateType } from '@/models/site';
-import type { SiteVo } from '@/models/types';
+import type { SiteVo } from '@/types/entity';
 import { querySiteList } from '@/services/site';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -8,7 +8,7 @@ import Popconfirm from 'antd/es/popconfirm';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import NewSiteModal from './NewSiteModal';
-import { ModelType } from '@/models/common/model';
+import { ModelType } from '@/types/model';
 
 const Site: React.FC<SiteStateType> = (props) => {
   const actionRef = useRef<ActionType>();

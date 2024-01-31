@@ -1,5 +1,5 @@
-import type { ModelType } from '@/models/common/model';
-import type { AuthorVo } from '@/models/types';
+import type { ModelType } from '@/types/model';
+import type { AuthorVo } from '@/types/entity';
 import AuthorModal from '@/pages/Author/AuthorModal';
 import { Button, Form, Input, Modal, Table } from 'antd';
 import type { Rule } from 'antd/lib/form';

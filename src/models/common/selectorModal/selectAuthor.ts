@@ -1,4 +1,4 @@
-import type { AuthorVo } from '@/models/types';
+import type { AuthorVo } from '@/types/entity';
 import { queryAuthorList } from '@/services/selectorModal';
 import type { Effect, Reducer } from 'umi';
 

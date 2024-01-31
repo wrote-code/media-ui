@@ -1,9 +1,9 @@
 import FavoriteTag from '@/components/Common/tagFc/FavoriteTag';
 import RateTag from '@/components/Common/tagFc/RateTag';
 import ResourceTags from '@/components/Common/tagFc/ResourceTag';
-import type { ModelType } from '@/models/common/model';
-import type TagReferenceVo from '@/models/types';
-import type { TagVo } from '@/models/types';
+import type { ModelType } from '@/types/model';
+import type TagReferenceVo from '@/types/entity';
+import type { TagVo } from '@/types/entity';
 import { useDebounceFn } from 'ahooks';
 import { Divider, Drawer, Input, Tag, message } from 'antd';
 import type { CSSProperties, ReactNode } from 'react';

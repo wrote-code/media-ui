@@ -1,8 +1,8 @@
 import { addTag, queryTagList, queryTagReferenceList } from '@/services/tag';
 import { parseResponse, parseTableResponse } from '@/utils/utils';
 import type { Effect, Reducer } from 'umi';
-import type TagReferenceVo from './types';
-import type { ProTableObject, TagVo } from './types';
+import type TagReferenceVo from '../types/entity';
+import type { ProTableObject, TagVo } from '../types/entity';
 import type { TableResponse } from '../types/response/table';
 import { deleteTag } from '@/services/resource/resource';
 import { message } from 'antd';

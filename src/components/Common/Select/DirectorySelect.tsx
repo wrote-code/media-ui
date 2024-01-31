@@ -1,4 +1,4 @@
-import type { ModelType } from '@/models/common/model';
+import type { ModelType } from '@/types/model';
 import { ProFormTreeSelect } from '@ant-design/pro-form';
 import type { ProFormFieldItemProps } from '@ant-design/pro-form/lib/interface';
 import React from 'react';

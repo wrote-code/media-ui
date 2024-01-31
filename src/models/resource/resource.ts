@@ -9,8 +9,8 @@ import {
 import { parseResponse } from '@/utils/utils';
 import { message } from 'antd';
 import type { Effect, Reducer } from 'umi';
-import type TagReferenceVo from '../types';
-import type { ResourceVo } from '../types';
+import type TagReferenceVo from '../../types/entity';
+import type { ResourceVo } from '../../types/entity';
 
 export interface ResourceStateType {
   resourceList: ResourceVo[];
