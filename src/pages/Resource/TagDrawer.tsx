@@ -47,7 +47,7 @@ export interface TagDrawerPropsType {
 
 const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
   const { resourceId, tagList, visible, onClose, renderTitle, dbTagList, setVisible } = props;
-  const [newTag, setNewTag] = useState();
+  const [newTag, setNewTag] = useState("");
   const dispatch = useDispatch();
   const editInputRef = useRef(null);
 
@@ -60,22 +60,26 @@ const TagDrawer: React.FC<TagDrawerPropsType> = (props) => {
     });
   }, [dispatch, resourceId]);
 
-  const { run: handleInputChange } = useDebounceFn(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setNewTag(value);
-      if (value.length == 0) {
+
+  const { run: handleInputChangeDe } = useDebounceFn(() => {
+      if (newTag.length == 0) {
         return;
       }
       dispatch({
         type: 'tag/queryTagList',
         payload: {
-          name: value,
+          name: newTag,
         },
       });
     },
     { wait: 500 },
   );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTag(e.target.value);
+    handleInputChangeDe();
+  }
+
 
   const addNewTag = () => {
     if (newTag.length == 0 || newTag.length > 10) {
