@@ -137,6 +137,14 @@ export interface ResourceVo extends E {
    * 标签数量。
    */
   tagCount: number;
+  /**
+   * 收藏状态。
+   */
+  favorite: boolean;
+  /**
+   * 评分。
+   */
+  rate: number;
 }
 
 export interface ResourceTypeMapVo extends E {

@@ -143,6 +143,26 @@ const Resource: React.FC<ResourceProps> = () => {
       render: renderTag,
     },
     {
+      title: '评分',
+      dataIndex: 'rate',
+      hideInSearch: true,
+      hideInForm: true,
+      width: 50,
+      render: (_, entity) => {
+        return entity.rate > -1 ? entity.rate : '';
+      },
+    },
+    {
+      title: '收藏',
+      dataIndex: 'favorite',
+      hideInSearch: true,
+      hideInForm: true,
+      width: 50,
+      render: (_, entity) => {
+        return entity.favorite ? '❤️' : ' ';
+      },
+    },
+    {
       title: '创建时间',
       dataIndex: 'createTime',
       valueType: 'dateTime',
