@@ -21,6 +21,10 @@ const Resource: React.FC<ResourceProps> = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [resourceId, setResourceId] = useState('');
   const [currentResource, setCurrentResource] = useState<ResourceVo>();
+  // 修改弹窗，使用的是添加弹窗，只是多了id字段。
+  const [modifyVisible, setModifyVisible] = useState(false);
+  // 要修改的资源
+  const [resToModify, setResToModify] = useState();
 
   const reload = () => {
     actionRef.current?.reload();
@@ -148,7 +152,7 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '操作',
       hideInSearch: true,
-      width: 140,
+      width: 160,
       render: (_, entity: ResourceVo) => {
         return (
           <>
@@ -161,8 +165,17 @@ const Resource: React.FC<ResourceProps> = () => {
                 删除
               </Button>
             </Popconfirm>
+            <Button
+              size="small"
+              onClick={() => {
+                setModifyVisible(true);
+                setResToModify(entity);
+              }}
+            >
+              修改
+            </Button>
             <Button size="small" onClick={() => copyAbsolutePath(entity)}>
-              复制路径
+              复制
             </Button>
           </>
         );
@@ -204,6 +217,21 @@ const Resource: React.FC<ResourceProps> = () => {
           renderTitle={renderTagDrawerTitle()}
           key={resourceId}
           setVisible={setDrawerVisible}
+        />
+      )}
+      {modifyVisible && (
+        <ResourceFormModal
+          data={resToModify}
+          visible={modifyVisible}
+          reload={() => {
+            reload();
+            setModifyVisible(false);
+            setResToModify(undefined);
+          }}
+          onCancel={() => {
+            setModifyVisible(false);
+            setResToModify(undefined);
+          }}
         />
       )}
     </div>
