@@ -1,5 +1,5 @@
-import type { ModelType } from '@/models/common/model';
-import type { SiteVo } from '@/models/types';
+import type { ModelType } from '@/types/model';
+import type { SiteVo } from '@/types/entity';
 import { Form, Input, Modal, Table } from 'antd';
 import Button from 'antd/es/button';
 import type { Rule } from 'antd/lib/form';

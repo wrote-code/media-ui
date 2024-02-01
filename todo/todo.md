@@ -21,5 +21,5 @@
 ## cicd/代码扫描/代码规范
 
 - [ ] effect加payload和response类型。
-- [ ] 整理前台类型文件，都移动到model/types目录下。
+- [x] 整理前台类型文件，都移动到model/types目录下。
 - [ ] model里reducer类型错误。

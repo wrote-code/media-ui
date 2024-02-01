@@ -1,6 +1,6 @@
 import AuthorInput from '@/components/Common/input/AuthorInput';
-import type { ModelType } from '@/models/common/model';
-import type { ResourceVo } from '@/models/types';
+import type { ModelType } from '@/types/model';
+import type { ResourceVo } from '@/types/entity';
 import { fetchResourceListRequest } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';

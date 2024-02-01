@@ -1,6 +1,6 @@
-import type { ModelType } from '@/models/common/model';
-import type TagReferenceVo from '@/models/types';
-import type { TagVo } from '@/models/types';
+import type { ModelType } from '@/types/model';
+import type TagReferenceVo from '@/types/entity';
+import type { TagVo } from '@/types/entity';
 import { Tag } from 'antd';
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'umi';

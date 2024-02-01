@@ -1,4 +1,4 @@
-import type TagReferenceVo from '@/models/types';
+import type TagReferenceVo from '@/types/entity';
 import { Tag } from 'antd';
 import React from 'react';
 import { useDispatch } from 'umi';

@@ -1,4 +1,4 @@
-import type { AuthorVo } from '@/models/types';
+import type { AuthorVo } from '@/types/entity';
 import type { FormInstance } from 'antd';
 import { Form, Input } from 'antd';
 import React, { useState } from 'react';

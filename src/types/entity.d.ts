@@ -1,11 +1,9 @@
 /**
- * 此类型用于connect使用，避免mapStateToProps报错。
+ * 占位符，用来标记实体类型。
  */
-export interface DefaultStateType {
-  working: boolean;
-}
+export interface E {}
 
-export interface AuthorVo {
+export interface AuthorVo extends E {
   /**
    * ID
    */
@@ -42,7 +40,7 @@ export interface AuthorVo {
   updateTime?: Date;
 }
 
-export interface AlbumVo {
+export interface AlbumVo extends E {
   /**
    * ID
    */
@@ -69,7 +67,7 @@ export interface AlbumVo {
   updateTime?: Date;
 }
 
-export interface ResourceAlbumVo {
+export interface ResourceAlbumVo extends E {
   /**
    * ID
    */
@@ -96,7 +94,7 @@ export interface ResourceAlbumVo {
   albumVo: AlbumVo;
 }
 
-export interface ResourceVo {
+export interface ResourceVo extends E {
   /**
    * ID
    */
@@ -141,7 +139,7 @@ export interface ResourceVo {
   tagCount: number;
 }
 
-export interface ResourceTypeMapVo {
+export interface ResourceTypeMapVo extends E {
   /**
    * 主键
    */
@@ -168,7 +166,7 @@ export interface ResourceTypeMapVo {
   updateTime: Date;
 }
 
-export interface ResourceTypeVo {
+export interface ResourceTypeVo extends E {
   /**
    * ID
    */
@@ -195,7 +193,7 @@ export interface ResourceTypeVo {
   updateTime: Date;
 }
 
-export interface SiteVo {
+export interface SiteVo extends E {
   /**
    * ID
    */
@@ -222,7 +220,7 @@ export interface SiteVo {
   updateTime: Date;
 }
 
-export interface Directory {
+export interface Directory extends E {
   /**
    * 主键id。
    */
@@ -259,7 +257,7 @@ export interface Directory {
   children: Directory[];
 }
 
-export interface TagVo {
+export interface TagVo extends E {
   /**
    * 主键
    */
@@ -276,7 +274,7 @@ export interface TagVo {
   createTime: any;
 }
 
-export default interface TagReferenceVo {
+export default interface TagReferenceVo extends E {
   serialVersionUID?: number;
 
   /**
@@ -303,13 +301,4 @@ export default interface TagReferenceVo {
    * 引用时间。
    */
   referTime: any;
-}
-
-export interface ProTableObject<T> {
-  page: number;
-  pageSize: number;
-  total: number;
-  data: T[];
-  message: string;
-  success: boolean;
 }

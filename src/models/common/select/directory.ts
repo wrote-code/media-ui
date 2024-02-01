@@ -1,5 +1,5 @@
 import type { Effect, Reducer } from 'umi';
-import type { Directory } from '@/models/types';
+import type { Directory } from '@/types/entity';
 import { queryRootDirectory } from '@/services/select/directory';
 import { parseResponse } from '@/utils/utils';
 

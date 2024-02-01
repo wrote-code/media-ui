@@ -1,5 +1,5 @@
 import AuthorSelectorModal from '@/components/Common/selectorModal/AuthorSelectorModal';
-import type { AuthorVo, ResourceVo } from '@/models/types';
+import type { AuthorVo, ResourceVo } from '@/types/entity';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
 import { Button, Form } from 'antd';
 import React, { useState } from 'react';

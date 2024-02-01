@@ -2,7 +2,7 @@ import { addSite, deleteSite, querySiteList } from '@/services/site';
 import { parseResponse } from '@/utils/utils';
 import { message } from 'antd';
 import type { Effect, Reducer } from 'umi';
-import type { SiteVo } from './types';
+import type { SiteVo } from '../types/entity';
 
 export interface SiteStateType {
   siteList: SiteVo[];

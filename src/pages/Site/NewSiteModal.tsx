@@ -1,4 +1,4 @@
-import type { DefaultStateType } from '@/models/types';
+import type { DefaultStateType } from "@/types/model";
 import { Form, Input, Modal } from 'antd';
 import React from 'react';
 import { connect } from 'umi';

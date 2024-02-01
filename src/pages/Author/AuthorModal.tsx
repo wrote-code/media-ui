@@ -1,6 +1,6 @@
 import SiteSelectorModal from '@/components/Common/selectorModal/SiteSelectorModal';
-import type { ModelType } from '@/models/common/model';
-import type { SiteVo } from '@/models/types';
+import type { ModelType } from '@/types/model';
+import type { SiteVo } from '@/types/entity';
 import { Form, Input, Modal } from 'antd';
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'umi';
