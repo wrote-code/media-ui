@@ -45,6 +45,11 @@
         component: './Author',
       },
       {
+        path: '/album',
+        name: '专辑',
+        component: './album',
+      },
+      {
         path: '/admin',
         name: 'admin',
         icon: 'crown',
