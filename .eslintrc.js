@@ -1,7 +1,7 @@
 module.exports = {
   extends: [require.resolve('@umijs/fabric/dist/eslint')],
   rules: {
-    'consistent-type-imports': 0,
+    'consistent-type-imports': 'disable',
   },
   globals: {
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: true,
