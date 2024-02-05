@@ -22,26 +22,22 @@
       {
         path: '/welcome',
         name: 'welcome',
-        icon: 'smile',
         component: './Welcome',
         hideInMenu: true,
       },
       {
         path: '/resource',
         name: '资源管理',
-        icon: 'smile',
         component: './Resource',
       },
       {
         path: '/site',
         name: '站点管理',
-        icon: 'smile',
         component: './Site',
       },
       {
         path: '/author',
         name: '创作人员',
-        icon: 'smile',
         component: './Author',
       },
       {
@@ -52,14 +48,12 @@
       {
         path: '/admin',
         name: 'admin',
-        icon: 'crown',
         component: './Admin',
         authority: ['admin'],
         routes: [
           {
             path: '/admin/sub-page',
             name: 'sub-page',
-            icon: 'smile',
             component: './Welcome',
             authority: ['admin'],
           },
