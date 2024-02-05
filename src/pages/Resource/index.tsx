@@ -1,7 +1,7 @@
 import AuthorInput from '@/components/Common/input/AuthorInput';
 import type { ModelType } from '@/types/model';
 import type { ResourceVo } from '@/types/entity';
-import { fetchResourceListRequest } from '@/services/resource/resource';
+import { fetchResourceList } from '@/services/resource/resource';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Tooltip, message } from 'antd';
@@ -204,7 +204,7 @@ const Resource: React.FC<ResourceProps> = () => {
   ];
 
   // request={async (params, sorter, filter) =>
-  //   fetchResourceListRequest({ params, sorter, filter })
+  //   fetchResourceList({ params, sorter, filter })
   // }
 
   const renderTagDrawerTitle = () => {
@@ -219,7 +219,7 @@ const Resource: React.FC<ResourceProps> = () => {
         defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) =>
-          fetchResourceListRequest({ params, sorter, filter }).then((v) => {
+          fetchResourceList({ params, sorter, filter }).then((v) => {
             if (v.success) {
               return v;
             } else {

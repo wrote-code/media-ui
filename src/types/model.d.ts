@@ -5,6 +5,7 @@ import type {
   AuthorStateType,
   SiteStateType,
   TagStateType,
+  AlbumModelState,
 } from 'umi';
 
 /**
@@ -21,4 +22,5 @@ export interface ModelType {
   author: AuthorStateType;
   site: SiteStateType;
   tag: TagStateType;
+  album: AlbumModelState;
 }

@@ -40,32 +40,6 @@ export interface AuthorVo extends E {
   updateTime?: Date;
 }
 
-export interface AlbumVo extends E {
-  /**
-   * ID
-   */
-  id: string;
-
-  /**
-   * 专辑
-   */
-  albumName: string;
-
-  /**
-   * 专辑作者
-   */
-  author: AuthorVo;
-
-  /**
-   * 创建时间
-   */
-  createTime: Date;
-
-  /**
-   * 更新时间
-   */
-  updateTime?: Date;
-}
 
 export interface ResourceAlbumVo extends E {
   /**
@@ -309,4 +283,50 @@ export default interface TagReferenceVo extends E {
    * 引用时间。
    */
   referTime: any;
+}
+
+export interface AlbumVo {
+  /**
+   * 主键
+   */
+  id?: string;
+
+  /**
+   * 专辑名称
+   */
+  name?: string;
+
+  /**
+   * 删除状态
+   */
+  deleteStatus?: number;
+
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+
+  /**
+   * 删除时间
+   */
+  deleteTime?: string;
+}
+
+export interface AlbumResourceVo {
+  id?: string
+
+  albumId?: string
+
+  albumName?: string
+
+  resourceId?: string
+
+  resourceName?: string
+
+  resourceDir?: string
 }

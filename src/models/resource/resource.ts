@@ -5,12 +5,15 @@ import {
   deleteTag,
   fetchResourceList,
   queryTags,
+  setAlbum,
+  unsetAlbum,
 } from '@/services/resource/resource';
+import type { ResponseData } from '@/types/response/response';
 import { parseResponse } from '@/utils/utils';
 import { message } from 'antd';
 import type { Effect, Reducer } from 'umi';
 import type TagReferenceVo from '../../types/entity';
-import type { ResourceVo } from '../../types/entity';
+import type { AlbumResourceVo, ResourceVo } from '../../types/entity';
 
 export interface ResourceStateType {
   resourceList: ResourceVo[];
@@ -33,6 +36,8 @@ export interface ResourceModelType {
     deleteTag: Effect;
     addTag: Effect;
     fetchTagList: Effect;
+    setAlbum: Effect;
+    unsetAlbum: Effect;
   };
   reducers: {
     setResourceList: Reducer<ResourceStateType>;
@@ -90,6 +95,18 @@ const ResourceMode: ResourceModelType = {
           ...payload,
         },
       });
+    },
+    *setAlbum({ payload }, { call }) {
+      const data: ResponseData<AlbumResourceVo> = yield call(setAlbum, payload);
+      if (parseResponse(data)) {
+        message.info(data.message);
+      }
+    },
+    *unsetAlbum({ payload }, { call }) {
+      const data: ResponseData<AlbumResourceVo> = yield call(unsetAlbum, payload);
+      if (parseResponse(data)) {
+        message.info(data.message);
+      }
     },
   },
   reducers: {
