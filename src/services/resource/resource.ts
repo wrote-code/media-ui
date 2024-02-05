@@ -1,3 +1,4 @@
+import type { TableRequest } from '@/types/request/table';
 import request from '@/utils/request';
 
 export async function fetchResourceList(data: any) {
@@ -11,15 +12,6 @@ export async function fetchResourceList(data: any) {
 export async function addResource(payload: any) {
   return request('/api/resource/add', {
     data: payload,
-    method: 'POST',
-  });
-}
-
-export async function fetchResourceListRequest(data: any) {
-  // todo 重复方法
-  const url = '/api/resource/queryResourceList';
-  return request(url, {
-    data: data,
     method: 'POST',
   });
 }
@@ -49,6 +41,29 @@ export async function deleteTag(payload: { resourceId: string; referenceId: stri
 
 export async function addTag(payload: { resourceId: string; tagName: string }) {
   return request('/api/resource/addTag', {
+    data: payload,
+    method: 'POST',
+    requestType: 'form',
+  });
+}
+
+export async function queryAlbumList(payload: TableRequest<any, any, any>) {
+  return request('/api/resource/queryAlbumList', {
+    data: payload,
+    method: 'POST',
+  });
+}
+
+export async function setAlbum(payload: { resourceId: string; albumId: string }) {
+  return request('/api/resource/setAlbum', {
+    data: payload,
+    method: 'POST',
+    requestType: 'form',
+  });
+}
+
+export async function unsetAlbum(payload: { albumResourceId: string }) {
+  return request('/api/resource/unsetAlbum', {
     data: payload,
     method: 'POST',
     requestType: 'form',
