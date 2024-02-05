@@ -55,6 +55,7 @@ const Resource: React.FC<ResourceProps> = () => {
       <Tooltip
         title={
           <ResourceTags
+            showMoreMessage
             resourceId={entity.id}
             tagList={entity.tagReferenceVoList}
             totalCount={entity.tagCount}

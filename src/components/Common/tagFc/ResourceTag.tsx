@@ -23,10 +23,14 @@ export interface ResourceTagPropsType {
   editable?: boolean;
   resourceId?: string;
   totalCount?: number;
+  /**
+   * 标签数量大于5后，是否展示提示内容。
+   */
+  showMoreMessage?: boolean;
 }
 
 const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsType) => {
-  const { tagList, editable, totalCount, resourceId } = props;
+  const { tagList, editable, totalCount, resourceId, showMoreMessage } = props;
   const dispatch = useDispatch();
 
   const deleteTag = (tag: TagReferenceVo) => {
@@ -50,7 +54,7 @@ const ResourceTags: React.FC<ResourceTagPropsType> = (props: ResourceTagPropsTyp
             </Tag>
           );
         })}
-        {leftCount > 0 && `点击单元格查看剩余${leftCount}个标签`}
+        {leftCount > 0 && showMoreMessage && <p>{`点击单元格查看剩余${leftCount}个标签`}</p>}
       </React.Fragment>
     );
   };
