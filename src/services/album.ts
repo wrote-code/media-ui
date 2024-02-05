@@ -14,5 +14,6 @@ export async function addAlbum(data: { albumName: string }) {
   return request(url, {
     data: data,
     method: 'POST',
+    requestType: 'form',
   });
 }

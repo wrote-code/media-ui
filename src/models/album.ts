@@ -22,7 +22,7 @@ const albumModel: AlbumModelType = {
     *addAlbum({ payload }, { call }) {
       const data: ResponseData<AlbumVo> = yield call(addAlbum, payload);
       if (parseResponse(data)) {
-        message.info('专辑');
+        message.success('添加成功');
       }
     },
   },
