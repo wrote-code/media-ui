@@ -1,6 +1,6 @@
 import { AlbumVo } from '@/types/entity';
 import { ModelType } from '@/types/model';
-import { Modal } from 'antd';
+import { Input, Modal } from 'antd';
 import Table, { ColumnType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'umi';
@@ -74,8 +74,23 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
     });
   };
 
+  const onSearch = (value: string) => {
+    setName(value);
+    dispatch({
+      type: 'selectModal/albumSelectModal/queryAlbumList',
+      payload: {
+        params: {
+          current: current,
+          pageSize: 5,
+          albumName: value,
+        },
+      },
+    });
+  };
+
   return (
     <Modal visible={visible} onCancel={onCancel} onOk={onCancel} title="选择专辑">
+      <Input.Search onSearch={onSearch} />
       <Table
         size="small"
         rowKey="id"
