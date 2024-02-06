@@ -66,7 +66,7 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
       type: 'selectModal/albumSelectModal/queryAlbumList',
       payload: {
         params: {
-          current: current,
+          current: page,
           pageSize: 5,
           albumName: name,
         },
