@@ -6,6 +6,7 @@ import type {
   SiteStateType,
   TagStateType,
   AlbumModelState,
+  AlbumSelectModalStateType,
 } from 'umi';
 
 /**
@@ -18,6 +19,7 @@ export interface DefaultStateType {
 export interface ModelType {
   'modal/selectAuthor': SelectAuthorStateType;
   'select/directory': DirectoryModelStateType;
+  'selectModal/albumSelectModal': AlbumSelectModalStateType
   resource: ResourceStateType;
   author: AuthorStateType;
   site: SiteStateType;
