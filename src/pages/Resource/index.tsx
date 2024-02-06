@@ -1,15 +1,16 @@
 import AuthorInput from '@/components/Common/input/AuthorInput';
-import type { ModelType } from '@/types/model';
-import type { ResourceVo } from '@/types/entity';
+import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 import { fetchResourceList } from '@/services/resource/resource';
+import type { ResourceVo } from '@/types/entity';
+import type { ModelType } from '@/types/model';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Tooltip, message } from 'antd';
 import copy from 'copy-to-clipboard';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
+import Album from './Album';
 import ResourceFormModal from './ResourceFormModal';
-import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 import TagDrawer from './TagDrawer';
 interface ResourceProps {
   resourceList: ResourceVo[];
@@ -21,6 +22,7 @@ const Resource: React.FC<ResourceProps> = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [resourceId, setResourceId] = useState('');
   const [currentResource, setCurrentResource] = useState<ResourceVo>();
+  const [albumVisible, setAlbumVisible] = useState(false);
   // 修改弹窗，使用的是添加弹窗，只是多了id字段。
   const [modifyVisible, setModifyVisible] = useState(false);
   // 要修改的资源
@@ -173,7 +175,7 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '操作',
       hideInSearch: true,
-      width: 160,
+      width: 210,
       render: (_, entity: ResourceVo) => {
         return (
           <>
@@ -197,6 +199,15 @@ const Resource: React.FC<ResourceProps> = () => {
             </Button>
             <Button size="small" onClick={() => copyAbsolutePath(entity)}>
               复制
+            </Button>
+            <Button
+              size="small"
+              onClick={() => {
+                setResourceId(entity.id);
+                setAlbumVisible(true);
+              }}
+            >
+              专辑
             </Button>
           </>
         );
@@ -253,6 +264,13 @@ const Resource: React.FC<ResourceProps> = () => {
             setModifyVisible(false);
             setResToModify(undefined);
           }}
+        />
+      )}
+      {albumVisible && (
+        <Album
+          onCancel={() => setAlbumVisible(false)}
+          resourceId={resourceId}
+          visible={albumVisible}
         />
       )}
     </div>
