@@ -1,11 +1,31 @@
 import AuthorSelectorModal from '@/components/Common/selectorModal/AuthorSelectorModal';
-import type { AuthorVo, ResourceVo } from '@/models/types';
+import type { AuthorVo, ResourceVo } from '@/types/entity';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
-import { Button, Form } from 'antd';
+import { Button, Form, Input, ModalProps } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'umi';
 
-interface FormType extends ResourceVo {
+interface ModalType {
+  /**
+   * 刷新父组件。
+   */
+  reload: () => void;
+  /**
+   * 关闭弹框。
+   */
+  onCancel?: () => void;
+  /**
+   * 要修改的资源。
+   */
+  data?: ResourceVo;
+  visible?: boolean;
+}
+
+interface FormType {
+  /**
+   * 资源标识
+   */
+  id?: string;
   /**
    * 资源对应的文件名。
    */
@@ -30,14 +50,10 @@ interface FormType extends ResourceVo {
    * 专辑名称。
    */
   albumName?: string;
-  /**
-   * 刷新父组件。
-   */
-  reload: () => void;
 }
 
-const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
-  const { reload } = props;
+const ResourceFormModal: React.FC<ModalType> = (props: ModalType) => {
+  const { reload, data, visible, onCancel } = props;
 
   const [authorVisible, setAuthorVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,13 +70,14 @@ const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
     });
   };
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: FormType) => {
     dispatch({
       type: 'resource/addResource',
       payload: {
         authorId: values.authorId,
         dir: values.dir,
         filename: values.filename,
+        id: values.id,
       },
     });
     form.resetFields();
@@ -74,12 +91,30 @@ const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
       onFinish={onFinish}
       title="添加资源"
       trigger={<Button>新建</Button>}
+      modalProps={{ onCancel: onCancel }}
+      visible={visible}
       form={form}
       width={500}
     >
-      <ProFormText label="资源名称" name="filename" rules={[{ required: true, max: 90 }]} />
-      <ProFormText label="资源目录" name="dir" rules={[{ required: true, max: 900 }]} />
-      <ProFormText hidden={true} name="authorId" rules={[{ required: true, max: 90 }]} />
+      {data && <ProFormText hidden={true} name="id" initialValue={data?.id} />}
+      <ProFormText
+        label="资源名称"
+        name="filename"
+        initialValue={data?.filename}
+        rules={[{ required: true, max: 90 }]}
+      />
+      <ProFormText
+        label="资源目录"
+        name="dir"
+        initialValue={data?.dir}
+        rules={[{ required: true, max: 900 }]}
+      />
+      <ProFormText
+        hidden={true}
+        name="authorId"
+        initialValue={data?.authorVo.id}
+        rules={[{ required: true, max: 90 }]}
+      />
       <ProFormText
         fieldProps={{
           onClick: () => setAuthorVisible(true),
@@ -87,6 +122,7 @@ const ResourceFormModal: React.FC<FormType> = (props: FormType) => {
         }}
         label="作者姓名"
         name="authorName"
+        initialValue={data?.authorVo.username}
         rules={[{ required: true, max: 90 }]}
       />
       {authorVisible && (

@@ -1,13 +1,13 @@
 import { addTag, queryTagList, queryTagReferenceList } from '@/services/tag';
 import { parseResponse, parseTableResponse } from '@/utils/utils';
 import type { Effect, Reducer } from 'umi';
-import type TagReferenceVo from './types';
-import type { ProTableObject, TagVo } from './types';
-import type { TableResponse } from './types/response/table';
+import type TagReferenceVo from '../types/entity';
+import type { TagVo } from '../types/entity';
+import type { TableResponse } from '../types/response/table';
 import { deleteTag } from '@/services/resource/resource';
 import { message } from 'antd';
-import type { ResponseData } from './types/response/response';
-import { StatusCode } from './types/response/enum';
+import type { ResponseData } from '../types/response/response';
+import { StatusCode } from '../types/response/enum';
 
 export interface TagStateType {
   /**
@@ -85,7 +85,7 @@ const model: TagModelType = {
   },
   effects: {
     *queryTagList({ payload }, { call, put }) {
-      const data: ProTableObject<TagVo> = yield call(queryTagList, payload);
+      const data: TableResponse<TagVo> = yield call(queryTagList, payload);
       if (parseTableResponse(data)) {
         yield put({
           type: 'setTagList',
@@ -94,7 +94,7 @@ const model: TagModelType = {
       }
     },
     *queryRateTagList({ payload }, { call, put }) {
-      const data: ProTableObject<TagVo> = yield call(queryTagList, payload);
+      const data: TableResponse<TagVo> = yield call(queryTagList, payload);
       if (parseTableResponse(data)) {
         yield put({
           type: 'setRateTagList',
@@ -103,7 +103,7 @@ const model: TagModelType = {
       }
     },
     *queryFavoriteTag({ payload }, { call, put }) {
-      const data: ProTableObject<TagVo> = yield call(queryTagList, payload);
+      const data: TableResponse<TagVo> = yield call(queryTagList, payload);
       if (parseTableResponse(data)) {
         yield put({
           type: 'setFavoriteTagList',
@@ -112,13 +112,13 @@ const model: TagModelType = {
       }
     },
     *queryCurrentRate({ payload }, { call, put }) {
-      const data: ProTableObject<TagReferenceVo> = yield call(queryTagReferenceList, payload);
+      const data: TableResponse<TagReferenceVo> = yield call(queryTagReferenceList, payload);
       if (parseTableResponse(data)) {
-          yield put({
-            type: 'setCurrentRate',
-            payload: data.data[0],
-          });
-        }
+        yield put({
+          type: 'setCurrentRate',
+          payload: data.data[0],
+        });
+      }
     },
     *addRate({ payload }, { call, put }) {
       const data: TableResponse<TagReferenceVo> = yield call(addTag, payload);

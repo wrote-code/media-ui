@@ -1,6 +1,6 @@
 import SiteSelectorModal from '@/components/Common/selectorModal/SiteSelectorModal';
 import type { AuthorStateType } from '@/models/author';
-import type { AuthorVo, SiteVo } from '@/models/types';
+import type { AuthorVo, SiteVo } from '@/types/entity';
 import { queryList } from '@/services/author';
 import type { ProFormInstance } from '@ant-design/pro-form';
 import { ActionType, ProColumns } from '@ant-design/pro-table';
@@ -9,7 +9,7 @@ import { Button, Input, Popconfirm } from 'antd';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import AuthorModal from './AuthorModal';
-import type { ModelType } from '@/models/common/model';
+import type { ModelType } from '@/types/model';
 
 const Author: React.FC<AuthorStateType> = () => {
   const [authorModalVisible, setAuthorModalVisible] = useState(false);

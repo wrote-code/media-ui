@@ -1,15 +1,16 @@
 import AuthorInput from '@/components/Common/input/AuthorInput';
-import type { ModelType } from '@/models/common/model';
-import type { ResourceVo } from '@/models/types';
-import { fetchResourceListRequest } from '@/services/resource/resource';
+import ResourceTags from '@/components/Common/tagFc/ResourceTag';
+import { fetchResourceList } from '@/services/resource/resource';
+import type { ResourceVo } from '@/types/entity';
+import type { ModelType } from '@/types/model';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Tooltip, message } from 'antd';
 import copy from 'copy-to-clipboard';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
+import Album from './Album';
 import ResourceFormModal from './ResourceFormModal';
-import ResourceTags from '@/components/Common/tagFc/ResourceTag';
 import TagDrawer from './TagDrawer';
 interface ResourceProps {
   resourceList: ResourceVo[];
@@ -21,6 +22,11 @@ const Resource: React.FC<ResourceProps> = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [resourceId, setResourceId] = useState('');
   const [currentResource, setCurrentResource] = useState<ResourceVo>();
+  const [albumVisible, setAlbumVisible] = useState(false);
+  // 修改弹窗，使用的是添加弹窗，只是多了id字段。
+  const [modifyVisible, setModifyVisible] = useState(false);
+  // 要修改的资源
+  const [resToModify, setResToModify] = useState();
 
   const reload = () => {
     actionRef.current?.reload();
@@ -51,6 +57,7 @@ const Resource: React.FC<ResourceProps> = () => {
       <Tooltip
         title={
           <ResourceTags
+            showMoreMessage
             resourceId={entity.id}
             tagList={entity.tagReferenceVoList}
             totalCount={entity.tagCount}
@@ -139,6 +146,26 @@ const Resource: React.FC<ResourceProps> = () => {
       render: renderTag,
     },
     {
+      title: '评分',
+      dataIndex: 'rate',
+      hideInSearch: true,
+      hideInForm: true,
+      width: 50,
+      render: (_, entity) => {
+        return entity.rate > -1 ? entity.rate : '';
+      },
+    },
+    {
+      title: '收藏',
+      dataIndex: 'favorite',
+      hideInSearch: true,
+      hideInForm: true,
+      width: 50,
+      render: (_, entity) => {
+        return entity.favorite ? '❤️' : ' ';
+      },
+    },
+    {
       title: '创建时间',
       dataIndex: 'createTime',
       valueType: 'dateTime',
@@ -148,7 +175,7 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '操作',
       hideInSearch: true,
-      width: 140,
+      width: 210,
       render: (_, entity: ResourceVo) => {
         return (
           <>
@@ -161,8 +188,26 @@ const Resource: React.FC<ResourceProps> = () => {
                 删除
               </Button>
             </Popconfirm>
+            <Button
+              size="small"
+              onClick={() => {
+                setModifyVisible(true);
+                setResToModify(entity);
+              }}
+            >
+              修改
+            </Button>
             <Button size="small" onClick={() => copyAbsolutePath(entity)}>
-              复制路径
+              复制
+            </Button>
+            <Button
+              size="small"
+              onClick={() => {
+                setResourceId(entity.id);
+                setAlbumVisible(true);
+              }}
+            >
+              专辑
             </Button>
           </>
         );
@@ -171,7 +216,7 @@ const Resource: React.FC<ResourceProps> = () => {
   ];
 
   // request={async (params, sorter, filter) =>
-  //   fetchResourceListRequest({ params, sorter, filter })
+  //   fetchResourceList({ params, sorter, filter })
   // }
 
   const renderTagDrawerTitle = () => {
@@ -186,7 +231,7 @@ const Resource: React.FC<ResourceProps> = () => {
         defaultSize="small"
         columns={columns}
         request={async (params, sorter, filter) =>
-          fetchResourceListRequest({ params, sorter, filter }).then((v) => {
+          fetchResourceList({ params, sorter, filter }).then((v) => {
             if (v.success) {
               return v;
             } else {
@@ -204,6 +249,28 @@ const Resource: React.FC<ResourceProps> = () => {
           renderTitle={renderTagDrawerTitle()}
           key={resourceId}
           setVisible={setDrawerVisible}
+        />
+      )}
+      {modifyVisible && (
+        <ResourceFormModal
+          data={resToModify}
+          visible={modifyVisible}
+          reload={() => {
+            reload();
+            setModifyVisible(false);
+            setResToModify(undefined);
+          }}
+          onCancel={() => {
+            setModifyVisible(false);
+            setResToModify(undefined);
+          }}
+        />
+      )}
+      {albumVisible && (
+        <Album
+          onCancel={() => setAlbumVisible(false)}
+          resourceId={resourceId}
+          visible={albumVisible}
         />
       )}
     </div>

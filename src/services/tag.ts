@@ -1,5 +1,5 @@
-import type { TagReferenceParam } from '@/models/types/request/tag';
-import type { TableRequest } from '@/models/types/request/table';
+import type { TagReferenceParam } from '@/types/request/tag';
+import type { TableRequest } from '@/types/request/table';
 import request from '@/utils/request';
 
 export async function queryTagList(data: { name: string }) {

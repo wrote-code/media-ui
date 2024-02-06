@@ -1,5 +1,6 @@
-import type { AuthorVo } from '@/models/types';
 import { queryAuthorList } from '@/services/selectorModal';
+import type { AuthorVo } from '@/types/entity';
+import type { TableResponse } from '@/types/response/table';
 import type { Effect, Reducer } from 'umi';
 
 export interface SelectAuthorStateType {
@@ -42,7 +43,7 @@ const SelectAuthorModel: SelectAuthorModelType = {
   },
   effects: {
     *queryAuthorList({ payload }, { call, put }) {
-      const data = yield call(queryAuthorList, payload);
+      const data: TableResponse<AuthorVo> = yield call(queryAuthorList, payload);
       yield put({
         type: 'setAuthorList',
         payload: data.data,

@@ -1,11 +1,9 @@
 /**
- * 此类型用于connect使用，避免mapStateToProps报错。
+ * 占位符，用来标记实体类型。
  */
-export interface DefaultStateType {
-  working: boolean;
-}
+export interface E {}
 
-export interface AuthorVo {
+export interface AuthorVo extends E {
   /**
    * ID
    */
@@ -42,34 +40,8 @@ export interface AuthorVo {
   updateTime?: Date;
 }
 
-export interface AlbumVo {
-  /**
-   * ID
-   */
-  id: string;
 
-  /**
-   * 专辑
-   */
-  albumName: string;
-
-  /**
-   * 专辑作者
-   */
-  author: AuthorVo;
-
-  /**
-   * 创建时间
-   */
-  createTime: Date;
-
-  /**
-   * 更新时间
-   */
-  updateTime?: Date;
-}
-
-export interface ResourceAlbumVo {
+export interface ResourceAlbumVo extends E {
   /**
    * ID
    */
@@ -96,7 +68,7 @@ export interface ResourceAlbumVo {
   albumVo: AlbumVo;
 }
 
-export interface ResourceVo {
+export interface ResourceVo extends E {
   /**
    * ID
    */
@@ -139,9 +111,17 @@ export interface ResourceVo {
    * 标签数量。
    */
   tagCount: number;
+  /**
+   * 收藏状态。
+   */
+  favorite: boolean;
+  /**
+   * 评分。
+   */
+  rate: number;
 }
 
-export interface ResourceTypeMapVo {
+export interface ResourceTypeMapVo extends E {
   /**
    * 主键
    */
@@ -168,7 +148,7 @@ export interface ResourceTypeMapVo {
   updateTime: Date;
 }
 
-export interface ResourceTypeVo {
+export interface ResourceTypeVo extends E {
   /**
    * ID
    */
@@ -195,7 +175,7 @@ export interface ResourceTypeVo {
   updateTime: Date;
 }
 
-export interface SiteVo {
+export interface SiteVo extends E {
   /**
    * ID
    */
@@ -222,7 +202,7 @@ export interface SiteVo {
   updateTime: Date;
 }
 
-export interface Directory {
+export interface Directory extends E {
   /**
    * 主键id。
    */
@@ -259,7 +239,7 @@ export interface Directory {
   children: Directory[];
 }
 
-export interface TagVo {
+export interface TagVo extends E {
   /**
    * 主键
    */
@@ -276,7 +256,7 @@ export interface TagVo {
   createTime: any;
 }
 
-export default interface TagReferenceVo {
+export default interface TagReferenceVo extends E {
   serialVersionUID?: number;
 
   /**
@@ -305,11 +285,48 @@ export default interface TagReferenceVo {
   referTime: any;
 }
 
-export interface ProTableObject<T> {
-  page: number;
-  pageSize: number;
-  total: number;
-  data: T[];
-  message: string;
-  success: boolean;
+export interface AlbumVo {
+  /**
+   * 主键
+   */
+  id?: string;
+
+  /**
+   * 专辑名称
+   */
+  name?: string;
+
+  /**
+   * 删除状态
+   */
+  deleteStatus?: number;
+
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+
+  /**
+   * 删除时间
+   */
+  deleteTime?: string;
+}
+
+export interface AlbumResourceVo {
+  id?: string
+
+  albumId?: string
+
+  albumName?: string
+
+  resourceId?: string
+
+  resourceName?: string
+
+  resourceDir?: string
 }
