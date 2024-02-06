@@ -44,6 +44,23 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
     });
   };
 
+  const unSet = (data: AlbumResourceVo) => {
+    dispatch({
+      type: 'resource/unsetAlbum',
+      payload: {
+        albumResourceId: data.id,
+      },
+    });
+    dispatch({
+      type: 'resource/queryAlbumList',
+      payload: {
+        params: {
+          resourceId: resourceId,
+        },
+      },
+    });
+  };
+
   const columns: TableColumnType<AlbumResourceVo>[] = [
     {
       title: '专辑名称',
@@ -51,7 +68,11 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
     },
     {
       title: '操作',
-      render: () => <Button size="small">删除</Button>,
+      render: (_, record) => (
+        <Button size="small" onClick={() => unSet(record)}>
+          删除
+        </Button>
+      ),
     },
   ];
 
