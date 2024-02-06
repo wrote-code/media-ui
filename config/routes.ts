@@ -27,12 +27,12 @@
       },
       {
         path: '/resource',
-        name: '资源管理',
+        name: '资源',
         component: './Resource',
       },
       {
         path: '/site',
-        name: '站点管理',
+        name: '站点',
         component: './Site',
       },
       {

@@ -4,16 +4,18 @@ import {
   deleteResource,
   deleteTag,
   fetchResourceList,
+  queryAlbumList,
   queryTags,
   setAlbum,
   unsetAlbum,
 } from '@/services/resource/resource';
 import type { ResponseData } from '@/types/response/response';
-import { parseResponse } from '@/utils/utils';
+import { TableResponse } from '@/types/response/table';
+import { parseResponse, parseTableResponse } from '@/utils/utils';
 import { message } from 'antd';
 import type { Effect, Reducer } from 'umi';
 import type TagReferenceVo from '../../types/entity';
-import type { AlbumResourceVo, ResourceVo } from '../../types/entity';
+import type { AlbumResourceVo, AlbumVo, ResourceVo } from '../../types/entity';
 
 export interface ResourceStateType {
   resourceList: ResourceVo[];
@@ -21,6 +23,10 @@ export interface ResourceStateType {
    * 指定资源拥有的标签。
    */
   tagList: TagReferenceVo[];
+  /**
+   * 资源关联的专辑。
+   */
+  albumTableResponse: TableResponse<AlbumVo>;
 }
 
 export interface ResourceModelType {
@@ -28,6 +34,7 @@ export interface ResourceModelType {
   state: {
     resourceList: ResourceVo[];
     tagList: TagReferenceVo[];
+    albumTableResponse: TableResponse<AlbumVo>;
   };
   effects: {
     fetchResourceList: Effect;
@@ -38,10 +45,12 @@ export interface ResourceModelType {
     fetchTagList: Effect;
     setAlbum: Effect;
     unsetAlbum: Effect;
+    queryAlbumList: Effect;
   };
   reducers: {
-    setResourceList: Reducer<ResourceStateType>;
-    setTagList: Reducer<ResourceStateType>;
+    setResourceList: Reducer;
+    setTagList: Reducer;
+    setAlbumList: Reducer;
   };
 }
 
@@ -50,29 +59,35 @@ const ResourceMode: ResourceModelType = {
   state: {
     resourceList: [],
     tagList: [],
+    albumTableResponse: {
+      data: [],
+      total: 0,
+      message: '',
+      success: true,
+    },
   },
   effects: {
     *fetchResourceList(_, { call, put }) {
-      const data = yield call(fetchResourceList);
+      const data: ResponseData<any> = yield call(fetchResourceList);
       yield put({
         type: 'resource/setResourceList',
         payload: data,
       });
     },
     *addResource({ payload }, { call }) {
-      const data = yield call(addResource, payload);
+      const data: ResponseData<any> = yield call(addResource, payload);
       if (parseResponse(data)) {
         message.success('添加成功, 请刷新页面后查看');
       }
     },
     *deleteResource({ payload }, { call }) {
-      const data = yield call(deleteResource, payload);
+      const data: ResponseData<any> = yield call(deleteResource, payload);
       if (parseResponse(data)) {
         message.success('删除成功');
       }
     },
     *fetchTagList({ payload }, { call, put }) {
-      const data = yield call(queryTags, payload);
+      const data: ResponseData<any> = yield call(queryTags, payload);
       if (parseResponse(data)) {
         yield put({
           type: 'setTagList',
@@ -81,13 +96,13 @@ const ResourceMode: ResourceModelType = {
       }
     },
     *deleteTag({ payload }, { call }) {
-      const data = yield call(deleteTag, payload);
+      const data: ResponseData<any> = yield call(deleteTag, payload);
       if (parseResponse(data)) {
         message.success('删除成功');
       }
     },
     *addTag({ payload }, { call, put }) {
-      const data = yield call(addTag, payload);
+      const data: ResponseData<any> = yield call(addTag, payload);
       parseResponse(data);
       yield put({
         type: 'fetchTagList',
@@ -99,13 +114,22 @@ const ResourceMode: ResourceModelType = {
     *setAlbum({ payload }, { call }) {
       const data: ResponseData<AlbumResourceVo> = yield call(setAlbum, payload);
       if (parseResponse(data)) {
-        message.info(data.message);
+        message.success(data.message);
       }
     },
     *unsetAlbum({ payload }, { call }) {
       const data: ResponseData<AlbumResourceVo> = yield call(unsetAlbum, payload);
       if (parseResponse(data)) {
-        message.info(data.message);
+        message.success(data.message);
+      }
+    },
+    *queryAlbumList({ payload }, { put, call }) {
+      const data: TableResponse<AlbumVo> = yield call(queryAlbumList, payload);
+      if (parseTableResponse(data)) {
+        yield put({
+          type: 'setAlbumList',
+          payload: data,
+        });
       }
     },
   },
@@ -120,6 +144,12 @@ const ResourceMode: ResourceModelType = {
       return {
         ...state,
         tagList: payload,
+      };
+    },
+    setAlbumList(state, { payload }) {
+      return {
+        ...state,
+        albumTableResponse: payload,
       };
     },
   },
