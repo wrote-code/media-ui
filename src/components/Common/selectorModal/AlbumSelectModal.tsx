@@ -11,10 +11,11 @@ interface PropsType {
   resourceId: string;
   visible: boolean;
   onCancel: () => void;
+  resourceName: string;
 }
 
 const AlbumSelectModal: React.FC<PropsType> = (props) => {
-  const { albumList, total, resourceId, visible, onCancel } = props;
+  const { albumList, total, resourceId, visible, onCancel, resourceName } = props;
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(1);
   const [name, setName] = useState('');
@@ -89,7 +90,12 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
   };
 
   return (
-    <Modal visible={visible} onCancel={onCancel} onOk={onCancel} title="选择专辑">
+    <Modal
+      visible={visible}
+      onCancel={onCancel}
+      onOk={onCancel}
+      title={`为【${resourceName}】选择专辑`}
+    >
       <Input.Search onSearch={onSearch} />
       <Table
         size="small"
