@@ -56,10 +56,12 @@ const Detail: React.FC<PropsType> = (props) => {
     {
       title: '文件名',
       dataIndex: 'resourceName',
+      ellipsis: true,
     },
     {
       title: '目录',
       dataIndex: 'resourceDir',
+      ellipsis: true,
     },
     {
       title: '操作',
