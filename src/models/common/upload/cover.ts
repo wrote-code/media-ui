@@ -36,9 +36,10 @@ const Cover: CoverModelType = {
     },
   },
   reducers: {
-    setFileList(state, payload) {
+    setFileList(state, { payload }) {
       return {
         ...state,
+        fileList: payload,
       };
     },
   },
