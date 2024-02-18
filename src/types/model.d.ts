@@ -1,12 +1,13 @@
 import type {
-  SelectAuthorStateType,
-  DirectoryModelStateType,
-  ResourceStateType,
-  AuthorStateType,
-  SiteStateType,
-  TagStateType,
   AlbumModelState,
   AlbumSelectModalStateType,
+  AuthorStateType,
+  CoverStateType,
+  DirectoryModelStateType,
+  ResourceStateType,
+  SelectAuthorStateType,
+  SiteStateType,
+  TagStateType,
 } from 'umi';
 
 /**
@@ -19,7 +20,8 @@ export interface DefaultStateType {
 export interface ModelType {
   'modal/selectAuthor': SelectAuthorStateType;
   'select/directory': DirectoryModelStateType;
-  'selectModal/albumSelectModal': AlbumSelectModalStateType
+  'selectModal/albumSelectModal': AlbumSelectModalStateType;
+  'upload/cover': CoverStateType;
   resource: ResourceStateType;
   author: AuthorStateType;
   site: SiteStateType;

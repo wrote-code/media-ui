@@ -330,3 +330,30 @@ export interface AlbumResourceVo {
 
   resourceDir?: string
 }
+
+export interface FileInfo {
+  /**
+  * 主键标识。
+  */
+  id?: string
+
+  /**
+  * 业务代码，用来关联业务。
+  */
+  businessCode?: string
+
+  /**
+  * 业务类型。
+  */
+  businessType?: number
+
+  /**
+  * 原始文件名。
+  */
+  originalFilename?: string
+
+  /**
+  * 实际文件名。
+  */
+  filename?: string
+}
