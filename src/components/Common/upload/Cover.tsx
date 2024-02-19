@@ -65,7 +65,7 @@ const Cover: React.FC<PropsType> = (props) => {
   };
 
   const onRemove = (file: UploadFile) => {
-    return deleteFile({ ab: file.uid })
+    return deleteFile({ id: file.uid })
       .then((v: ResponseData<FileInfo>) => {
         if (v.statusCode === '00000000') {
           message.success('删除成功');
