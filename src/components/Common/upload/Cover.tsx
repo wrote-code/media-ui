@@ -1,5 +1,7 @@
+import { deleteFile } from '@/services/upload';
 import { FileInfo } from '@/types/entity';
 import { ModelType } from '@/types/model';
+import { ResponseData } from '@/types/response/response';
 import { Button, Modal, Upload, message } from 'antd';
 import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 import React, { useEffect, useState } from 'react';
@@ -62,6 +64,21 @@ const Cover: React.FC<PropsType> = (props) => {
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
   };
 
+  const onRemove = (file: UploadFile) => {
+    return deleteFile({ ab: file.uid })
+      .then((v: ResponseData<FileInfo>) => {
+        if (v.statusCode === '00000000') {
+          message.success('删除成功');
+        } else {
+          message.error('删除失败:' + v.message);
+          return false;
+        }
+      })
+      .catch((e) => {
+        return false;
+      });
+  };
+
   return (
     <>
       <Upload
@@ -72,6 +89,7 @@ const Cover: React.FC<PropsType> = (props) => {
         fileList={fileList}
         onChange={handleFileChange}
         onPreview={handlePreview}
+        onRemove={onRemove}
       >
         <Button>上传</Button>
       </Upload>
