@@ -40,7 +40,6 @@ export interface AuthorVo extends E {
   updateTime?: Date;
 }
 
-
 export interface ResourceAlbumVo extends E {
   /**
    * ID
@@ -119,6 +118,10 @@ export interface ResourceVo extends E {
    * 评分。
    */
   rate: number;
+  /**
+   * 封面标识。
+   */
+  coverId: string;
 }
 
 export interface ResourceTypeMapVo extends E {
@@ -315,45 +318,49 @@ export interface AlbumVo {
    * 删除时间
    */
   deleteTime?: string;
+  /**
+   * 封面标识。
+   */
+  coverId?: string;
 }
 
 export interface AlbumResourceVo {
-  id?: string
+  id?: string;
 
-  albumId?: string
+  albumId?: string;
 
-  albumName?: string
+  albumName?: string;
 
-  resourceId?: string
+  resourceId?: string;
 
-  resourceName?: string
+  resourceName?: string;
 
-  resourceDir?: string
+  resourceDir?: string;
 }
 
 export interface FileInfo {
   /**
-  * 主键标识。
-  */
-  id?: string
+   * 主键标识。
+   */
+  id?: string;
 
   /**
-  * 业务代码，用来关联业务。
-  */
-  businessCode?: string
+   * 业务代码，用来关联业务。
+   */
+  businessCode?: string;
 
   /**
-  * 业务类型。
-  */
-  businessType?: number
+   * 业务类型。
+   */
+  businessType?: number;
 
   /**
-  * 原始文件名。
-  */
-  originalFilename?: string
+   * 原始文件名。
+   */
+  originalFilename?: string;
 
   /**
-  * 实际文件名。
-  */
-  filename?: string
+   * 实际文件名。
+   */
+  filename?: string;
 }
