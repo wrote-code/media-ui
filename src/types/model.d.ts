@@ -2,7 +2,7 @@ import type {
   AlbumModelState,
   AlbumSelectModalStateType,
   AuthorStateType,
-  CoverStateType,
+  ImageUploadStateType,
   DirectoryModelStateType,
   ResourceStateType,
   SelectAuthorStateType,
@@ -21,7 +21,7 @@ export interface ModelType {
   'modal/selectAuthor': SelectAuthorStateType;
   'select/directory': DirectoryModelStateType;
   'selectModal/albumSelectModal': AlbumSelectModalStateType;
-  'upload/cover': CoverStateType;
+  'upload/imageUpload': ImageUploadStateType;
   resource: ResourceStateType;
   author: AuthorStateType;
   site: SiteStateType;

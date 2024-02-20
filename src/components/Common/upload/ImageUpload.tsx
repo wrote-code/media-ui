@@ -23,7 +23,7 @@ const ImageUpload: React.FC<PropsType> = (props) => {
 
   useEffect(() => {
     dispatch({
-      type: 'upload/cover/queryFileList',
+      type: 'upload/imageUpload/queryFileList',
       payload: {
         businessCode,
       },
@@ -40,7 +40,7 @@ const ImageUpload: React.FC<PropsType> = (props) => {
   }, [currentFileList]);
 
   const handleFileChange = (info: UploadChangeParam) => {
-    const { fileList, file } = info;
+    const { fileList } = info;
     const newList = fileList.map((f) => {
       if (f.response) {
         if (f.response.statusCode === '00000000') {
@@ -103,6 +103,6 @@ const ImageUpload: React.FC<PropsType> = (props) => {
   );
 };
 
-export default connect(({ 'upload/cover': { fileList } }: ModelType) => ({
+export default connect(({ 'upload/imageUpload': { fileList } }: ModelType) => ({
   currentFileList: fileList,
 }))(ImageUpload);

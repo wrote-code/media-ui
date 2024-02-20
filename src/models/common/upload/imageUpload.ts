@@ -4,13 +4,13 @@ import { TableResponse } from '@/types/response/table';
 import { parseTableResponse } from '@/utils/utils';
 import { Effect, Reducer } from 'umi';
 
-export interface CoverStateType {
+export interface ImageUploadStateType {
   fileList: FileInfo[];
 }
 
-export interface CoverModelType {
-  namespace: 'upload/cover';
-  state: CoverStateType;
+export interface ImageUploadModelType {
+  namespace: 'upload/imageUpload';
+  state: ImageUploadStateType;
   effects: {
     queryFileList: Effect;
   };
@@ -19,8 +19,8 @@ export interface CoverModelType {
   };
 }
 
-const Cover: CoverModelType = {
-  namespace: 'upload/cover',
+const ImageUpload: ImageUploadModelType = {
+  namespace: 'upload/imageUpload',
   state: {
     fileList: [],
   },
@@ -45,4 +45,4 @@ const Cover: CoverModelType = {
   },
 };
 
-export default Cover;
+export default ImageUpload;
