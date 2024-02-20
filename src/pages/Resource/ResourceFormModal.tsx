@@ -1,7 +1,8 @@
 import AuthorSelectorModal from '@/components/Common/selectorModal/AuthorSelectorModal';
+import ImageUpload from '@/components/Common/upload/ImageUpload';
 import type { AuthorVo, ResourceVo } from '@/types/entity';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
-import { Button, Form, Input, ModalProps } from 'antd';
+import { Button, Form } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'umi';
 
@@ -125,6 +126,8 @@ const ResourceFormModal: React.FC<ModalType> = (props: ModalType) => {
         initialValue={data?.authorVo.username}
         rules={[{ required: true, max: 90 }]}
       />
+      <ProFormText name="coverId" initialValue={data?.id ?? ''} hidden={true} />
+      {data?.id && <ImageUpload businessCode={data?.id} businessType={2} />}
       {authorVisible && (
         <AuthorSelectorModal
           addButton

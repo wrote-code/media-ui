@@ -45,8 +45,8 @@ const ReleaseNote: React.FC<PropsType> = () => {
       <Paragraph>
         <ul>
           <li>发行版本：{version}</li>
-          <li>前台版本：{frontVersion}</li>
-          <li>后台版本：{backVersion}</li>
+          <li>客户端版本：{frontVersion}</li>
+          <li>服务端版本：{backVersion}</li>
         </ul>
       </Paragraph>
       <Title level={3}>发行说明</Title>

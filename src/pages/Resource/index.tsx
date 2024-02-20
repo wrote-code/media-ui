@@ -205,6 +205,7 @@ const Resource: React.FC<ResourceProps> = () => {
               onClick={() => {
                 setResourceId(entity.id);
                 setAlbumVisible(true);
+                setCurrentResource(entity);
               }}
             >
               专辑
@@ -268,6 +269,7 @@ const Resource: React.FC<ResourceProps> = () => {
       )}
       {albumVisible && (
         <Album
+          resourceName={currentResource?.filename ?? ''}
           onCancel={() => setAlbumVisible(false)}
           resourceId={resourceId}
           visible={albumVisible}
