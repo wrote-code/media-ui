@@ -1,11 +1,12 @@
 import AuthorInput from '@/components/Common/input/AuthorInput';
 import ResourceTags from '@/components/Common/tagFc/ResourceTag';
+import ImageUpload from '@/components/Common/upload/ImageUpload';
 import { fetchResourceList } from '@/services/resource/resource';
 import type { ResourceVo } from '@/types/entity';
 import type { ModelType } from '@/types/model';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { Button, Popconfirm, Tooltip, message } from 'antd';
+import { Button, Modal, Popconfirm, Tooltip, message } from 'antd';
 import copy from 'copy-to-clipboard';
 import React, { useRef, useState } from 'react';
 import { connect, useDispatch } from 'umi';
@@ -27,6 +28,7 @@ const Resource: React.FC<ResourceProps> = () => {
   const [modifyVisible, setModifyVisible] = useState(false);
   // 要修改的资源
   const [resToModify, setResToModify] = useState();
+  const [showPreview, setShowPreview] = useState(false);
 
   const reload = () => {
     actionRef.current?.reload();
@@ -175,7 +177,7 @@ const Resource: React.FC<ResourceProps> = () => {
     {
       title: '操作',
       hideInSearch: true,
-      width: 210,
+      width: 255,
       render: (_, entity: ResourceVo) => {
         return (
           <>
@@ -209,6 +211,16 @@ const Resource: React.FC<ResourceProps> = () => {
               }}
             >
               专辑
+            </Button>
+            <Button
+              size="small"
+              onClick={() => {
+                setResourceId(entity.id);
+                setCurrentResource(entity);
+                setShowPreview(true);
+              }}
+            >
+              预览
             </Button>
           </>
         );
@@ -274,6 +286,16 @@ const Resource: React.FC<ResourceProps> = () => {
           resourceId={resourceId}
           visible={albumVisible}
         />
+      )}
+      {showPreview && (
+        <Modal
+          visible={showPreview}
+          title={`资源【${currentResource?.filename}】预览`}
+          onCancel={() => setShowPreview(false)}
+          onOk={() => setShowPreview(false)}
+        >
+          <ImageUpload businessCode={resourceId} businessType={4} />
+        </Modal>
       )}
     </div>
   );

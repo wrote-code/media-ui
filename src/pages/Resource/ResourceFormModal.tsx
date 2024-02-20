@@ -126,8 +126,6 @@ const ResourceFormModal: React.FC<ModalType> = (props: ModalType) => {
         initialValue={data?.authorVo.username}
         rules={[{ required: true, max: 90 }]}
       />
-      <ProFormText name="coverId" initialValue={data?.id ?? ''} hidden={true} />
-      {data?.id && <ImageUpload businessCode={data?.id} businessType={2} />}
       {authorVisible && (
         <AuthorSelectorModal
           addButton
