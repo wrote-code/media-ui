@@ -13,7 +13,7 @@ interface PropsType {
   currentFileList: FileInfo[];
 }
 
-const Cover: React.FC<PropsType> = (props) => {
+const ImageUpload: React.FC<PropsType> = (props) => {
   const { businessCode, businessType, currentFileList } = props;
   const [fileList, setFileList] = useState<UploadFile[]>();
   const [showPreview, setShowPreview] = useState(false);
@@ -105,4 +105,4 @@ const Cover: React.FC<PropsType> = (props) => {
 
 export default connect(({ 'upload/cover': { fileList } }: ModelType) => ({
   currentFileList: fileList,
-}))(Cover);
+}))(ImageUpload);

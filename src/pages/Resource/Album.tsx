@@ -104,6 +104,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
       ]}
     >
       <Table
+        rowKey="id"
         columns={columns}
         size="small"
         pagination={pagination}
