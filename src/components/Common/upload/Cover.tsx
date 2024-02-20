@@ -28,13 +28,16 @@ const Cover: React.FC<PropsType> = (props) => {
         businessCode,
       },
     });
-    const list = currentFileList.map((f) => ({
+  }, [dispatch]);
+
+  useEffect(() => {
+    const list: any = currentFileList.map((f) => ({
       uid: f.id,
       name: f.originalFilename,
       url: `/api/file/getFile?id=${f.id}`,
     }));
     setFileList(list);
-  }, [dispatch]);
+  }, [currentFileList]);
 
   const handleFileChange = (info: UploadChangeParam) => {
     const { fileList, file } = info;
