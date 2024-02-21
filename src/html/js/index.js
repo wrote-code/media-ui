@@ -1,5 +1,8 @@
+const { Button } = antd;
+
 function MyApp() {
-  return <h1>Hello, world!</h1>;
+  const [count, setCount] = React.useState(0);
+  return <Button style={{ margin: 10 }} type="primary" onClick={() => setCount(count + 1)}>当前：{count}</Button>;
 }
 
 const container = document.getElementById('root');
