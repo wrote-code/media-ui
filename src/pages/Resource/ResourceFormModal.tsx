@@ -1,7 +1,8 @@
 import AuthorSelectorModal from '@/components/Common/selectorModal/AuthorSelectorModal';
+import ImageUpload from '@/components/Common/upload/ImageUpload';
 import type { AuthorVo, ResourceVo } from '@/types/entity';
 import { ModalForm, ProFormText } from '@ant-design/pro-form';
-import { Button, Form, Input, ModalProps } from 'antd';
+import { Button, Form } from 'antd';
 import React, { useState } from 'react';
 import { useDispatch } from 'umi';
 

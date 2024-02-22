@@ -8,13 +8,14 @@ import { connect, useDispatch } from 'umi';
 
 interface PropsType {
   resourceId: string;
+  resourceName: string;
   visible: boolean;
   onCancel: () => void;
   albumTableResponse: TableResponse<AlbumResourceVo>;
 }
 
 const Album: React.FC<PropsType> = (props: PropsType) => {
-  const { resourceId, albumTableResponse, visible, onCancel } = props;
+  const { resourceId, albumTableResponse, visible, onCancel, resourceName } = props;
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [showAlbumSelect, setShowAlbumSelect] = useState(false);
@@ -49,14 +50,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
       type: 'resource/unsetAlbum',
       payload: {
         albumResourceId: data.id,
-      },
-    });
-    dispatch({
-      type: 'resource/queryAlbumList',
-      payload: {
-        params: {
-          resourceId: resourceId,
-        },
+        resourceId: resourceId,
       },
     });
   };
@@ -87,7 +81,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
     <Modal
       visible={visible}
       onCancel={onCancel}
-      title="专辑"
+      title={`包含【${resourceName}】的专辑`}
       footer={[
         <Button
           key={2}
@@ -103,6 +97,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
       ]}
     >
       <Table
+        rowKey="id"
         columns={columns}
         size="small"
         pagination={pagination}
@@ -110,6 +105,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
       />
       {showAlbumSelect && (
         <AlbumSelectModal
+          resourceName={resourceName}
           resourceId={resourceId}
           visible={showAlbumSelect}
           onCancel={() => setShowAlbumSelect(false)}
