@@ -50,14 +50,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
       type: 'resource/unsetAlbum',
       payload: {
         albumResourceId: data.id,
-      },
-    });
-    dispatch({
-      type: 'resource/queryAlbumList',
-      payload: {
-        params: {
-          resourceId: resourceId,
-        },
+        resourceId: resourceId,
       },
     });
   };
