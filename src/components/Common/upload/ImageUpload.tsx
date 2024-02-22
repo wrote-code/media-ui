@@ -93,6 +93,7 @@ const ImageUpload: React.FC<PropsType> = (props) => {
         onChange={handleFileChange}
         onPreview={handlePreview}
         onRemove={onRemove}
+        multiple
       >
         <Button>上传</Button>
       </Upload>
