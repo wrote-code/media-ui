@@ -106,6 +106,7 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
           current: current,
           total: total,
           onChange: onPageChange,
+          pageSize: 5,
         }}
         onRow={onRow}
       />

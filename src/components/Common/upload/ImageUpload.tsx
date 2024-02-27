@@ -93,6 +93,8 @@ const ImageUpload: React.FC<PropsType> = (props) => {
         onChange={handleFileChange}
         onPreview={handlePreview}
         onRemove={onRemove}
+        // todo 开启后可以选多个但是一个文件会上传多次
+        // multiple
       >
         <Button>上传</Button>
       </Upload>
