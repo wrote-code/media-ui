@@ -126,6 +126,7 @@ const ResourceMode: ResourceModelType = {
           payload: {
             params: {
               resourceId: payload.resourceId,
+              albumId: payload?.albumId,
             },
           },
         });
