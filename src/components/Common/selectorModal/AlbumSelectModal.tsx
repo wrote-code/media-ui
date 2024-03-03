@@ -26,7 +26,7 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
       payload: {
         params: {
           current: current,
-          pageSize: 5,
+          pageSize: 10,
           albumName: name,
         },
       },
@@ -68,7 +68,7 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
       payload: {
         params: {
           current: page,
-          pageSize: 5,
+          pageSize: 10,
           albumName: name,
         },
       },
@@ -82,7 +82,7 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
       payload: {
         params: {
           current: current,
-          pageSize: 5,
+          pageSize: 10,
           albumName: value,
         },
       },
@@ -106,7 +106,7 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
           current: current,
           total: total,
           onChange: onPageChange,
-          pageSize: 5,
+          pageSize: 10,
         }}
         onRow={onRow}
       />

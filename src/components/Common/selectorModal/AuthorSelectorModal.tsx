@@ -62,7 +62,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         filter: {},
         params: {
           current: currentPage,
-          pageSize: 5,
+          pageSize: 10,
         },
         sort: {},
       },
@@ -99,7 +99,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         params: {
           ...values,
           current: page,
-          pageSize: 5,
+          pageSize: 10,
         },
         sort: {},
       },
@@ -109,7 +109,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
 
   const pagination: TablePaginationConfig = {
     current: currentPage,
-    pageSize: 5,
+    pageSize: 10,
     onChange: onPageChange,
     total: total,
   };
@@ -123,7 +123,7 @@ const AuthorSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         sort: {},
         params: {
           current: currentPage,
-          pageSize: 5,
+          pageSize: 10,
           ...values,
         },
       },
