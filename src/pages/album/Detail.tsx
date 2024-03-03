@@ -1,4 +1,5 @@
-import { AlbumResourceVo } from '@/types/entity';
+import ResourceSelectModal from '@/components/Common/selectorModal/ResourceSelectModal';
+import { AlbumResourceVo, ResourceVo } from '@/types/entity';
 import { ModelType } from '@/types/model';
 import { Button, Modal, Table, TablePaginationConfig } from 'antd';
 import { ColumnType } from 'antd/lib/table';
@@ -16,6 +17,7 @@ interface PropsType {
 
 const Detail: React.FC<PropsType> = (props) => {
   const { albumId, visible, onCancel, dataList, total, albumName } = props;
+  const [showResModal, setShowResModal] = useState(false);
   const dispatch = useDispatch();
 
   const [current, setCurrent] = useState(1);
@@ -84,12 +86,33 @@ const Detail: React.FC<PropsType> = (props) => {
     },
   ];
 
+  const closeResModal = () => {
+    setShowResModal(false);
+  };
+
+  const addResourceToAlbum = (data: ResourceVo) => {
+    dispatch({
+      type: 'resource/setAlbum',
+      payload: {
+        albumId,
+        resourceId: data.id,
+      },
+    });
+  };
+
   return (
     <Modal
       visible={visible}
       onCancel={onCancel}
       title={`专辑【${albumName}】包含的资源`}
-      onOk={onCancel}
+      footer={[
+        <Button key={1} onClick={() => setShowResModal(true)}>
+          添加资源
+        </Button>,
+        <Button type="primary" key={2} onClick={onCancel}>
+          确定
+        </Button>,
+      ]}
     >
       <Table
         size="small"
@@ -98,6 +121,13 @@ const Detail: React.FC<PropsType> = (props) => {
         dataSource={dataList}
         pagination={pagination}
       />
+      {showResModal && (
+        <ResourceSelectModal
+          onCancel={closeResModal}
+          onSelect={addResourceToAlbum}
+          visible={showResModal}
+        />
+      )}
     </Modal>
   );
 };

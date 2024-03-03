@@ -49,6 +49,7 @@ const Album: React.FC<PropsType> = () => {
             预览
           </Button>
           <Button
+            type="primary"
             size="small"
             onClick={() => {
               setAlbumId(data.id);
@@ -72,7 +73,7 @@ const Album: React.FC<PropsType> = () => {
       type: 'album/addAlbum',
       payload: {
         albumName: name.trim(),
-        coverId: '0'
+        coverId: '0',
       },
     });
     setName('');

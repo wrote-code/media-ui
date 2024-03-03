@@ -1,9 +1,10 @@
+import { ResourceSelectModalStateType } from '@/models/common/selectorModal/resourceSelectModal';
 import type {
   AlbumModelState,
   AlbumSelectModalStateType,
   AuthorStateType,
-  ImageUploadStateType,
   DirectoryModelStateType,
+  ImageUploadStateType,
   ResourceStateType,
   SelectAuthorStateType,
   SiteStateType,
@@ -21,6 +22,7 @@ export interface ModelType {
   'modal/selectAuthor': SelectAuthorStateType;
   'select/directory': DirectoryModelStateType;
   'selectModal/albumSelectModal': AlbumSelectModalStateType;
+  'selectModal/resource': ResourceSelectModalStateType;
   'upload/imageUpload': ImageUploadStateType;
   resource: ResourceStateType;
   author: AuthorStateType;
