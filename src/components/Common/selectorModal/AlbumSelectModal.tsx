@@ -7,6 +7,7 @@ import { connect, useDispatch } from 'umi';
 
 interface PropsType {
   albumList: AlbumVo[];
+  onSelect: (data: AlbumVo) => void;
   total: number;
   resourceId: string;
   visible: boolean;
@@ -15,7 +16,7 @@ interface PropsType {
 }
 
 const AlbumSelectModal: React.FC<PropsType> = (props) => {
-  const { albumList, total, resourceId, visible, onCancel, resourceName } = props;
+  const { albumList, total, resourceId, visible, onCancel, resourceName, onSelect } = props;
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(1);
   const [name, setName] = useState('');
@@ -42,22 +43,8 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
 
   const onRow: (data: AlbumVo) => React.HTMLAttributes<any> = (data: AlbumVo) => ({
     onClick: () => {
-      dispatch({
-        type: 'resource/setAlbum',
-        payload: {
-          resourceId: resourceId,
-          albumId: data.id,
-        },
-      });
+      onSelect(data);
       onCancel();
-      dispatch({
-        type: 'resource/queryAlbumList',
-        payload: {
-          params: {
-            resourceId: resourceId,
-          },
-        },
-      });
     },
   });
 
