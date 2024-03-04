@@ -1,8 +1,8 @@
 import AlbumSelectModal from '@/components/Common/selectorModal/AlbumSelectModal';
-import { AlbumResourceVo } from '@/types/entity';
+import { AlbumResourceVo, AlbumVo } from '@/types/entity';
 import { ModelType } from '@/types/model';
 import { TableResponse } from '@/types/response/table';
-import { Button, Modal, Table, TableColumnType } from 'antd';
+import { Button, Modal, Table, TableColumnType, TablePaginationConfig } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 
@@ -17,7 +17,7 @@ interface PropsType {
 const Album: React.FC<PropsType> = (props: PropsType) => {
   const { resourceId, albumTableResponse, visible, onCancel, resourceName } = props;
   const [current, setCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(10);
   const [showAlbumSelect, setShowAlbumSelect] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,6 +27,8 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
       payload: {
         params: {
           resourceId: resourceId,
+          pageSize,
+          current,
         },
       },
     });
@@ -40,6 +42,8 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
       payload: {
         params: {
           resourceId: resourceId,
+          pageSize,
+          current: page,
         },
       },
     });
@@ -62,18 +66,30 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
     },
     {
       title: '操作',
+      width: 60,
       render: (_, record) => (
-        <Button size="small" onClick={() => unSet(record)}>
+        <Button size="small" onClick={() => unSet(record)} type="primary" danger>
           删除
         </Button>
       ),
     },
   ];
 
-  const pagination = {
+  const onSelect = (data: AlbumVo) => {
+    dispatch({
+      type: 'resource/setAlbum',
+      payload: {
+        resourceId: resourceId,
+        albumId: data.id,
+      },
+    });
+  };
+
+  const pagination: TablePaginationConfig = {
+    showTotal: (total) => `总计:${total}`,
     current: current,
     pageSize: pageSize,
-    onPaginationChange: onPaginationChange,
+    onChange: onPaginationChange,
     total: albumTableResponse.total,
   };
 
@@ -109,6 +125,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
           resourceId={resourceId}
           visible={showAlbumSelect}
           onCancel={() => setShowAlbumSelect(false)}
+          onSelect={onSelect}
         />
       )}
     </Modal>

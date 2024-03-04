@@ -9,6 +9,14 @@ export async function fetchResourceList(data: any) {
   });
 }
 
+export async function queryList(data: any) {
+  const url = '/api/resource/queryList';
+  return request(url, {
+    data: data,
+    method: 'POST',
+  });
+}
+
 export async function addResource(payload: any) {
   return request('/api/resource/add', {
     data: payload,
