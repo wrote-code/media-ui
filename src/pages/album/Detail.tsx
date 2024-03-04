@@ -127,6 +127,7 @@ const Detail: React.FC<PropsType> = (props) => {
           onCancel={closeResModal}
           onSelect={addResourceToAlbum}
           visible={showResModal}
+          albumId={albumId}
         />
       )}
     </Modal>

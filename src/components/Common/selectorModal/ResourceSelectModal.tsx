@@ -5,16 +5,18 @@ import { useDebounceFn } from 'ahooks';
 import { Input, Modal, Table, TableColumnType, TablePaginationConfig } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'umi';
+import './style.less';
 
 interface PropsType {
   onSelect: (data: ResourceVo) => void;
   onCancel: () => void;
   response?: TableResponse<ResourceVo>;
   visible: boolean;
+  albumId?: string;
 }
 
 const ResourceSelectModal: React.FC<PropsType> = (props) => {
-  const { onCancel, onSelect, response, visible } = props;
+  const { onCancel, onSelect, response, visible, albumId } = props;
   const [current, setCurrent] = useState(1);
   const [name, setName] = useState('');
 
@@ -28,6 +30,7 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
           current,
           pageSize: 10,
           filename: name,
+          albumId,
         },
       },
     });
@@ -54,9 +57,10 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
         type: 'selectModal/resource/queryList',
         payload: {
           params: {
-            current,
+            current: page,
             pageSize: 10,
             filename: name,
+            albumId,
           },
         },
       });
@@ -80,7 +84,8 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
           params: {
             current,
             pageSize: 10,
-            filename: name,
+            filename: value,
+            albumId,
           },
         },
       });
@@ -88,10 +93,18 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
     { wait: 500 },
   );
 
+  const rowClassName = (record: ResourceVo) => {
+    if (record.albumId) {
+      return 'selectRow';
+    }
+    return '';
+  };
+
   return (
     <Modal visible={visible} title="选择资源" onCancel={onCancel} onOk={onCancel}>
       <Input.Search value={name} onSearch={onSearch} onChange={(e) => setName(e.target.value)} />
       <Table
+        rowClassName={rowClassName}
         size="small"
         columns={columns}
         pagination={pagination}

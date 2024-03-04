@@ -122,6 +122,10 @@ export interface ResourceVo extends E {
    * 封面标识。
    */
   coverId: string;
+  /**
+   * 和资源关联的专辑id，只在ResourceSelectModal中使用。
+   */
+  albumId: string;
 }
 
 export interface ResourceTypeMapVo extends E {
