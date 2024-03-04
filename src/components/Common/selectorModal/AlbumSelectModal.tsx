@@ -20,25 +20,19 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
   const { albumList, total, visible, onCancel, resourceName, onSelect, resourceId } = props;
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(1);
-  const [name, setName] = useState('');
 
-  const queryData = (page?: any) => {
+  useEffect(() => {
     dispatch({
       type: 'selectModal/albumSelectModal/queryAlbumList',
       payload: {
         params: {
-          current: page || current,
+          current: current,
           pageSize: 10,
-          albumName: name,
           selectModal: true,
           resourceId,
         },
       },
     });
-  };
-
-  useEffect(() => {
-    queryData();
   }, [dispatch]);
 
   const columns: ColumnType<AlbumVo>[] = [
@@ -64,12 +58,32 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
 
   const onPageChange = (page: number) => {
     setCurrent(page);
-    queryData(page);
+    dispatch({
+      type: 'selectModal/albumSelectModal/queryAlbumList',
+      payload: {
+        params: {
+          current: page,
+          pageSize: 10,
+          selectModal: true,
+          resourceId,
+        },
+      },
+    });
   };
 
   const onSearch = (value: string) => {
-    setName(value);
-    queryData();
+    dispatch({
+      type: 'selectModal/albumSelectModal/queryAlbumList',
+      payload: {
+        params: {
+          current: current,
+          pageSize: 10,
+          selectModal: true,
+          albumName: value,
+          resourceId,
+        },
+      },
+    });
   };
 
   return (
