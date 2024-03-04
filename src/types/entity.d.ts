@@ -322,6 +322,12 @@ export interface AlbumVo {
    * 封面标识。
    */
   coverId?: string;
+  /**
+   * 和专辑关联的资源id。
+   *
+   * 此字段是为了在选择专辑时高亮已选专辑，其他时候不用。
+   */
+  resourceId: string;
 }
 
 export interface AlbumResourceVo {
