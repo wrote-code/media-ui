@@ -47,6 +47,7 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
   ];
 
   const pagination: TablePaginationConfig = {
+    showTotal: (total) => `总计:${total}`,
     onChange: (page) => {
       setCurrent(page);
       dispatch({

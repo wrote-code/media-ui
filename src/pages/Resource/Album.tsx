@@ -85,6 +85,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
   };
 
   const pagination: TablePaginationConfig = {
+    showTotal: (total) => `总计:${total}`,
     current: current,
     pageSize: pageSize,
     onChange: onPaginationChange,

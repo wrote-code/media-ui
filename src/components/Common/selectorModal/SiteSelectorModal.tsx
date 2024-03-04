@@ -190,6 +190,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
           current: currentPage,
           pageSize: 10,
           total,
+          showTotal: (total) => `总计:${total}`,
           onChange: onPageChange,
         }}
         rowSelection={rowSelection}

@@ -38,6 +38,7 @@ const Detail: React.FC<PropsType> = (props) => {
   const pagination: TablePaginationConfig = {
     pageSize: 10,
     total: total,
+    showTotal: (total) => `总计:${total}`,
     current: current,
     onChange: (page) => {
       setCurrent(page);
