@@ -52,7 +52,6 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
   const onRow: (data: AlbumVo) => React.HTMLAttributes<any> = (data: AlbumVo) => ({
     onClick: () => {
       onSelect(data);
-      onCancel();
     },
   });
 

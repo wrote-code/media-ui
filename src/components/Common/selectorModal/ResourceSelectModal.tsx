@@ -72,7 +72,6 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
   const onRow = (data: ResourceVo) => ({
     onClick: () => {
       onSelect(data);
-      onCancel();
     },
   });
 
