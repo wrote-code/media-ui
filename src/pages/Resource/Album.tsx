@@ -66,8 +66,9 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
     },
     {
       title: '操作',
+      width: 60,
       render: (_, record) => (
-        <Button size="small" onClick={() => unSet(record)}>
+        <Button size="small" onClick={() => unSet(record)} type="primary" danger>
           删除
         </Button>
       ),

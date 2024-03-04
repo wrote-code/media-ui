@@ -68,9 +68,12 @@ const Detail: React.FC<PropsType> = (props) => {
     },
     {
       title: '操作',
+      width: 60,
       render: (_, data) => (
         <Button
           size="small"
+          type="primary"
+          danger
           onClick={() => {
             dispatch({
               type: 'resource/unsetAlbum',
