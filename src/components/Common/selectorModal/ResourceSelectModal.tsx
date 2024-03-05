@@ -110,12 +110,12 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
 
   return (
     <Modal visible={visible} title="选择资源" onCancel={onCancel} onOk={onCancel}>
-      <Row>
+      <Row gutter={[5, 5]}>
         <Col>
-          <Input value={name} onChange={(e) => setName(e.target.value)} />
+          <Input placeholder="文件名" value={name} onChange={(e) => setName(e.target.value)} />
         </Col>
         <Col>
-          <Input value={dir} onChange={(e) => setDir(e.target.value)} />
+          <Input placeholder="目录" value={dir} onChange={(e) => setDir(e.target.value)} />
         </Col>
         <Col>
           <Button type="primary" onClick={onSearch}>
