@@ -1,8 +1,16 @@
 import { ResourceVo } from '@/types/entity';
 import { ModelType } from '@/types/model';
 import { TableResponse } from '@/types/response/table';
-import { useDebounceFn } from 'ahooks';
-import { Input, Modal, Table, TableColumnType, TablePaginationConfig } from 'antd';
+import {
+  Button,
+  Col,
+  Input,
+  Modal,
+  Row,
+  Table,
+  TableColumnType,
+  TablePaginationConfig,
+} from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'umi';
 import './style.less';
@@ -19,6 +27,7 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
   const { onCancel, onSelect, response, visible, albumId } = props;
   const [current, setCurrent] = useState(1);
   const [name, setName] = useState('');
+  const [dir, setDir] = useState('');
 
   const dispatch = useDispatch();
 
@@ -30,6 +39,7 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
           current,
           pageSize: 10,
           filename: name,
+          dir,
           albumId,
         },
       },
@@ -60,6 +70,7 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
             current: page,
             pageSize: 10,
             filename: name,
+            dir,
             albumId,
           },
         },
@@ -75,22 +86,20 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
     },
   });
 
-  const { run: onSearch } = useDebounceFn(
-    (value: string) => {
-      dispatch({
-        type: 'selectModal/resource/queryList',
-        payload: {
-          params: {
-            current,
-            pageSize: 10,
-            filename: value,
-            albumId,
-          },
+  const onSearch = () => {
+    dispatch({
+      type: 'selectModal/resource/queryList',
+      payload: {
+        params: {
+          current,
+          pageSize: 10,
+          filename: name,
+          dir,
+          albumId,
         },
-      });
-    },
-    { wait: 500 },
-  );
+      },
+    });
+  };
 
   const rowClassName = (record: ResourceVo) => {
     if (record.albumId) {
@@ -101,7 +110,20 @@ const ResourceSelectModal: React.FC<PropsType> = (props) => {
 
   return (
     <Modal visible={visible} title="选择资源" onCancel={onCancel} onOk={onCancel}>
-      <Input.Search value={name} onSearch={onSearch} onChange={(e) => setName(e.target.value)} />
+      <Row gutter={[5, 5]}>
+        <Col>
+          <Input placeholder="文件名" value={name} onChange={(e) => setName(e.target.value)} />
+        </Col>
+        <Col>
+          <Input placeholder="目录" value={dir} onChange={(e) => setDir(e.target.value)} />
+        </Col>
+        <Col>
+          <Button type="primary" onClick={onSearch}>
+            搜索
+          </Button>
+        </Col>
+      </Row>
+
       <Table
         rowClassName={rowClassName}
         size="small"

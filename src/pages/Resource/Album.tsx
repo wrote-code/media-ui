@@ -93,6 +93,20 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
     total: albumTableResponse.total,
   };
 
+  const closeAlbumSelectModal = () => {
+    setShowAlbumSelect(false);
+    dispatch({
+      type: 'resource/queryAlbumList',
+      payload: {
+        params: {
+          resourceId: resourceId,
+          pageSize,
+          current,
+        },
+      },
+    });
+  };
+
   return (
     <Modal
       visible={visible}
@@ -124,7 +138,7 @@ const Album: React.FC<PropsType> = (props: PropsType) => {
           resourceName={resourceName}
           resourceId={resourceId}
           visible={showAlbumSelect}
-          onCancel={() => setShowAlbumSelect(false)}
+          onCancel={closeAlbumSelectModal}
           onSelect={onSelect}
         />
       )}

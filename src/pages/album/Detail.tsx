@@ -92,6 +92,16 @@ const Detail: React.FC<PropsType> = (props) => {
 
   const closeResModal = () => {
     setShowResModal(false);
+    dispatch({
+      type: 'resource/queryAlbumList',
+      payload: {
+        params: {
+          albumId: albumId,
+          pageSize: 10,
+          current: 1,
+        },
+      },
+    });
   };
 
   const addResourceToAlbum = (data: ResourceVo) => {
