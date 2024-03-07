@@ -111,10 +111,18 @@ const ResourceMode: ResourceModelType = {
         },
       });
     },
-    *setAlbum({ payload }, { call }) {
+    *setAlbum({ payload }, { put, call }) {
       const data: ResponseData<AlbumResourceVo> = yield call(setAlbum, payload);
       if (parseResponse(data)) {
         message.success(data.message);
+        yield put({
+          type: 'queryAlbumList',
+          payload: {
+            params: {
+              resourceId: payload.resourceId,
+            },
+          },
+        });
       }
     },
     *unsetAlbum({ payload }, { call, put }) {
@@ -126,6 +134,7 @@ const ResourceMode: ResourceModelType = {
           payload: {
             params: {
               resourceId: payload.resourceId,
+              albumId: payload?.albumId,
             },
           },
         });

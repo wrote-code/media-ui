@@ -49,6 +49,7 @@ const Album: React.FC<PropsType> = () => {
             预览
           </Button>
           <Button
+            type="primary"
             size="small"
             onClick={() => {
               setAlbumId(data.id);
@@ -72,6 +73,7 @@ const Album: React.FC<PropsType> = () => {
       type: 'album/addAlbum',
       payload: {
         albumName: name.trim(),
+        coverId: '0',
       },
     });
     setName('');
@@ -94,6 +96,14 @@ const Album: React.FC<PropsType> = () => {
         </Button>
       </>
     );
+  };
+
+  const closePreview = () => {
+    setShowPreview(false);
+    dispatch({
+      type: 'upload/imageUpload/setFileList',
+      payload: [],
+    });
   };
 
   return (
@@ -131,8 +141,8 @@ const Album: React.FC<PropsType> = () => {
         <Modal
           visible={showPreview}
           title={`专辑【${currentName}】预览`}
-          onCancel={() => setShowPreview(false)}
-          onOk={() => setShowPreview(false)}
+          onCancel={closePreview}
+          onOk={closePreview}
         >
           <ImageUpload businessCode={albumId} businessType={4} />
         </Modal>

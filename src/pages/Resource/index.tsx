@@ -236,6 +236,14 @@ const Resource: React.FC<ResourceProps> = () => {
     return <span>当前文件：{`${currentResource?.dir}${currentResource?.filename}`}</span>;
   };
 
+  const closeImageUpload = () => {
+    setShowPreview(false);
+    dispatch({
+      type: 'upload/imageUpload/setFileList',
+      payload: [],
+    });
+  };
+
   return (
     <div>
       <ProTable<ResourceVo>
@@ -291,8 +299,8 @@ const Resource: React.FC<ResourceProps> = () => {
         <Modal
           visible={showPreview}
           title={`资源【${currentResource?.filename}】预览`}
-          onCancel={() => setShowPreview(false)}
-          onOk={() => setShowPreview(false)}
+          onCancel={closeImageUpload}
+          onOk={closeImageUpload}
         >
           <ImageUpload businessCode={resourceId} businessType={4} />
         </Modal>

@@ -68,7 +68,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         sort: {},
         params: {
           current: currentPage,
-          pageSize: 5,
+          pageSize: 10,
         },
       },
     });
@@ -114,7 +114,7 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         sort: {},
         params: {
           current: currentPage,
-          pageSize: 5,
+          pageSize: 10,
           ...values,
         },
       },
@@ -188,8 +188,9 @@ const SiteSelectorModal: React.FC<PropsType> = (props: PropsType) => {
         size="small"
         pagination={{
           current: currentPage,
-          pageSize: 5,
+          pageSize: 10,
           total,
+          showTotal: (total) => `总计:${total}`,
           onChange: onPageChange,
         }}
         rowSelection={rowSelection}

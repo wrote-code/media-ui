@@ -4,9 +4,11 @@ import { Input, Modal } from 'antd';
 import Table, { ColumnType } from 'antd/lib/table';
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'umi';
+import './style.less';
 
 interface PropsType {
   albumList: AlbumVo[];
+  onSelect: (data: AlbumVo) => void;
   total: number;
   resourceId: string;
   visible: boolean;
@@ -15,10 +17,9 @@ interface PropsType {
 }
 
 const AlbumSelectModal: React.FC<PropsType> = (props) => {
-  const { albumList, total, resourceId, visible, onCancel, resourceName } = props;
+  const { albumList, total, visible, onCancel, resourceName, onSelect, resourceId } = props;
   const dispatch = useDispatch();
   const [current, setCurrent] = useState(1);
-  const [name, setName] = useState('');
 
   useEffect(() => {
     dispatch({
@@ -26,8 +27,9 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
       payload: {
         params: {
           current: current,
-          pageSize: 5,
-          albumName: name,
+          pageSize: 10,
+          selectModal: true,
+          resourceId,
         },
       },
     });
@@ -40,24 +42,16 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
     },
   ];
 
+  const rowClassName = (record: AlbumVo) => {
+    if (record.resourceId) {
+      return 'selectRow';
+    }
+    return '';
+  };
+
   const onRow: (data: AlbumVo) => React.HTMLAttributes<any> = (data: AlbumVo) => ({
     onClick: () => {
-      dispatch({
-        type: 'resource/setAlbum',
-        payload: {
-          resourceId: resourceId,
-          albumId: data.id,
-        },
-      });
-      onCancel();
-      dispatch({
-        type: 'resource/queryAlbumList',
-        payload: {
-          params: {
-            resourceId: resourceId,
-          },
-        },
-      });
+      onSelect(data);
     },
   });
 
@@ -68,22 +62,24 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
       payload: {
         params: {
           current: page,
-          pageSize: 5,
-          albumName: name,
+          pageSize: 10,
+          selectModal: true,
+          resourceId,
         },
       },
     });
   };
 
   const onSearch = (value: string) => {
-    setName(value);
     dispatch({
       type: 'selectModal/albumSelectModal/queryAlbumList',
       payload: {
         params: {
           current: current,
-          pageSize: 5,
+          pageSize: 10,
+          selectModal: true,
           albumName: value,
+          resourceId,
         },
       },
     });
@@ -98,14 +94,17 @@ const AlbumSelectModal: React.FC<PropsType> = (props) => {
     >
       <Input.Search onSearch={onSearch} />
       <Table
+        rowClassName={rowClassName}
         size="small"
         rowKey="id"
         columns={columns}
         dataSource={albumList}
         pagination={{
           current: current,
+          showTotal: (total) => `总计:${total}`,
           total: total,
           onChange: onPageChange,
+          pageSize: 10,
         }}
         onRow={onRow}
       />
